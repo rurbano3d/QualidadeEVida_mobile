@@ -1,7 +1,10 @@
 import React from 'react';
 import { Image } from 'react-native';
 import PropTypes from 'prop-types';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from '@react-navigation/stack';
 
 import logo from '~/assets/logoHorizontal.png';
 import ExitButton from '~/components/Exit';
@@ -25,7 +28,27 @@ export default function Routes({ signed }) {
   }
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        cardShadowEnabled: false,
+        cardOverlayEnabled: false,
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        ...TransitionPresets.SlideFromRightIOS,
+        headerTitleAlign: 'center',
+        headerTitle: () => <Logo />,
+        headerRight: () => <UserButton />,
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 1,
+          borderBottomColor: '#dadada',
+        },
+      }}
+      headerMode="float"
+
+      // animation="fade"
+    >
       {signed === false ? (
         <Stack.Screen
           name="SignIn"
@@ -40,70 +63,13 @@ export default function Routes({ signed }) {
         />
       ) : (
         <>
-          <Stack.Screen
-            name="Dashboard"
-            component={DashboardRouter}
-            options={{
-              headerTitleAlign: 'center',
-              headerTitle: () => <Logo />,
-              headerLeft: () => <UserButton />,
-              headerRight: () => <ExitButton />,
-            }}
-          />
-          <Stack.Screen
-            name="User"
-            component={User}
-            options={{
-              headerTitleAlign: 'center',
-              headerTitle: () => <Logo />,
-              headerRight: () => <ExitButton />,
-            }}
-          />
-          <Stack.Screen
-            name="Evaluation"
-            component={Evaluation}
-            options={{
-              headerTitleAlign: 'center',
-              headerTitle: () => <Logo />,
-              headerRight: () => <ExitButton />,
-            }}
-          />
-          <Stack.Screen
-            name="Category"
-            component={Category}
-            options={{
-              headerTitleAlign: 'center',
-              headerTitle: () => <Logo />,
-              headerRight: () => <ExitButton />,
-            }}
-          />
-          <Stack.Screen
-            name="MyCategory"
-            component={MyCategory}
-            options={{
-              headerTitleAlign: 'center',
-              headerTitle: () => <Logo />,
-              headerRight: () => <ExitButton />,
-            }}
-          />
-          <Stack.Screen
-            name="PointDetail"
-            component={PointDetail}
-            options={{
-              headerTitleAlign: 'center',
-              headerTitle: () => <Logo />,
-              headerRight: () => <ExitButton />,
-            }}
-          />
-          <Stack.Screen
-            name="RankingDetail"
-            component={RankingDetail}
-            options={{
-              headerTitleAlign: 'center',
-              headerTitle: () => <Logo />,
-              headerRight: () => <ExitButton />,
-            }}
-          />
+          <Stack.Screen name="Dashboard" component={DashboardRouter} />
+          <Stack.Screen name="User" component={User} />
+          <Stack.Screen name="Evaluation" component={Evaluation} />
+          <Stack.Screen name="Category" component={Category} />
+          <Stack.Screen name="MyCategory" component={MyCategory} />
+          <Stack.Screen name="PointDetail" component={PointDetail} />
+          <Stack.Screen name="RankingDetail" component={RankingDetail} />
         </>
       )}
     </Stack.Navigator>

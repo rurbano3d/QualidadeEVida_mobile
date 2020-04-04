@@ -1,10 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
-
 import { signOut } from '~/store/modules/auth/actions';
 
-import { ExitButton } from './styles';
+import { ExitButton, ExitText } from './styles';
 
 export default function Exit() {
   const dispatch = useDispatch();
@@ -15,7 +13,7 @@ export default function Exit() {
 
   return (
     <ExitButton onPress={() => handleExit()}>
-      <Ionicons name="md-exit" size={25} color="#53B1DA" />
+      <ExitText>Sair</ExitText>
     </ExitButton>
   );
 }

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import Button from '~/components/Button';
 import Separator from '~/components/Separator';
+import ExitButton from '~/components/Exit';
 
 import { Container, List, Item } from './styles';
 
@@ -29,6 +30,12 @@ export default function User() {
         </Item>
         <Item>
           <Text>1.80 de altura</Text>
+        </Item>
+        <Item>
+          <Text>1.80 de altura</Text>
+        </Item>
+        <Item>
+          <ExitButton />
         </Item>
       </List>
       <Separator />

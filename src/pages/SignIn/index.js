@@ -29,6 +29,7 @@ export default function SignIn() {
         <Input
           autoCapitalize="none"
           placeholder="Informe seu e-mail"
+          keyboatdType="email-address"
           returnKeyType="send"
           onSubmitEditing={handleSubmit}
           value={email}

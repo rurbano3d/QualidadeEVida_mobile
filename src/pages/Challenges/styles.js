@@ -17,6 +17,7 @@ export const Item = styled.View`
   border-bottom-width: 1px;
   padding: 15px;
   align-items: center;
+  height: auto;
 `;
 
 export const ItemButton = styled(TouchableHighlight)`

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export const Container = styled(TouchableHighlight)`
+export const Container = styled(TouchableOpacity)`
   margin: 10px 0 0 0;
   height: 50px;
   width: 100%;
