@@ -4,6 +4,8 @@ import { useRoute } from '@react-navigation/native';
 
 import Button from '~/components/Button';
 import Separator from '~/components/Separator';
+import SlideRight from '~/Animation/SlideRight';
+import GrowUp from '~/Animation/GrowUp';
 
 import { Container, Content, List, Item, Title, TitleText } from './styles';
 
@@ -13,29 +15,32 @@ export default function Category() {
   console.tron.log(id);
   return (
     <Container>
-      <Content>
-        <Title>
-          <TitleText>Sequência de aeróbicos</TitleText>
-        </Title>
+      <SlideRight>
+        <Content>
+          <Title>
+            <TitleText>Sequência de aeróbicos</TitleText>
+          </Title>
 
-        <List>
-          <Item>
-            <Text>100 Polichinelo</Text>
-            <Text>3 x 15</Text>
-          </Item>
-          <Item>
-            <Text>100 Polichinelo</Text>
-            <Text>3 x 15</Text>
-          </Item>
-          <Item>
-            <Text>100 Polichinelo</Text>
-            <Text>3 x 15</Text>
-          </Item>
-        </List>
-      </Content>
-
+          <List>
+            <Item>
+              <Text>100 Polichinelo</Text>
+              <Text>3 x 15</Text>
+            </Item>
+            <Item>
+              <Text>100 Polichinelo</Text>
+              <Text>3 x 15</Text>
+            </Item>
+            <Item>
+              <Text>100 Polichinelo</Text>
+              <Text>3 x 15</Text>
+            </Item>
+          </List>
+        </Content>
+      </SlideRight>
       <Separator />
-      <Button color="#42CB59">Inscrever-se</Button>
+      <GrowUp>
+        <Button color="#42CB59">Inscrever-se</Button>
+      </GrowUp>
     </Container>
   );
 }
