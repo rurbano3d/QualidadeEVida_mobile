@@ -12,6 +12,7 @@ export default function SlideTop({ children }) {
         toValue: 0,
         speed: 1,
         bounciness: 2,
+        useNativeDriver: true,
       }).start();
     }
   }, [isFocused]);

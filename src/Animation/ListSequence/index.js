@@ -12,6 +12,7 @@ export default function ListSequence({ children, time }) {
       Animated.sequence([
         Animated.spring(init, {
           toValue: 0,
+          useNativeDriver: true,
         }),
 
         Animated.delay(time),
@@ -19,6 +20,7 @@ export default function ListSequence({ children, time }) {
           toValue: 1,
           speed: 1,
           bounciness: 4,
+          useNativeDriver: true,
         }),
       ]).start();
     }

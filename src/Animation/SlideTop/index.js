@@ -6,12 +6,14 @@ import { useIsFocused } from '@react-navigation/native';
 export default function SlideTop({ children }) {
   const isFocused = useIsFocused();
   const init = new Animated.Value(-100);
+
   useEffect(() => {
     if (isFocused) {
       Animated.spring(init, {
         toValue: 0,
         speed: 1,
         bounciness: 2,
+        useNativeDriver: true,
       }).start();
     }
   }, [isFocused]);

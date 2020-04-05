@@ -11,6 +11,7 @@ export default function GrowUp({ children }) {
       Animated.timing(init, {
         toValue: 1,
         duration: 300,
+        useNativeDriver: true,
       }).start();
     }
   }, [isFocused]);
