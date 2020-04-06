@@ -11,13 +11,17 @@ export function* signIn({ payload }) {
     const response = yield call(api.post, 'sessionStudents', {
       email,
     });
-    const { id, name } = response.data;
-    const student = {
-      id,
-      name,
-    };
-    console.tron.log(student);
-    yield put(signInSuccess(student));
+    const { student, token } = response.data;
+
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
+    const responseRegistration = yield call(api.get, 'registrations', {
+      params: { student_id: student.id },
+    });
+
+    const registration = responseRegistration.data;
+
+    yield put(signInSuccess(student, registration, token));
   } catch (err) {
     Alert.alert('Login error', `${err.response.data.error}`);
     yield put(signFailure());
@@ -39,6 +43,7 @@ export function signOut() {
 }
 
 export default all([
+  takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_OUT', signOut),
 ]);

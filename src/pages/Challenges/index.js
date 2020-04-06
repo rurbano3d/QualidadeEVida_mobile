@@ -14,9 +14,9 @@ export default function Challenges() {
   return (
     <Container>
       {isFocused && (
-        <GrowUp>
+        <GrowUp isFocused={isFocused}>
           <List>
-            <ListSequence time={100}>
+            <ListSequence time={100} isFocused={isFocused}>
               <Item>
                 <Seletor link="Category" params={{ id: 30 }}>
                   <Text>Sequência de aeróbicos</Text>
@@ -26,7 +26,7 @@ export default function Challenges() {
                 </ItemButton>
               </Item>
             </ListSequence>
-            <ListSequence time={200}>
+            <ListSequence time={200} isFocused={isFocused}>
               <Item>
                 <Seletor link="Category" params={{ id: 30 }}>
                   <Text>Sequência de aeróbicos</Text>
@@ -36,7 +36,7 @@ export default function Challenges() {
                 </ItemButton>
               </Item>
             </ListSequence>
-            <ListSequence time={300}>
+            <ListSequence time={300} isFocused={isFocused}>
               <Item>
                 <Seletor link="Category" params={{ id: 30 }}>
                   <Text>Sequência de aeróbicos</Text>

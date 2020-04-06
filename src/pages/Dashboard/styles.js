@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { Animated } from 'react-native';
 
 export const Container = styled.SafeAreaView`
   margin: 20px;
@@ -27,20 +26,16 @@ export const DescView = styled.View`
 
 export const PointText = styled.Text`
   color: #53b1da;
-  font-size: 12px;
+  font-size: 14px;
 `;
 
-export const StatusText = styled.Text`
-  color: #42cb59;
-  font-size: 12px;
-`;
-
-export const Checkin = styled.View`
+export const Checkin = styled.FlatList`
   background-color: #fff;
   border: 1px solid #dddddd;
   border-radius: 4px;
   margin-top: 20px;
   padding: 10px;
+  height: 50%;
 `;
 
 export const CheckinView = styled.View`
@@ -51,3 +46,16 @@ export const CheckinView = styled.View`
   border-bottom-color: #eaeaea;
 `;
 export const DataText = styled.Text``;
+
+export const Warning = styled.Text`
+  color: #fff;
+  font-size: 18px;
+`;
+
+export const WarningView = styled.View`
+  background-color: #cc3026;
+  width: 100%;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+`;

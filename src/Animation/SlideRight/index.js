@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-
-import { Animated } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import { Animated } from 'react-native';
 
 export default function SlideRight({ children }) {
   const isFocused = useIsFocused();
