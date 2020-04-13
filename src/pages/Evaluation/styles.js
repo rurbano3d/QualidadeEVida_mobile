@@ -4,7 +4,7 @@ export const Container = styled.SafeAreaView`
   margin: 20px;
 `;
 
-export const List = styled.View``;
+export const List = styled.FlatList``;
 
 export const Row = styled.View`
   flex-direction: row;
@@ -26,4 +26,10 @@ export const Item = styled.View`
 
 export const Title = styled.Text`
   font-weight: bold;
+`;
+
+export const Warning = styled.View`
+  align-items: center;
+  justify-content: center;
+  height: 80%;
 `;

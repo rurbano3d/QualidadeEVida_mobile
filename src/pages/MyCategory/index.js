@@ -1,80 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
 
+import api from '~/services/api';
+
+import ExercisesRender from '~/components/Exercise/Render';
+import SeparatorList from '~/components/SeparatorList';
 import SlideRight from '~/Animation/SlideRight';
 
-import {
-  Container,
-  Content,
-  List,
-  Item,
-  Title,
-  TitleText,
-  Sequency,
-  Repetition,
-} from './styles';
+import { Container, Content, List, Title, TitleText } from './styles';
 
 export default function MyCategory() {
   const route = useRoute();
-  const { id } = route.params;
-  console.tron.log(id);
+
+  const { id, title } = route.params;
+
+  const [exercises, setExercises] = useState({});
+
+  // const exerciseSample = [
+  //   {
+  //     student_id: 2,
+  //     category_id: 13,
+  //     exercise_id: 40,
+  //     date: '2020-04-08 18:30:11.544+00',
+  //   },
+  // ];
+
+  useEffect(() => {
+    async function getExercises() {
+      const response = await api.get('exercises', {
+        params: { category_id: id },
+      });
+      setExercises(response.data);
+    }
+    getExercises();
+  }, []);
+
   return (
     <Container>
       <SlideRight>
+        <Title>
+          <TitleText>{title}</TitleText>
+        </Title>
         <Content>
-          <Title>
-            <TitleText>Sequência de aeróbicos</TitleText>
-          </Title>
-
-          <List>
-            <Item>
-              <Text>100 Polichinelo</Text>
-              <Text>3 x 15</Text>
-              <Sequency>
-                <Repetition>
-                  <AntDesign name="checkcircleo" size={20} color="#42CB59" />
-                </Repetition>
-                <Repetition>
-                  <AntDesign name="checkcircleo" size={20} color="#afafaf" />
-                </Repetition>
-                <Repetition>
-                  <AntDesign name="checkcircleo" size={20} color="#afafaf" />
-                </Repetition>
-              </Sequency>
-            </Item>
-            <Item>
-              <Text>100 Polichinelo</Text>
-              <Text>3 x 15</Text>
-              <Sequency>
-                <Repetition>
-                  <AntDesign name="checkcircleo" size={20} color="#42CB59" />
-                </Repetition>
-                <Repetition>
-                  <AntDesign name="checkcircleo" size={20} color="#afafaf" />
-                </Repetition>
-                <Repetition>
-                  <AntDesign name="checkcircleo" size={20} color="#afafaf" />
-                </Repetition>
-              </Sequency>
-            </Item>
-            <Item>
-              <Text>100 Polichinelo</Text>
-              <Text>3 x 15</Text>
-              <Sequency>
-                <Repetition>
-                  <AntDesign name="checkcircleo" size={20} color="#42CB59" />
-                </Repetition>
-                <Repetition>
-                  <AntDesign name="checkcircleo" size={20} color="#afafaf" />
-                </Repetition>
-                <Repetition>
-                  <AntDesign name="checkcircleo" size={20} color="#afafaf" />
-                </Repetition>
-              </Sequency>
-            </Item>
-          </List>
+          <List
+            data={exercises}
+            ItemSeparatorComponent={SeparatorList}
+            ListEmptyComponent={<Text>Sem atualização</Text>}
+            keyExtract={(item) => String(item.id)}
+            renderItem={({ item }) => <ExercisesRender item={item} />}
+          />
         </Content>
       </SlideRight>
     </Container>

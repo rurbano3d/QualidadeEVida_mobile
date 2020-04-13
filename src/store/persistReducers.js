@@ -6,7 +6,7 @@ export default (reducers) => {
     {
       key: 'qualidadeVida',
       storage: AsyncStorage,
-      whitelist: ['auth', 'user', 'checkin'],
+      whitelist: ['auth'],
     },
     reducers
   );

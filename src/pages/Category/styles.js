@@ -11,7 +11,7 @@ export const Content = styled.View`
   padding: 10px;
 `;
 
-export const List = styled.View``;
+export const List = styled.FlatList``;
 
 export const Item = styled.View`
   flex-direction: row;

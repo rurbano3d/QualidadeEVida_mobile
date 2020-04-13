@@ -14,7 +14,7 @@ export default function SeletorComponent({ link, params, children }) {
 }
 SeletorComponent.propTypes = {
   link: PropTypes.string.isRequired,
-  params: PropTypes.objectOf(PropTypes.number),
+  params: PropTypes.object,
   children: PropTypes.element.isRequired,
 };
 

@@ -42,8 +42,6 @@ export const CheckinView = styled.View`
   flex-direction: row;
   justify-content: space-between;
   padding: 15px;
-  border-bottom-width: 1px;
-  border-bottom-color: #eaeaea;
 `;
 export const DataText = styled.Text``;
 

@@ -9,6 +9,8 @@ import { formatDate, formatDatePure } from '~/utils';
 
 import Button from '~/components/Button';
 import Separator from '~/components/Separator';
+import SeparatorList from '~/components/SeparatorList';
+
 import Slideleft from '~/Animation/SlideLeft';
 import SlideTop from '~/Animation/SlideTop';
 import SlideBottom from '~/Animation/SlideBottom';
@@ -34,7 +36,7 @@ export default function Dashboard() {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const student = useSelector((state) => state.auth.student);
-  const registration = useSelector((state) => state.auth.registration[0]);
+  const registration = useSelector((state) => state.auth.registration);
   const [checkins, setCheckins] = useState(null);
   const [page, setPage] = useState(null);
   const [refresh, setRefresh] = useState(false);
@@ -84,6 +86,7 @@ export default function Dashboard() {
     dispatch(checkinRequest(student.id));
     setRefresh(true);
   }
+
   return (
     <Container>
       <SlideTop isFocused={isFocused}>
@@ -124,7 +127,7 @@ export default function Dashboard() {
               color="#444444"
             />
             <Text>Plano</Text>
-            <PointText>{registration.plan.title}</PointText>
+            <PointText>{registration && registration.plan.title}</PointText>
           </DescView>
         </Information>
       </Slideleft>
@@ -140,7 +143,8 @@ export default function Dashboard() {
           data={checkins}
           onEndReachedThreshold={0.01}
           onEndReached={loadMore}
-          keyExtract={(item) => item.id}
+          ItemSeparatorComponent={SeparatorList}
+          keyExtract={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <CheckinView>
               <Text>Check-in #{item.id}</Text>

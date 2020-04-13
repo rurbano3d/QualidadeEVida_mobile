@@ -17,3 +17,10 @@ export const formatDatePure = (value) => {
 
   return dateFormatted;
 };
+
+export const formatDateParse = (value) => {
+  if (!value) return null;
+  const dateFormatted = format(parseISO(value), 'dd/MM/yyyy');
+
+  return dateFormatted;
+};

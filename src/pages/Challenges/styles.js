@@ -1,9 +1,9 @@
 import styled from 'styled-components/native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const Container = styled.SafeAreaView``;
 
-export const List = styled.View`
+export const List = styled.FlatList`
   background-color: #fff;
   border: 1px solid #ddd;
   margin: 20px;
@@ -11,16 +11,12 @@ export const List = styled.View`
 `;
 
 export const Item = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  border-bottom-color: #eaeaea;
-  border-bottom-width: 1px;
   padding: 15px;
-  align-items: center;
+
   height: auto;
 `;
 
-export const ItemButton = styled(TouchableHighlight)`
+export const ItemButton = styled(TouchableOpacity)`
   background-color: #42cb59;
   border-radius: 4px;
   padding: 5px 10px;
@@ -28,4 +24,18 @@ export const ItemButton = styled(TouchableHighlight)`
 
 export const TextButton = styled.Text`
   color: #fff;
+`;
+
+export const Top = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const Bottom = styled.View`
+  height: 5px;
+`;
+
+export const BottomText = styled.Text`
+  font-size: 12px;
+  color: #666;
 `;
