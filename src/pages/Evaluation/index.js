@@ -11,7 +11,7 @@ import ListSequence from '~/Animation/ListSequence';
 import { Container, List, Row, Column, Title, Item, Warning } from './styles';
 
 export default function Evaluation() {
-  const student = useSelector((state) => state.auth.student);
+  const student = useSelector(state => state.auth.student);
   const [evaluations, setEvaluations] = useState({});
 
   async function getEvaluations() {
@@ -38,7 +38,7 @@ export default function Evaluation() {
       )}
       <List
         data={evaluations}
-        keyExtract={(item) => String(item.id)}
+        keyExtractor={item => String(item.id)}
         renderItem={({ item }) => (
           <ListSequence time={100}>
             <Item>

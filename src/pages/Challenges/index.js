@@ -24,7 +24,7 @@ import {
 } from './styles';
 
 export default function Challenges() {
-  const { id } = useSelector((state) => state.auth.student);
+  const { id } = useSelector(state => state.auth.student);
   const dispatch = useDispatch();
   const [challenges, setChallenges] = useState({});
   const [refresh, setRefresh] = useState(true);
@@ -38,9 +38,9 @@ export default function Challenges() {
 
     const subscriptions = await api.get(`subscriptions/${id}`);
 
-    const challengesFilter = response.data.filter((item) => {
+    const challengesFilter = response.data.filter(item => {
       const verify = subscriptions.data.filter(
-        (subs) => subs.category_id === item.id
+        subs => subs.category_id === item.id,
       );
       if (verify == '') {
         return { ...item };
@@ -50,7 +50,7 @@ export default function Challenges() {
     setRefresh(false);
     setPage(page);
     setChallenges(
-      page >= 2 ? [...challenges, ...challengesFilter] : challengesFilter
+      page >= 2 ? [...challenges, ...challengesFilter] : challengesFilter,
     );
   }
 
@@ -78,8 +78,8 @@ export default function Challenges() {
   }
   return (
     <Container>
-      {isFocused && (
-        <ListSequence time={100} onRefresh={animationRefresh}>
+      <ListSequence time={100} onRefresh={animationRefresh}>
+        {isFocused && (
           <List
             onRefresh={getChallenges}
             refreshing={refresh}
@@ -88,7 +88,7 @@ export default function Challenges() {
             onEndReached={loadMore}
             ListEmptyComponent={<Text>Sem desafios no momento!</Text>}
             ItemSeparatorComponent={SeparatorList}
-            keyExtract={(item) => String(item.id)}
+            keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
               <Item>
                 <Top>
@@ -115,8 +115,8 @@ export default function Challenges() {
               </Item>
             )}
           />
-        </ListSequence>
-      )}
+        )}
+      </ListSequence>
     </Container>
   );
 }

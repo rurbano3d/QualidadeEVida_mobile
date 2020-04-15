@@ -47,8 +47,10 @@ export default function MyCategory() {
             data={exercises}
             ItemSeparatorComponent={SeparatorList}
             ListEmptyComponent={<Text>Sem atualização</Text>}
-            keyExtract={(item) => String(item.id)}
-            renderItem={({ item }) => <ExercisesRender item={item} />}
+            keyExtractor={item => String(item.id)}
+            renderItem={({ item }) => (
+              <ExercisesRender item={item} category={id} />
+            )}
           />
         </Content>
       </SlideRight>

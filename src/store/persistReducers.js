@@ -1,14 +1,14 @@
 import { AsyncStorage } from 'react-native';
 import { persistReducer } from 'redux-persist';
 
-export default (reducers) => {
+export default reducers => {
   const persistedReducer = persistReducer(
     {
       key: 'qualidadeVida',
       storage: AsyncStorage,
-      whitelist: ['auth'],
+      whitelist: ['auth', 'exercises', 'series'],
     },
-    reducers
+    reducers,
   );
   return persistedReducer;
 };

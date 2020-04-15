@@ -23,7 +23,7 @@ import {
 } from './styles';
 
 export default function MyChallenges() {
-  const { id } = useSelector((state) => state.auth.student);
+  const { id } = useSelector(state => state.auth.student);
   const dispatch = useDispatch();
   const [challenges, setChallenges] = useState({});
   const [refresh, setRefresh] = useState(true);
@@ -37,9 +37,9 @@ export default function MyChallenges() {
 
     const subscriptions = await api.get(`subscriptions/${id}`);
 
-    const challengesFilter = response.data.filter((item) => {
+    const challengesFilter = response.data.filter(item => {
       const verify = subscriptions.data.filter(
-        (subs) => subs.category_id === item.id
+        subs => subs.category_id === item.id,
       );
       if (verify != '') {
         return { ...item };
@@ -49,7 +49,7 @@ export default function MyChallenges() {
     setRefresh(false);
     setPage(page);
     setChallenges(
-      page >= 2 ? [...challenges, ...challengesFilter] : challengesFilter
+      page >= 2 ? [...challenges, ...challengesFilter] : challengesFilter,
     );
   }
 
@@ -86,7 +86,7 @@ export default function MyChallenges() {
             onEndReachedThreshold={0.01}
             onEndReached={loadMore}
             ItemSeparatorComponent={SeparatorList}
-            keyExtract={(item) => String(item.id)}
+            keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
               <Item>
                 <Top>
@@ -114,38 +114,6 @@ export default function MyChallenges() {
             )}
           />
         </ListSequence>
-        // <List>
-        //   <ListSequence time={100}>
-        //     <Item>
-        //       <Seletor link="MyCategory" params={{ id: 30 }}>
-        //         <Text>Sequência de aeróbicos</Text>
-        //       </Seletor>
-        //       <ItemButton>
-        //         <TextButton>Desinscrever-se</TextButton>
-        //       </ItemButton>
-        //     </Item>
-        //   </ListSequence>
-        //   <ListSequence time={200}>
-        //     <Item>
-        //       <Seletor link="MyCategory" params={{ id: 30 }}>
-        //         <Text>Sequência de aeróbicos</Text>
-        //       </Seletor>
-        //       <ItemButton>
-        //         <TextButton>Desinscrever-se</TextButton>
-        //       </ItemButton>
-        //     </Item>
-        //   </ListSequence>
-        //   <ListSequence time={300}>
-        //     <Item>
-        //       <Seletor link="MYCategory" params={{ id: 30 }}>
-        //         <Text>Sequência de aeróbicos</Text>
-        //       </Seletor>
-        //       <ItemButton>
-        //         <TextButton>Desinscrever-se</TextButton>
-        //       </ItemButton>
-        //     </Item>
-        //   </ListSequence>
-        // </List>
       )}
     </Container>
   );

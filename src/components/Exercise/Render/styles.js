@@ -5,6 +5,8 @@ export const Item = styled.View`
   border-bottom-width: 1px;
   padding: 0 15px;
   align-items: center;
+
+  opacity: ${(props) => (props.finalized ? '0.3' : '1')};
 `;
 
 export const InfoView = styled.View`

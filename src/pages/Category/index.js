@@ -16,7 +16,7 @@ import { Container, Content, List, Item, Title, TitleText } from './styles';
 export default function Category() {
   const route = useRoute();
   const dispatch = useDispatch();
-  const student = useSelector((state) => state.auth.student);
+  const student = useSelector(state => state.auth.student);
   const [refresh, setRefresh] = useState(false);
   const { id, title } = route.params;
   const [exercises, setExercises] = useState(null);
@@ -46,7 +46,7 @@ export default function Category() {
             data={exercises}
             ItemSeparatorComponent={SeparatorList}
             ListEmptyComponent={<Text>Sem atualização</Text>}
-            keyExtract={(item) => String(item.id)}
+            keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
               <Item>
                 <Text>{item.title}</Text>
@@ -69,7 +69,7 @@ export default function Category() {
                 {exercises.repetitions} x {exercises.time} segundos
               </Text>
             </Item>
-            
+
             <Item>
               <Text>100 Polichinelo</Text>
               <Text>3 x 15</Text>

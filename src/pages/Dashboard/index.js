@@ -35,8 +35,8 @@ import {
 export default function Dashboard() {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-  const student = useSelector((state) => state.auth.student);
-  const registration = useSelector((state) => state.auth.registration);
+  const student = useSelector(state => state.auth.student);
+  const registration = useSelector(state => state.auth.registration);
   const [checkins, setCheckins] = useState(null);
   const [page, setPage] = useState(null);
   const [refresh, setRefresh] = useState(false);
@@ -55,12 +55,12 @@ export default function Dashboard() {
     const response = await api.get('monthlyPayments', {
       params: { q: registration.id },
     });
-    const filter = response.data.filter((item) => item.payday === null);
-    const result = filter.map((item) => {
+    const filter = response.data.filter(item => item.payday === null);
+    const result = filter.map(item => {
       if (item.payday === null) {
         const newPaymentDay = setDate(
           parseISO(item.payment_day),
-          item.overdue_day
+          item.overdue_day,
         );
         return {
           ...item,
@@ -144,7 +144,7 @@ export default function Dashboard() {
           onEndReachedThreshold={0.01}
           onEndReached={loadMore}
           ItemSeparatorComponent={SeparatorList}
-          keyExtract={(item) => item.id.toString()}
+          keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <CheckinView>
               <Text>Check-in #{item.id}</Text>

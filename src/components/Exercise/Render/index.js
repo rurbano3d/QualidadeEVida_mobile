@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 
@@ -14,9 +14,18 @@ import {
   SeriesText,
 } from './styles';
 
-export default function ExercisesRender({ item }) {
+export default function ExercisesRender({ item, category }) {
+  const [finalized, setFinalizaded] = useState(false);
+  function handleCompleted(onCompleted) {
+    if (!onCompleted) {
+      setFinalizaded(true);
+    } else {
+      setFinalizaded(false);
+    }
+  }
+
   return (
-    <Item>
+    <Item finalized={finalized}>
       <ExerciseView>
         <ExerciseText>{item.title}</ExerciseText>
       </ExerciseView>
@@ -31,10 +40,14 @@ export default function ExercisesRender({ item }) {
         </SeriesView>
         <Amount item={item} />
       </InfoView>
-      <ButtonSeries item={item} />
+      <ButtonSeries
+        item={item}
+        category={category}
+        onCompleted={handleCompleted}
+      />
     </Item>
   );
 }
 ExercisesRender.propTypes = {
-  item: PropTypes.arrayOf(PropTypes.object).isRequired,
+  item: PropTypes.array.isRequired,
 };
