@@ -69,17 +69,11 @@ export default function Challenges() {
     dispatch(challengeRequest(id, category_id));
     setRefresh(true);
   }
-  function animationRefresh(set) {
-    console.tron.log(set);
-    if (set) {
-      console.tron.log('entrou');
-      setRefresh(true);
-    }
-  }
+
   return (
     <Container>
-      <ListSequence time={100} onRefresh={animationRefresh}>
-        {isFocused && (
+      {isFocused && (
+        <ListSequence time={100}>
           <List
             onRefresh={getChallenges}
             refreshing={refresh}
@@ -115,8 +109,8 @@ export default function Challenges() {
               </Item>
             )}
           />
-        )}
-      </ListSequence>
+        </ListSequence>
+      )}
     </Container>
   );
 }

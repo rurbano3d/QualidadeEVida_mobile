@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import PropTypes from 'prop-types';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { isToday, parseISO } from 'date-fns';
 
@@ -23,13 +23,6 @@ export default function ButtonSeries({ item, category, onCompleted }) {
   // const student = useSelector(state => state.auth.student);
   const exercisesCache = useSelector(state => state.exercises);
   const seriesCache = useSelector(state => state.series);
-  console.log(seriesCache);
-  const seriesCacheOnlyIsToday = seriesCache.filter(
-    serie =>
-      serie.category === category &&
-      serie.exercise === item.id &&
-      isToday(serie.date),
-  );
 
   let repetitions = [];
 
@@ -39,7 +32,7 @@ export default function ButtonSeries({ item, category, onCompleted }) {
         exercise =>
           exercise.exercise === item.id &&
           exercise.category === category &&
-          isToday(exercise.date),
+          isToday(parseISO(exercise.date)),
       );
 
       if (exercisesCacheFilter[0]) {
@@ -47,10 +40,21 @@ export default function ButtonSeries({ item, category, onCompleted }) {
         onCompleted(exerciseCompleted);
       }
     }
+    const seriesCacheOnlyIsToday = seriesCache.filter(
+      serie =>
+        serie.category === category &&
+        serie.exercise === item.id &&
+        isToday(parseISO(serie.date)),
+    );
     if (seriesCacheOnlyIsToday) {
       const positionArray = [];
       seriesCacheOnlyIsToday.map(serie => positionArray.push(serie.position));
       setCheckButtons(positionArray);
+
+      if (positionArray.length === repetitions.length) {
+        setExerciseCompleted(true);
+        onCompleted(exerciseCompleted);
+      }
     }
   }, []);
   function createRepetitions(count) {
@@ -62,18 +66,13 @@ export default function ButtonSeries({ item, category, onCompleted }) {
   }
 
   function handleCheckIn(checkPosition) {
-    console.tron.log(checkButtons);
     const find = checkButtons.find(position => position === checkPosition);
-    console.tron.log(find);
+
     if (!find) {
       dispatch(seriesRequest(checkPosition, item.id, category));
       setCheckButtons([...checkButtons, checkPosition]);
 
-      const size = seriesCacheOnlyIsToday.filter(
-        serie => serie.exercise === item.id && serie.category === category,
-      );
-
-      if (size.length === repetitions.length - 1) {
+      if (checkButtons.length === repetitions.length - 1) {
         setExerciseCompleted(true);
         onCompleted(exerciseCompleted);
         dispatch(exercisesRequest(item.id, category));

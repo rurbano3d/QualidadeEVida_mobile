@@ -69,16 +69,10 @@ export default function MyChallenges() {
     setRefresh(true);
   }
 
-  function animationRefresh(set) {
-    if (set) {
-      setRefresh(true);
-    }
-  }
-
   return (
     <Container>
       {isFocused && (
-        <ListSequence time={100} onRefresh={animationRefresh}>
+        <ListSequence time={100}>
           <List
             onRefresh={getChallenges}
             refreshing={refresh}

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { Animated } from 'react-native';
 
-export default function ListSequence({ children, time, onRefresh }) {
+export default function ListSequence({ children, time }) {
   const isFocused = useIsFocused();
   const init = new Animated.Value(0);
 
@@ -21,7 +21,7 @@ export default function ListSequence({ children, time, onRefresh }) {
           bounciness: 4,
           useNativeDriver: true,
         }),
-      ]).start(() => onRefresh());
+      ]).start();
     }
   }, [isFocused]);
 
