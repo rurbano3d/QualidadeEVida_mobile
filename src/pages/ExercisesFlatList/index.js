@@ -10,7 +10,6 @@ export default function ExercisesFlatList({
   data,
   category,
   renderButtonSeries,
-  type,
 }) {
   return (
     <Container>
@@ -18,10 +17,10 @@ export default function ExercisesFlatList({
         data={data}
         ItemSeparatorComponent={SeparatorList}
         showsVerticalScrollIndicator={false}
-        keyExtractor={item => String(item.id)}
+        keyExtractor={item => String(item.id + item.title)}
         renderItem={({ item }) => (
           <>
-            {type === 'exercises' ? (
+            {item.exercises ? (
               <ExercisesRender
                 item={item}
                 category={category}

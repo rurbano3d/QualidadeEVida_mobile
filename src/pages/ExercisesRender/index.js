@@ -23,8 +23,7 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
   const student = useSelector(state => state.auth.student);
 
   const [refresh, setRefresh] = useState(false);
-  const [exercises, setExercises] = useState([]);
-  const [runnings, setRunnings] = useState([]);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,8 +34,7 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
       const runningsResponse = await api.get('runnings', {
         params: { category_id: id },
       });
-      setExercises(response.data);
-      setRunnings(runningsResponse.data);
+      setItems([...response.data, ...runningsResponse.data]);
       setLoading(false);
     }
     getExercises();
@@ -56,20 +54,11 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
             <Title>
               <TitleText>{title}</TitleText>
             </Title>
-            {exercises.length > 0 && (
+            {items.length > 0 && (
               <ExercisesFlatlist
-                data={exercises}
+                data={items}
                 category={id}
                 renderButtonSeries={renderButtonSeries}
-                type="exercises"
-              />
-            )}
-            {runnings.length > 0 && (
-              <ExercisesFlatlist
-                data={runnings}
-                category={id}
-                renderButtonSeries={renderButtonSeries}
-                type="runnings"
               />
             )}
           </SlideRight>
