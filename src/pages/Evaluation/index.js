@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { useSelector } from 'react-redux';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import api from '~/services/api';
 
 import { formatDateParse } from '~/utils';
-
+import Warning from '~/components/WarningWithoutInfo';
 import ListSequence from '~/Animation/ListSequence';
 
-import { Container, List, Row, Column, Title, Item, Warning } from './styles';
+import { Container, List, Row, Column, Title, Item } from './styles';
 
 export default function Evaluation() {
   const student = useSelector(state => state.auth.student);
-  const [evaluations, setEvaluations] = useState({});
+  const [evaluations, setEvaluations] = useState([]);
 
   async function getEvaluations() {
     const response = await api.get('evaluations', {
@@ -23,19 +23,10 @@ export default function Evaluation() {
   useEffect(() => {
     getEvaluations();
   }, []);
+
   return (
     <Container>
-      {evaluations == '' && (
-        <Warning>
-          <MaterialCommunityIcons
-            name="alert-circle-outline"
-            size={70}
-            color="#53b1da"
-          />
-          <Text style={{ fontSize: 15 }}>Sem registro de avaliação!</Text>
-          <Text style={{ fontSize: 15 }}>Consulte seu professor!</Text>
-        </Warning>
-      )}
+      {evaluations && <Warning message="Sem registro de avalição!" />}
       <List
         data={evaluations}
         keyExtractor={item => String(item.id)}

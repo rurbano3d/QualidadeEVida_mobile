@@ -4,7 +4,10 @@ export const Item = styled.View`
   padding: 0 20px;
   align-items: center;
   padding-bottom: 20px;
-  opacity: ${props => (props.finalized ? '0.3' : '1')};
+`;
+
+export const Content = styled.View`
+  display: ${props => (props.finalized ? 'none' : 'flex')};
 `;
 
 export const InfoView = styled.View`
@@ -37,4 +40,15 @@ export const SeriesView = styled.View`
 
 export const SeriesText = styled.Text`
   padding-left: 10px;
+`;
+
+export const DateView = styled.View`
+  flex-direction: column;
+  flex: 0.5;
+`;
+export const CongratulationsText = styled.Text`
+  font-size: 18px;
+  margin-top: 10px;
+  color: #42cb59;
+  text-align: center;
 `;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 
@@ -14,7 +15,11 @@ import {
   SeriesText,
 } from './styles';
 
-export default function ExercisesRender({ item, category }) {
+export default function ExercisesRender({
+  item,
+  category,
+  renderButtonSeries,
+}) {
   const [finalized, setFinalizaded] = useState(false);
   function handleCompleted(onCompleted) {
     if (!onCompleted) {
@@ -40,11 +45,14 @@ export default function ExercisesRender({ item, category }) {
         </SeriesView>
         <Amount item={item} />
       </InfoView>
-      <ButtonSeries
-        item={item}
-        category={category}
-        onCompleted={handleCompleted}
-      />
+
+      {renderButtonSeries && (
+        <ButtonSeries
+          item={item}
+          category={category}
+          onCompleted={handleCompleted}
+        />
+      )}
     </Item>
   );
 }

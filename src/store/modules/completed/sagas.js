@@ -7,11 +7,20 @@ import api from '~/services/api';
 
 export function* addSubscription({ payload }) {
   try {
-    const { student_id, exercise_id } = payload;
+    const {
+      student_id,
+      registration_id,
+      category_id,
+      exercise_id,
+      running_id,
+    } = payload;
 
     const response = yield call(api.post, `completed`, {
       student_id,
+      registration_id,
+      category_id,
       exercise_id,
+      running_id,
     });
     const completeds = response.data;
 
@@ -34,21 +43,11 @@ export function* addSubscription({ payload }) {
 
 export function* removeSubscription({ payload }) {
   try {
-    const { student_id, exercise_id } = payload;
+    const { id } = payload;
 
-    yield call(api.delete, `completed/${student_id}/${exercise_id}`);
+    yield call(api.delete, `completed/${id}`);
   } catch (err) {
-    let error = '';
-    switch (err.response.data.error) {
-      case 'Week completed exceeded, you can only do 5 completeds per week':
-        error =
-          'Checkin excedido, vocês so pode fazer 5 completeds por semana!';
-        break;
-
-      default:
-        error = 'Contate o suporte!';
-    }
-    Alert.alert('Erro no completed', `${error}`);
+    Alert.alert('Erro no completed Remove');
     yield put(completedFailure());
   }
 }

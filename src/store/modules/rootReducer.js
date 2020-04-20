@@ -5,8 +5,8 @@ import user from './user/reducer';
 import checkin from './checkin/reducer';
 import challenges from './challenges/reducer';
 import completed from './completed/reducer';
-import exercises from './exercises/reducer';
 import series from './series/reducer';
+import runnings from './runnings/reducer';
 
 const appReducer = combineReducers({
   auth,
@@ -14,14 +14,14 @@ const appReducer = combineReducers({
   checkin,
   challenges,
   completed,
-  exercises,
   series,
+  runnings,
 });
 
 const rootReducer = (state, action) => {
   if (action.type === '@auth/SIGN_OUT') {
     state.series = [];
-    state.exercises = [];
+    state.runnings = [];
   }
   return appReducer(state, action);
 };

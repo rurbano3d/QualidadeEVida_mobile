@@ -1,7 +1,9 @@
 import styled from 'styled-components/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export const Container = styled.SafeAreaView``;
+export const Container = styled.SafeAreaView`
+  flex: 1;
+`;
 
 export const List = styled.FlatList`
   background-color: #fff;
@@ -19,11 +21,12 @@ export const Item = styled.View`
 export const ItemButton = styled(TouchableOpacity)`
   background-color: #42cb59;
   border-radius: 4px;
-  padding: 5px 10px;
+  padding: 10px 15px;
 `;
 
 export const TextButton = styled.Text`
   color: #fff;
+  font-size: 16px;
 `;
 
 export const Top = styled.View`

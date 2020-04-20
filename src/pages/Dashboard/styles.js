@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
-  margin: 20px;
+  flex: 1;
+  padding: 20px;
 `;
 export const Alerts = styled.View`
   align-items: center;
@@ -30,12 +31,13 @@ export const PointText = styled.Text`
 `;
 
 export const Checkin = styled.FlatList`
+  flex-grow: 0;
   background-color: #fff;
   border: 1px solid #dddddd;
   border-radius: 4px;
   margin-top: 20px;
-  padding: 10px;
-  height: 50%;
+  padding: 0 10px;
+  margin-bottom: 210px;
 `;
 
 export const CheckinView = styled.View`

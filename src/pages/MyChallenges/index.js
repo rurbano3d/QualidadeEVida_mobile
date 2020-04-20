@@ -10,6 +10,7 @@ import { challengeRemove } from '~/store/modules/challenges/actions';
 import Seletor from '~/components/Seletor';
 import SeparatorList from '~/components/SeparatorList';
 import ListSequence from '~/Animation/ListSequence';
+import Warning from '~/components/WarningWithoutInfo';
 
 import {
   Container,
@@ -25,8 +26,8 @@ import {
 export default function MyChallenges() {
   const { id } = useSelector(state => state.auth.student);
   const dispatch = useDispatch();
-  const [challenges, setChallenges] = useState({});
-  const [refresh, setRefresh] = useState(true);
+  const [challenges, setChallenges] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const [page, setPage] = useState(null);
   const isFocused = useIsFocused();
 
@@ -72,13 +73,17 @@ export default function MyChallenges() {
   return (
     <Container>
       {isFocused && (
-        <ListSequence time={100}>
+        <ListSequence time={100} onRefresh={() => getChallenges()}>
           <List
             onRefresh={getChallenges}
             refreshing={refresh}
+            showsVerticalScrollIndicator={false}
             data={challenges}
             onEndReachedThreshold={0.01}
             onEndReached={loadMore}
+            ListEmptyComponent={
+              <Warning message="Você ainda não se inscreveu em nenhum Desafio" />
+            }
             ItemSeparatorComponent={SeparatorList}
             keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
@@ -88,11 +93,11 @@ export default function MyChallenges() {
                     link="MyCategory"
                     params={{ id: item.id, title: item.title }}
                   >
-                    <Text>{item.title}</Text>
+                    <Text style={{ fontSize: 18 }}>{item.title}</Text>
                   </Seletor>
                   <ItemButton>
                     <TextButton onPress={() => handleSubscription(item.id)}>
-                      Desinscrever-se
+                      Remover
                     </TextButton>
                   </ItemButton>
                 </Top>

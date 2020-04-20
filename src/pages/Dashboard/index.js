@@ -136,14 +136,16 @@ export default function Dashboard() {
       <GrowUp isFocused={isFocused}>
         <Button onPress={handleNewCheckin}>Novo check-in</Button>
       </GrowUp>
-      <SlideBottom isFocused={isFocused}>
+      <SlideBottom>
         <Checkin
           onRefresh={getCheckins}
           refreshing={refresh}
           data={checkins}
           onEndReachedThreshold={0.01}
           onEndReached={loadMore}
+          showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={SeparatorList}
+          initialNumToRender={10}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <CheckinView>

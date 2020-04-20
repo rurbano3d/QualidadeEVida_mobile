@@ -3,14 +3,14 @@ import { TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { isToday, parseISO } from 'date-fns';
+import { isToday, parseISO, parseJSON } from 'date-fns';
 
-// import api from '~/services/api';
+import api from '~/services/api';
 
 import {
-  exercisesRequest,
-  exercisesRemove,
-} from '~/store/modules/exercises/actions';
+  completedRequest,
+  completedRemove,
+} from '~/store/modules/completed/actions';
 import { seriesRequest, seriesRemove } from '~/store/modules/series/actions';
 import GrowUp from '~/Animation/GrowUp';
 
@@ -19,32 +19,21 @@ import { Sequency, Repetition } from './styles';
 export default function ButtonSeries({ item, category, onCompleted }) {
   const [exerciseCompleted, setExerciseCompleted] = useState(false);
   const [checkButtons, setCheckButtons] = useState([]);
+  const [completedId, setCompletedId] = useState('');
   const dispatch = useDispatch();
-  // const student = useSelector(state => state.auth.student);
-  const exercisesCache = useSelector(state => state.exercises);
+  const student = useSelector(state => state.auth.student);
+  const registration = useSelector(state => state.auth.registration);
+
   const seriesCache = useSelector(state => state.series);
 
   let repetitions = [];
 
   useEffect(() => {
-    if (exercisesCache) {
-      const exercisesCacheFilter = exercisesCache.filter(
-        exercise =>
-          exercise.exercise === item.id &&
-          exercise.category === category &&
-          isToday(parseISO(exercise.date)),
-      );
-
-      if (exercisesCacheFilter[0]) {
-        setExerciseCompleted(true);
-        onCompleted(exerciseCompleted);
-      }
-    }
     const seriesCacheOnlyIsToday = seriesCache.filter(
       serie =>
         serie.category === category &&
         serie.exercise === item.id &&
-        isToday(parseISO(serie.date)),
+        isToday(parseJSON(serie.date)),
     );
     if (seriesCacheOnlyIsToday) {
       const positionArray = [];
@@ -56,7 +45,29 @@ export default function ButtonSeries({ item, category, onCompleted }) {
         onCompleted(exerciseCompleted);
       }
     }
+    async function getChallegesCompleted() {
+      const response = await api.get('completed', {
+        params: {
+          category,
+          exercise_id: item.id,
+        },
+      });
+      const challengesCompleted = response.data;
+
+      if (
+        challengesCompleted != '' &&
+        isToday(parseISO(challengesCompleted[0].createdAt))
+      ) {
+        setCompletedId(challengesCompleted[0].id);
+        setExerciseCompleted(true);
+        onCompleted(false);
+      } else {
+        onCompleted(true);
+      }
+    }
+    getChallegesCompleted();
   }, []);
+
   function createRepetitions(count) {
     repetitions = [];
     for (let i = 0; i < count; i += 1) {
@@ -75,19 +86,25 @@ export default function ButtonSeries({ item, category, onCompleted }) {
       if (checkButtons.length === repetitions.length - 1) {
         setExerciseCompleted(true);
         onCompleted(exerciseCompleted);
-        dispatch(exercisesRequest(item.id, category));
+        dispatch(
+          completedRequest(
+            student.id,
+            registration.id,
+            category,
+            item.id,
+            null,
+          ),
+        );
       }
     }
   }
   function handleCheckOut(checkPosition) {
     if (exerciseCompleted) {
-      dispatch(exercisesRemove(item.id, category));
-      dispatch(seriesRemove(checkPosition, item.id, category));
+      dispatch(completedRemove(completedId));
       setExerciseCompleted(false);
       onCompleted(exerciseCompleted);
-    } else {
-      dispatch(seriesRemove(checkPosition, item.id, category));
     }
+    dispatch(seriesRemove(checkPosition, item.id, category));
     setCheckButtons(checkButtons.filter(check => check !== checkPosition));
   }
   function listCheck(checkPosition) {

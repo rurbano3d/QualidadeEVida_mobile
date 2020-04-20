@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import api from '~/services/api';
 import { formatDateParse } from '~/utils';
@@ -9,6 +10,7 @@ import { formatDateParse } from '~/utils';
 import { challengeRequest } from '~/store/modules/challenges/actions';
 import Seletor from '~/components/Seletor';
 import SeparatorList from '~/components/SeparatorList';
+import Warning from '~/components/WarningWithoutInfo';
 
 import ListSequence from '~/Animation/ListSequence';
 
@@ -26,8 +28,8 @@ import {
 export default function Challenges() {
   const { id } = useSelector(state => state.auth.student);
   const dispatch = useDispatch();
-  const [challenges, setChallenges] = useState({});
-  const [refresh, setRefresh] = useState(true);
+  const [challenges, setChallenges] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const [page, setPage] = useState(null);
   const isFocused = useIsFocused();
 
@@ -49,6 +51,7 @@ export default function Challenges() {
 
     setRefresh(false);
     setPage(page);
+
     setChallenges(
       page >= 2 ? [...challenges, ...challengesFilter] : challengesFilter,
     );
@@ -73,14 +76,15 @@ export default function Challenges() {
   return (
     <Container>
       {isFocused && (
-        <ListSequence time={100}>
+        <ListSequence time={100} onRefresh={() => getChallenges()}>
           <List
             onRefresh={getChallenges}
             refreshing={refresh}
             data={challenges}
             onEndReachedThreshold={0.01}
             onEndReached={loadMore}
-            ListEmptyComponent={<Text>Sem desafios no momento!</Text>}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<Warning message="Sem Desafios disponívies" />}
             ItemSeparatorComponent={SeparatorList}
             keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
@@ -90,7 +94,7 @@ export default function Challenges() {
                     link="Category"
                     params={{ id: item.id, title: item.title }}
                   >
-                    <Text>{item.title}</Text>
+                    <Text style={{ fontSize: 18 }}>{item.title}</Text>
                   </Seletor>
                   <ItemButton>
                     <TextButton onPress={() => handleSubscription(item.id)}>
