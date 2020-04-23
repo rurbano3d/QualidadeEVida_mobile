@@ -33,11 +33,11 @@ export default function DashboarRouter() {
               <MaterialCommunityIcons name="medal" size={30} color={color} />
             );
           }
-          if (route.name === 'Ranking') {
-            return (
-              <MaterialCommunityIcons name="trophy" size={30} color={color} />
-            );
-          }
+          // if (route.name === 'Ranking') {
+          //   return (
+          //     <MaterialCommunityIcons name="trophy" size={30} color={color} />
+          //   );
+          // }
         },
       })}
       tabBarOptions={{
@@ -69,7 +69,7 @@ export default function DashboarRouter() {
         component={Points}
         options={{ title: 'Pontuação' }}
       />
-      <Tab.Screen name="Ranking" component={Ranking} />
+      {/* <Tab.Screen name="Ranking" component={Ranking} /> */}
     </Tab.Navigator>
   );
 }

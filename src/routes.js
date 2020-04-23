@@ -69,7 +69,7 @@ export default function Routes({ signed }) {
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="MyCategory" component={MyCategory} />
           <Stack.Screen name="PointDetail" component={PointDetail} />
-          <Stack.Screen name="RankingDetail" component={RankingDetail} />
+          {/* <Stack.Screen name="RankingDetail" component={RankingDetail} /> */}
         </>
       )}
     </Stack.Navigator>

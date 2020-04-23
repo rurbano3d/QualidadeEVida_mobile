@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+
+import api from '~/services/api';
 
 import Seletor from '~/components/Seletor';
 import Separator from '~/components/Separator';
 import SlideTop from '~/Animation/SlideTop';
 import SlideBottom from '~/Animation/SlideBottom';
+import Warning from '~/components/WarningWithoutInfo';
+import SeparatorList from '~/components/SeparatorList';
 
 import {
   Container,
@@ -18,7 +23,31 @@ import {
 } from './styles';
 
 export default function Points() {
+  const [points, setPoints] = useState([]);
   const isFocused = useIsFocused();
+  const [refresh, setRefresh] = useState(false);
+  const [page, setPage] = useState(null);
+  const { id } = useSelector(state => state.auth.student);
+
+  async function getPoints() {
+    const response = await api.get(`points/${id}`);
+    setPoints(response.data);
+    setRefresh(false);
+    setPage(page);
+  }
+
+  useEffect(() => {
+    if (isFocused) {
+      getPoints();
+    }
+  }, [refresh, isFocused]);
+  function loadMore() {
+    if (points.length > 10) {
+      const next = page + 1;
+      getPoints(next);
+    }
+  }
+
   return (
     isFocused && (
       <Container>
@@ -27,32 +56,41 @@ export default function Points() {
             <DescView>
               <MaterialCommunityIcons name="medal" size={20} color="#444444" />
               <Text>Pontuação total</Text>
-              <PointText>200 pontos</PointText>
+              <PointText>{points[0] && points[0].totalScore} pontos</PointText>
             </DescView>
           </Information>
         </SlideTop>
         <Separator />
         <SlideBottom>
-          <List>
-            <Item>
-              <Seletor link="PointDetail" params={{ id: 30 }}>
-                <Text>Sequência de aeróbicos</Text>
-              </Seletor>
-              <PointText>50 pontos</PointText>
-            </Item>
-            <Item>
-              <Seletor link="PointDetail" params={{ id: 30 }}>
-                <Text>Sequência de aeróbicos</Text>
-              </Seletor>
-              <PointText>50 pontos</PointText>
-            </Item>
-            <Item>
-              <Seletor link="PointDetail" params={{ id: 30 }}>
-                <Text>Sequência de aeróbicos</Text>
-              </Seletor>
-              <PointText>50 pontos</PointText>
-            </Item>
-          </List>
+          <List
+            onRefresh={getPoints}
+            refreshing={refresh}
+            showsVerticalScrollIndicator={false}
+            data={points[0] && points[0].challenges}
+            onEndReachedThreshold={0.01}
+            onEndReached={loadMore}
+            ListEmptyComponent={
+              <Warning message="Você ainda não se inscreveu em nenhum Desafio" />
+            }
+            ItemSeparatorComponent={SeparatorList}
+            keyExtractor={item => String(item.category_id)}
+            renderItem={({ item }) => (
+              <Item>
+                <Seletor
+                  link="PointDetail"
+                  params={{
+                    title: item.title,
+                    points: item.score,
+                    count: item.count,
+                    lastDate: item.lastDate,
+                  }}
+                >
+                  <Text>{item.title}</Text>
+                </Seletor>
+                <PointText>{item.score} pontos</PointText>
+              </Item>
+            )}
+          />
         </SlideBottom>
       </Container>
     )

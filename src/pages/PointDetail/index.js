@@ -2,6 +2,8 @@ import React from 'react';
 import { Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
+import { formatDateParse } from '~/utils/index';
+
 import SlideRight from '~/Animation/SlideRight';
 
 import {
@@ -16,27 +18,27 @@ import {
 
 export default function PointDetail() {
   const route = useRoute();
-  const { id } = route.params;
+  const { title, points, count, lastDate } = route.params;
   return (
     <Container>
       <SlideRight>
         <Content>
           <Title>
-            <TitleText>Sequência de aeróbicos</TitleText>
+            <TitleText>{title}</TitleText>
           </Title>
 
           <List>
             <Item>
               <Text>Última data</Text>
-              <ValueText>20/02/2020</ValueText>
+              <ValueText>{formatDateParse(lastDate)}</ValueText>
             </Item>
             <Item>
               <Text>Repetições</Text>
-              <ValueText>5</ValueText>
+              <ValueText>{count}</ValueText>
             </Item>
             <Item>
               <Text>Pontuação</Text>
-              <ValueText>100</ValueText>
+              <ValueText>{points}</ValueText>
             </Item>
           </List>
         </Content>

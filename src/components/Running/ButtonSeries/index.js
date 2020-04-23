@@ -40,7 +40,7 @@ export default function ButtonSeries({ item: data, category, onCompleted }) {
       }
     }
     async function getChallegesCompleted() {
-      const response = await api.get('completed', {
+      const response = await api.get(`completed/${student.id}`, {
         params: {
           category,
           running_id: data.id,
