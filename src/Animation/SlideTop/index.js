@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { Animated } from 'react-native';
 
-export default function SlideTop({ children }) {
+export default function SlideTop({ children, execute }) {
   const isFocused = useIsFocused();
   const init = new Animated.Value(-100);
 
@@ -13,7 +13,7 @@ export default function SlideTop({ children }) {
         speed: 1,
         bounciness: 2,
         useNativeDriver: true,
-      }).start();
+      }).start(execute);
     }
   }, [isFocused]);
 

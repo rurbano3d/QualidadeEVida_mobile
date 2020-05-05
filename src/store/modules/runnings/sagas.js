@@ -6,7 +6,7 @@ import { runningSuccess, runningFailure } from './actions';
 export function* addRunning({ payload }) {
   try {
     const { running } = payload;
-    console.tron.log(running);
+
     yield put(runningSuccess(running));
   } catch (err) {
     Alert.alert('Erro no running');

@@ -17,7 +17,7 @@ import {
 export default function PointDetail() {
   const route = useRoute();
   const { id } = route.params;
-  console.tron.log(id);
+
   return (
     <Container>
       <SlideRight>

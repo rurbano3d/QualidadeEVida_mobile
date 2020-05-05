@@ -96,10 +96,8 @@ export default function Challenges() {
                   >
                     <Text style={{ fontSize: 18 }}>{item.title}</Text>
                   </Seletor>
-                  <ItemButton>
-                    <TextButton onPress={() => handleSubscription(item.id)}>
-                      Inscrever-se
-                    </TextButton>
+                  <ItemButton onPress={() => handleSubscription(item.id)}>
+                    <TextButton>Adicionar</TextButton>
                   </ItemButton>
                 </Top>
                 <Bottom>

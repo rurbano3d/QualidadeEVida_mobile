@@ -24,7 +24,12 @@ const Stack = createStackNavigator();
 
 export default function Routes({ signed }) {
   function Logo() {
-    return <Image source={logo} style={{ width: 150, resizeMode: 'cover' }} />;
+    return (
+      <Image
+        source={logo}
+        style={{ width: 140, resizeMode: 'cover', marginBottom: 10 }}
+      />
+    );
   }
 
   return (
@@ -44,6 +49,8 @@ export default function Routes({ signed }) {
           borderBottomWidth: 1,
           borderBottomColor: '#dadada',
         },
+        headerBackTitleVisible: false,
+        headerTintColor: '#53b1da',
       }}
       headerMode="float"
 

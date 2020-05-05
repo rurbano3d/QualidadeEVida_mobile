@@ -13,11 +13,13 @@ import { Container, Logo, Form } from './styles';
 
 export default function SignIn() {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.auth.loading);
+  const loading = useSelector(state => state.auth.loading);
   const [email, setEmail] = useState('');
 
   function handleSubmit() {
-    dispatch(signInRequest(email));
+    if (email) {
+      dispatch(signInRequest(email));
+    }
   }
   return (
     <Container>

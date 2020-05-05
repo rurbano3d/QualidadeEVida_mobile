@@ -1,6 +1,5 @@
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import PropTypes from 'prop-types';
 
 import { SeriesView, SeriesText } from './styles';
 
@@ -21,6 +20,3 @@ export default function Amount({ item }) {
     </SeriesView>
   );
 }
-Amount.propTypes = {
-  item: PropTypes.arrayOf(PropTypes.object).isRequired,
-};

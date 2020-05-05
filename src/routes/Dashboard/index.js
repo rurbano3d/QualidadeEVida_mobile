@@ -44,13 +44,13 @@ export default function DashboarRouter() {
         activeTintColor: '#53B1DA',
         inactiveTintColor: '#AFAFAF',
         style: {
-          height: 70,
-          paddingBottom: 10,
+          height: 95,
+          paddingBottom: 20,
           paddingTop: 20,
         },
         labelStyle: {
           fontSize: 14,
-          paddingTop: 10,
+          paddingTop: 5,
         },
       }}
     >

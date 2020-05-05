@@ -95,10 +95,8 @@ export default function MyChallenges() {
                   >
                     <Text style={{ fontSize: 18 }}>{item.title}</Text>
                   </Seletor>
-                  <ItemButton>
-                    <TextButton onPress={() => handleSubscription(item.id)}>
-                      Remover
-                    </TextButton>
+                  <ItemButton onPress={() => handleSubscription(item.id)}>
+                    <TextButton>Remover</TextButton>
                   </ItemButton>
                 </Top>
                 <Bottom>

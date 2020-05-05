@@ -1,12 +1,13 @@
 import Reactotron from 'reactotron-react-native';
 import { reactotronRedux } from 'reactotron-redux';
 import reactotronSaga from 'reactotron-redux-saga';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Platform } from 'react-native';
 
 if (__DEV__) {
   const tron = Reactotron.setAsyncStorageHandler(AsyncStorage)
     .configure()
-    .useReactNative('exp://192.168.0.104:19000')
+    .useReactNative(Platform.OS === 'ios' ? '' : 'exp://192.168.0.107:19000')
+    .useReactNative()
     .use(reactotronRedux())
     .use(reactotronSaga())
     .connect();

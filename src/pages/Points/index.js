@@ -37,10 +37,8 @@ export default function Points() {
   }
 
   useEffect(() => {
-    if (isFocused) {
-      getPoints();
-    }
-  }, [refresh, isFocused]);
+    getPoints();
+  }, [refresh]);
   function loadMore() {
     if (points.length > 10) {
       const next = page + 1;
@@ -51,7 +49,7 @@ export default function Points() {
   return (
     isFocused && (
       <Container>
-        <SlideTop>
+        <SlideTop execute={() => getPoints()}>
           <Information>
             <DescView>
               <MaterialCommunityIcons name="medal" size={20} color="#444444" />

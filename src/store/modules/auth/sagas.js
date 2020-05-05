@@ -23,7 +23,21 @@ export function* signIn({ payload }) {
 
     yield put(signInSuccess(student, registration, token));
   } catch (err) {
-    Alert.alert('Login error', `${err.response.data.error}`);
+    let error = '';
+    switch (err.response.data.error) {
+      case 'Student no found':
+        error = 'Seu e-mail não foi encontrado!';
+        break;
+      case 'Student has no Registration':
+        error = 'Sua matrícula ainda não foi cadastrada!';
+        break;
+      case 'Student register is not active':
+        error = 'Sua matrícula não esta ativa!';
+        break;
+      default:
+        error = 'Contate o suporte!';
+    }
+    Alert.alert('Ops!', `${error}`);
     yield put(signFailure());
   }
 }

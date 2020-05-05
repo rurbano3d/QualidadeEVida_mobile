@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import PropTypes from 'prop-types';
 
 import Amount from '~/components/Exercise/Amount';
 import ButtonSeries from '~/components/Exercise/ButtonSeries';
@@ -56,6 +55,3 @@ export default function ExercisesRender({
     </Item>
   );
 }
-ExercisesRender.propTypes = {
-  item: PropTypes.array.isRequired,
-};

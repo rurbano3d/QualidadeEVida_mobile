@@ -10,6 +10,7 @@ import { formatDate, formatDatePure } from '~/utils';
 import Button from '~/components/Button';
 import Separator from '~/components/Separator';
 import SeparatorList from '~/components/SeparatorList';
+import Loading from '~/components/Loading';
 
 import Slideleft from '~/Animation/SlideLeft';
 import SlideTop from '~/Animation/SlideTop';
@@ -41,6 +42,8 @@ export default function Dashboard() {
   const [page, setPage] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [monthly, setMonthly] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [points, setPoints] = useState([]);
 
   async function getCheckins(page = 1) {
     const response = await api.get(`students/${student.id}/checkins`, {
@@ -48,7 +51,12 @@ export default function Dashboard() {
     });
     setRefresh(false);
     setPage(page);
+
     setCheckins(page >= 2 ? [...checkins, ...response.data] : response.data);
+  }
+  async function getPoints() {
+    const response = await api.get(`points/${student.id}`);
+    setPoints(response.data);
   }
 
   async function getMonthlyPayments() {
@@ -71,8 +79,10 @@ export default function Dashboard() {
     if (result != '') {
       setMonthly(result);
     }
+    setLoading(false);
   }
   useEffect(() => {
+    getPoints();
     getCheckins();
     getMonthlyPayments();
   }, [refresh]);
@@ -89,72 +99,84 @@ export default function Dashboard() {
 
   return (
     <Container>
-      <SlideTop isFocused={isFocused}>
-        <Alerts>
-          {monthly ? (
-            monthly[0].overdue ? (
-              <WarningView>
-                <Warning>Mensalidade atrasada:</Warning>
-                <Warning>
-                  {monthly && formatDatePure(monthly[0].newPaymentDay)}
-                </Warning>
-              </WarningView>
-            ) : (
-              <>
-                <Text>Próxima mensalidade:</Text>
-                <Text>
-                  {monthly && formatDatePure(monthly[0].newPaymentDay)}
-                </Text>
-              </>
-            )
-          ) : (
-            <Text>Mensalidade Quitada</Text>
-          )}
-        </Alerts>
-      </SlideTop>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <SlideTop isFocused={isFocused}>
+            <Alerts>
+              {monthly ? (
+                monthly[0].overdue ? (
+                  <WarningView>
+                    <Warning>Mensalidade atrasada:</Warning>
+                    <Warning>
+                      {monthly && formatDatePure(monthly[0].newPaymentDay)}
+                    </Warning>
+                  </WarningView>
+                ) : (
+                  <>
+                    <Text>Próxima mensalidade:</Text>
+                    <Text>
+                      {monthly && formatDatePure(monthly[0].newPaymentDay)}
+                    </Text>
+                  </>
+                )
+              ) : (
+                <Text>Mensalidade Quitada</Text>
+              )}
+            </Alerts>
+          </SlideTop>
 
-      <Slideleft isFocused={isFocused}>
-        <Information>
-          <DescView>
-            <MaterialCommunityIcons name="dumbbell" size={20} color="#444444" />
-            <Text>Pontuação</Text>
-            <PointText>200 pontos</PointText>
-          </DescView>
-          <DescView>
-            <MaterialCommunityIcons
-              name="folder-open"
-              size={20}
-              color="#444444"
+          <Slideleft isFocused={isFocused}>
+            <Information>
+              <DescView>
+                <MaterialCommunityIcons
+                  name="dumbbell"
+                  size={20}
+                  color="#444444"
+                />
+                <Text>Pontuação</Text>
+                <PointText>
+                  {points[0] && points[0].totalScore} pontos
+                </PointText>
+              </DescView>
+              <DescView>
+                <MaterialCommunityIcons
+                  name="folder-open"
+                  size={20}
+                  color="#444444"
+                />
+                <Text>Plano</Text>
+                <PointText>{registration && registration.plan.title}</PointText>
+              </DescView>
+            </Information>
+          </Slideleft>
+
+          <Separator />
+          <GrowUp isFocused={isFocused}>
+            <Button onPress={handleNewCheckin}>Novo check-in</Button>
+          </GrowUp>
+          <SlideBottom>
+            <Checkin
+              onRefresh={getCheckins}
+              refreshing={refresh}
+              data={checkins}
+              onEndReachedThreshold={0.01}
+              onEndReached={loadMore}
+              showsVerticalScrollIndicator={false}
+              ItemSeparatorComponent={SeparatorList}
+              initialNumToRender={10}
+              keyExtractor={item => String(item.id)}
+              renderItem={({ item }) => (
+                <CheckinView>
+                  <Text>Check-in #{item.id}</Text>
+                  <DataText>{formatDate(item.createdAt)}</DataText>
+                </CheckinView>
+              )}
             />
-            <Text>Plano</Text>
-            <PointText>{registration && registration.plan.title}</PointText>
-          </DescView>
-        </Information>
-      </Slideleft>
-
-      <Separator />
-      <GrowUp isFocused={isFocused}>
-        <Button onPress={handleNewCheckin}>Novo check-in</Button>
-      </GrowUp>
-      <SlideBottom>
-        <Checkin
-          onRefresh={getCheckins}
-          refreshing={refresh}
-          data={checkins}
-          onEndReachedThreshold={0.01}
-          onEndReached={loadMore}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={SeparatorList}
-          initialNumToRender={10}
-          keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => (
-            <CheckinView>
-              <Text>Check-in #{item.id}</Text>
-              <DataText>{formatDate(item.createdAt)}</DataText>
-            </CheckinView>
-          )}
-        />
-      </SlideBottom>
+          </SlideBottom>
+        </>
+      )}
     </Container>
   );
 }

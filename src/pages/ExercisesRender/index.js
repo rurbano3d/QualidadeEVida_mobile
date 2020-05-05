@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -24,6 +25,7 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
 
   const [refresh, setRefresh] = useState(false);
   const [items, setItems] = useState([]);
+  const [video, setVideo] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -37,13 +39,21 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
       setItems([...response.data, ...runningsResponse.data]);
       setLoading(false);
     }
+    async function getVideo() {
+      const response = await api.get('videos', {
+        params: { category_id: id },
+      });
+      setVideo(response.data);
+      setLoading(false);
+    }
     getExercises();
+    getVideo();
   }, []);
-
   function handleSubscription() {
     dispatch(challengeRequest(student.id, id));
     setRefresh(true);
   }
+
   return (
     <Container>
       {loading ? (
@@ -54,6 +64,7 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
             <Title>
               <TitleText>{title}</TitleText>
             </Title>
+            <Text>{video[0] && video[0].url}</Text>
             {items.length > 0 && (
               <ExercisesFlatlist
                 data={items}
