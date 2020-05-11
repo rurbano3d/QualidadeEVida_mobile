@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import api from '~/services/api';
+import vimeoApi from '~/services/vimeoApi';
 
 import { challengeRequest } from '~/store/modules/challenges/actions';
 
@@ -13,6 +13,7 @@ import GrowUp from '~/Animation/GrowUp';
 import Loading from '~/components/Loading';
 
 import ExercisesFlatlist from '~/pages/ExercisesFlatList';
+import VideoVimeo from '~/components/Video/VideoVimeo';
 
 import { Container, ButtonCustom, Title, TitleText } from './styles';
 
@@ -25,7 +26,7 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
 
   const [refresh, setRefresh] = useState(false);
   const [items, setItems] = useState([]);
-  const [video, setVideo] = useState({});
+  const [video, setVideo] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -37,15 +38,15 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
         params: { category_id: id },
       });
       setItems([...response.data, ...runningsResponse.data]);
-      setLoading(false);
     }
     async function getVideo() {
       const response = await api.get('videos', {
         params: { category_id: id },
       });
-      setVideo(response.data);
-      setLoading(false);
+      if (response.data.length > 0) setVideo(response.data[0].url);
     }
+
+    setLoading(false);
     getExercises();
     getVideo();
   }, []);
@@ -53,7 +54,6 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
     dispatch(challengeRequest(student.id, id));
     setRefresh(true);
   }
-
   return (
     <Container>
       {loading ? (
@@ -64,7 +64,8 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
             <Title>
               <TitleText>{title}</TitleText>
             </Title>
-            <Text>{video[0] && video[0].url}</Text>
+            {video.length > 0 && <VideoVimeo url={video} />}
+
             {items.length > 0 && (
               <ExercisesFlatlist
                 data={items}

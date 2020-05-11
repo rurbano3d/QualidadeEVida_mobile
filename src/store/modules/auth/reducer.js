@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   signed: false,
   loading: false,
   token: null,
+  vimeoAuth: null,
 };
 
 export default function auth(state = INITIAL_STATE, action) {
@@ -20,8 +21,10 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.student = action.payload.student;
         draft.registration = action.payload.registration;
         draft.token = action.payload.token;
+        draft.vimeoAuth = action.payload.vimeoAuth;
         draft.signed = true;
         draft.loading = false;
+
         break;
       }
 
@@ -32,6 +35,7 @@ export default function auth(state = INITIAL_STATE, action) {
 
       case '@auth/SIGN_OUT': {
         draft.token = null;
+        draft.vimeoAuth = null;
         draft.signed = false;
         break;
       }

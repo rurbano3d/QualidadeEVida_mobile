@@ -11,7 +11,7 @@ export function* signIn({ payload }) {
     const response = yield call(api.post, 'sessionStudents', {
       email,
     });
-    const { student, token } = response.data;
+    const { student, token, vimeoAuth } = response.data;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
@@ -21,7 +21,7 @@ export function* signIn({ payload }) {
 
     const registration = responseRegistration.data;
 
-    yield put(signInSuccess(student, registration, token));
+    yield put(signInSuccess(student, registration, token, vimeoAuth));
   } catch (err) {
     let error = '';
     switch (err.response.data.error) {
