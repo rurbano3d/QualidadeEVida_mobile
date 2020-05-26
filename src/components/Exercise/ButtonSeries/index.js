@@ -12,7 +12,6 @@ import {
   completedRemove,
 } from '~/store/modules/completed/actions';
 import { seriesRequest, seriesRemove } from '~/store/modules/series/actions';
-import GrowUp from '~/Animation/GrowUp';
 
 import { Sequency, Repetition } from './styles';
 
@@ -55,8 +54,8 @@ export default function ButtonSeries({ item, category, onCompleted }) {
       const challengesCompleted = response.data;
 
       if (
-        challengesCompleted != '' &&
-        isToday(parseISO(challengesCompleted[0].createdAt))
+        isToday(parseISO(challengesCompleted[0]?.createdAt)) ||
+        challengesCompleted[0]?.category.end_date
       ) {
         setCompletedId(challengesCompleted[0].id);
         setExerciseCompleted(true);
@@ -67,7 +66,6 @@ export default function ButtonSeries({ item, category, onCompleted }) {
     }
     getChallegesCompleted();
   }, []);
-
   function createRepetitions(count) {
     repetitions = [];
     for (let i = 0; i < count; i += 1) {
@@ -99,11 +97,11 @@ export default function ButtonSeries({ item, category, onCompleted }) {
     }
   }
   function handleCheckOut(checkPosition) {
-    if (exerciseCompleted) {
-      dispatch(completedRemove(completedId));
-      setExerciseCompleted(false);
-      onCompleted(exerciseCompleted);
-    }
+    // if (exerciseCompleted) {
+    //   // dispatch(completedRemove(completedId));
+    //   // setExerciseCompleted(false);
+    //   onCompleted(exerciseCompleted);
+    // }
     dispatch(seriesRemove(checkPosition, item.id, category));
     setCheckButtons(checkButtons.filter(check => check !== checkPosition));
   }
@@ -120,11 +118,9 @@ export default function ButtonSeries({ item, category, onCompleted }) {
     <Sequency>
       {createRepetitions(item.repetitions).map(rep => (
         <Repetition key={rep}>
-          {listCheck(rep) ? (
+          {listCheck(rep) && !exerciseCompleted ? (
             <TouchableOpacity onPress={() => handleCheckOut(rep)}>
-              <GrowUp>
-                <AntDesign name="checkcircleo" size={25} color="#42CB59" />
-              </GrowUp>
+              <AntDesign name="checkcircleo" size={25} color="#42CB59" />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={() => handleCheckIn(rep)}>

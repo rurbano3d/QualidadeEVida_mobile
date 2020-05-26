@@ -14,3 +14,12 @@ export const Logo = styled.View`
   margin-top: -80px;
 `;
 export const Form = styled.View``;
+export const SignLink = styled.TouchableOpacity`
+  margin-top: 20px;
+`;
+export const SignLinkText = styled.Text`
+  color: #999;
+  font-weight: bold;
+  font-size: 16px;
+  align-self: flex-end;
+`;

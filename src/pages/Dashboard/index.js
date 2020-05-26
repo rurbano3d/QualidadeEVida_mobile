@@ -1,133 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { Text } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { setDate, parseISO } from 'date-fns';
 
-import { formatDate, formatDatePure } from '~/utils';
-
-import Button from '~/components/Button';
 import Separator from '~/components/Separator';
-import SeparatorList from '~/components/SeparatorList';
+
 import Loading from '~/components/Loading';
+
+import MonthlyInfo from '~/components/Dashboard/MonthlyInfo';
+import Pontuation from '~/components/Dashboard/Pontuation';
+import CheckList from '~/components/Dashboard/CheckList';
+import Welcome from '~/components/Dashboard/Welcome';
 
 import Slideleft from '~/Animation/SlideLeft';
 import SlideTop from '~/Animation/SlideTop';
 import SlideBottom from '~/Animation/SlideBottom';
-import GrowUp from '~/Animation/GrowUp';
-import { checkinRequest } from '../../store/modules/checkin/actions';
-
-import api from '~/services/api';
 
 import {
   Container,
-  Alerts,
+  Header,
+  Info,
+  Content,
   Information,
-  Checkin,
   PointText,
-  CheckinView,
-  DataText,
   DescView,
-  Warning,
-  WarningView,
 } from './styles';
 
 export default function Dashboard() {
   const isFocused = useIsFocused();
-  const dispatch = useDispatch();
-  const student = useSelector(state => state.auth.student);
   const registration = useSelector(state => state.auth.registration);
-  const [checkins, setCheckins] = useState(null);
-  const [page, setPage] = useState(null);
-  const [refresh, setRefresh] = useState(false);
-  const [monthly, setMonthly] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [points, setPoints] = useState([]);
-
-  async function getCheckins(page = 1) {
-    const response = await api.get(`students/${student.id}/checkins`, {
-      params: { page },
-    });
-    setRefresh(false);
-    setPage(page);
-
-    setCheckins(page >= 2 ? [...checkins, ...response.data] : response.data);
-  }
-  async function getPoints() {
-    const response = await api.get(`points/${student.id}`);
-    setPoints(response.data);
-  }
-
-  async function getMonthlyPayments() {
-    const response = await api.get('monthlyPayments', {
-      params: { q: registration.id },
-    });
-    const filter = response.data.filter(item => item.payday === null);
-    const result = filter.map(item => {
-      if (item.payday === null) {
-        const newPaymentDay = setDate(
-          parseISO(item.payment_day),
-          item.overdue_day,
-        );
-        return {
-          ...item,
-          newPaymentDay,
-        };
-      }
-    });
-    if (result != '') {
-      setMonthly(result);
-    }
-    setLoading(false);
-  }
-  useEffect(() => {
-    getPoints();
-    getCheckins();
-    getMonthlyPayments();
-  }, [refresh]);
-
-  function loadMore() {
-    const next = page + 1;
-    getCheckins(next);
-  }
-
-  async function handleNewCheckin() {
-    dispatch(checkinRequest(student.id));
-    setRefresh(true);
-  }
 
   return (
-    <Container>
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <SlideTop isFocused={isFocused}>
-            <Alerts>
-              {monthly ? (
-                monthly[0].overdue ? (
-                  <WarningView>
-                    <Warning>Mensalidade atrasada:</Warning>
-                    <Warning>
-                      {monthly && formatDatePure(monthly[0].newPaymentDay)}
-                    </Warning>
-                  </WarningView>
-                ) : (
-                  <>
-                    <Text>Próxima mensalidade:</Text>
-                    <Text>
-                      {monthly && formatDatePure(monthly[0].newPaymentDay)}
-                    </Text>
-                  </>
-                )
-              ) : (
-                <Text>Mensalidade Quitada</Text>
-              )}
-            </Alerts>
+    isFocused && (
+      <Container>
+        <Header>
+          <SlideTop>
+            <MonthlyInfo />
           </SlideTop>
-
-          <Slideleft isFocused={isFocused}>
+        </Header>
+        <Info>
+          <Slideleft>
             <Information>
               <DescView>
                 <MaterialCommunityIcons
@@ -136,9 +49,7 @@ export default function Dashboard() {
                   color="#444444"
                 />
                 <Text>Pontuação</Text>
-                <PointText>
-                  {points[0] && points[0].totalScore} pontos
-                </PointText>
+                <Pontuation />
               </DescView>
               <DescView>
                 <MaterialCommunityIcons
@@ -147,36 +58,26 @@ export default function Dashboard() {
                   color="#444444"
                 />
                 <Text>Plano</Text>
-                <PointText>{registration && registration.plan.title}</PointText>
+                <PointText>
+                  {registration ? registration.plan.title : 'Sem plano'}
+                </PointText>
               </DescView>
             </Information>
           </Slideleft>
-
-          <Separator />
-          <GrowUp isFocused={isFocused}>
-            <Button onPress={handleNewCheckin}>Novo check-in</Button>
-          </GrowUp>
+        </Info>
+        <Separator />
+        <Content>
           <SlideBottom>
-            <Checkin
-              onRefresh={getCheckins}
-              refreshing={refresh}
-              data={checkins}
-              onEndReachedThreshold={0.01}
-              onEndReached={loadMore}
-              showsVerticalScrollIndicator={false}
-              ItemSeparatorComponent={SeparatorList}
-              initialNumToRender={10}
-              keyExtractor={item => String(item.id)}
-              renderItem={({ item }) => (
-                <CheckinView>
-                  <Text>Check-in #{item.id}</Text>
-                  <DataText>{formatDate(item.createdAt)}</DataText>
-                </CheckinView>
-              )}
-            />
+            {registration != '' ? (
+              <View>
+                <CheckList />
+              </View>
+            ) : (
+              <Welcome />
+            )}
           </SlideBottom>
-        </>
-      )}
-    </Container>
+        </Content>
+      </Container>
+    )
   );
 }

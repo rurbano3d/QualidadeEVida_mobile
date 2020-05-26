@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
-import { Animated } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { Animated, InteractionManager } from 'react-native';
 
 export default function GrowUp({ children }) {
-  const isFocused = useIsFocused();
   const init = new Animated.Value(0);
-  useEffect(() => {
-    if (isFocused) {
-      Animated.timing(init, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [isFocused]);
+
+  useFocusEffect(() => {
+    Animated.timing(init, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, [init]);
 
   return (
     <Animated.View

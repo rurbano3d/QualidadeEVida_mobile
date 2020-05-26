@@ -1,20 +1,17 @@
-import React, { useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
+import React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Animated } from 'react-native';
 
 export default function SlideLeft({ children }) {
-  const isFocused = useIsFocused();
   const init = new Animated.Value(-100);
-  useEffect(() => {
-    if (isFocused) {
-      Animated.spring(init, {
-        toValue: 0,
-        speed: 1,
-        bounciness: 2,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [isFocused]);
+  useFocusEffect(() => {
+    Animated.spring(init, {
+      toValue: 0,
+      speed: 1,
+      bounciness: 2,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   return (
     <Animated.View

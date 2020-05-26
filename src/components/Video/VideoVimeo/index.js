@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 
 import vimeoApi from '~/services/vimeoApi';
 import VideoPlayer from '~/components/Video/VideoPlayer';
-
-// import { Container } from './styles';
+import Loading from '~/components/Loading';
 
 const VideoVimeo = ({ url }) => {
   const { vimeoAuth } = useSelector(state => state.auth);
   const [uri, setUri] = useState('');
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function getVideoVimeo() {
       const response = await vimeoApi.get(`/users/114109058${url}`, {
@@ -19,10 +20,11 @@ const VideoVimeo = ({ url }) => {
       });
 
       setUri(response.data.files[0].link);
+      setLoading(false);
     }
     getVideoVimeo();
   }, []);
-  return <VideoPlayer uri={uri} />;
+  return loading ? <Loading /> : <VideoPlayer uri={uri} />;
 };
 
 export default VideoVimeo;

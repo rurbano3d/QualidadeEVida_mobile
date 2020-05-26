@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import api from '~/services/api';
-
+import Loading from '~/components/Loading';
 import Amount from '~/components/Exercise/Amount';
 import ButtonSeries from '~/components/Exercise/ButtonSeries';
 import VideoVimeo from '~/components/Video/VideoVimeo';
+import VideoBasic from '~/components/Video/VideoBasic';
 
 import {
   Item,
@@ -20,18 +21,28 @@ export default function ExercisesRender({
   item,
   category,
   renderButtonSeries,
+  hasVideo,
 }) {
-  const [video, setVideo] = useState('');
+  const [video, setVideo] = useState([]);
+  const [videoBasic, setVideoBasic] = useState([]);
   const [finalized, setFinalizaded] = useState(false);
-  useEffect(() => {
-    async function getVideo() {
-      const response = await api.get('videos', {
-        params: { exercise_id: item.id },
-      });
+  const [loading, setLoading] = useState(true);
 
-      if (response.data.length > 0) setVideo(response.data[0].url);
+  useEffect(() => {
+    async function getVideos() {
+      const [videos, videosBasic] = await Promise.all([
+        await api.get('videos', {
+          params: { exercise_id: item.id },
+        }),
+        await api.get('videos', {
+          params: { exercise_id: item.id, basic: true },
+        }),
+      ]);
+      if (videos.data.length) setVideo(videos.data[0].url);
+      if (videosBasic.data.length) setVideoBasic(videosBasic.data[0].url);
     }
-    getVideo();
+    getVideos();
+    setLoading(false);
   }, []);
   function handleCompleted(onCompleted) {
     if (!onCompleted) {
@@ -41,10 +52,13 @@ export default function ExercisesRender({
     }
   }
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
-      {video.length > 0 && <VideoVimeo url={video} />}
       <Item finalized={finalized}>
+        {!!video.length && hasVideo && <VideoVimeo url={video} />}
+        {!!videoBasic.length && hasVideo && <VideoBasic url={videoBasic} />}
         <ExerciseView>
           <ExerciseText>{item.title}</ExerciseText>
         </ExerciseView>

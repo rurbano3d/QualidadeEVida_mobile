@@ -19,3 +19,15 @@ export const Item = styled.View`
   padding: 15px;
   align-items: center;
 `;
+
+export const CustomText = styled.Text`
+  font-size: 18px;
+`;
+
+export const ItemExit = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 15px;
+  align-items: center;
+`;

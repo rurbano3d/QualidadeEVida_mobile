@@ -11,6 +11,8 @@ import ExitButton from '~/components/Exit';
 import UserButton from '~/components/User';
 
 import SignIn from '~/pages/SignIn';
+import SignUp from '~/pages/SignUp';
+import SignUpComplements from '~/components/SignUp/FormComplements';
 import DashboardRouter from '~/routes/Dashboard';
 
 import User from '~/pages/User';
@@ -57,17 +59,39 @@ export default function Routes({ signed }) {
       // animation="fade"
     >
       {signed === false ? (
-        <Stack.Screen
-          name="SignIn"
-          component={SignIn}
-          options={{
-            headerShown: false,
-            title: 'Sign in',
-            // When logging out, a pop animation feels intuitive
-            // You can remove this if you want the default 'push' animation
-            animationTypeForReplace: signed ? 'pop' : 'push',
-          }}
-        />
+        <>
+          <Stack.Screen
+            name="SignIn"
+            component={SignIn}
+            options={{
+              headerShown: false,
+              title: 'Sign in',
+              // When logging out, a pop animation feels intuitive
+              // You can remove this if you want the default 'push' animation
+              animationTypeForReplace: signed ? 'pop' : 'push',
+            }}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={SignUp}
+            options={{
+              headerShown: false,
+              title: 'Sign up',
+              // When logging out, a pop animation feels intuitive
+              // You can remove this if you want the default 'push' animation
+              // animationTypeForReplace: signed ? 'pop' : 'push',
+            }}
+          />
+          <Stack.Screen
+            name="SignUpComplements"
+            component={SignUpComplements}
+            options={{
+              headerShown: false,
+              title: 'Sign up Complements',
+              gestureEnabled: false,
+            }}
+          />
+        </>
       ) : (
         <>
           <Stack.Screen name="Dashboard" component={DashboardRouter} />

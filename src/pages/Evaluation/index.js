@@ -18,15 +18,21 @@ export default function Evaluation() {
     const response = await api.get('evaluations', {
       params: { student_id: student.id },
     });
-    setEvaluations(response.data);
+
+    const evaluationsFormatted = response.data.map(evaluation => ({
+      ...evaluation,
+      formattedDate: formatDateParse(evaluation.createdAt),
+    }));
+    setEvaluations(evaluationsFormatted);
   }
   useEffect(() => {
     getEvaluations();
   }, []);
-
   return (
     <Container>
-      {evaluations && <Warning message="Sem registro de avalição!" />}
+      {evaluations.length <= 0 && (
+        <Warning message="Sem registro de avalição!" />
+      )}
       <List
         data={evaluations}
         keyExtractor={item => String(item.id)}
@@ -50,7 +56,7 @@ export default function Evaluation() {
                 </Column>
                 <Column>
                   <Title>Data</Title>
-                  <Text>{formatDateParse(item.createdAt)}</Text>
+                  <Text>{item.formattedDate}</Text>
                 </Column>
               </Row>
             </Item>

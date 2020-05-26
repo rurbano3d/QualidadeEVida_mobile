@@ -1,14 +1,20 @@
-export function signInRequest(email) {
+export function signInRequest(email, password) {
   return {
     type: '@auth/SIGN_IN_REQUEST',
-    payload: { email },
+    payload: { email, password },
   };
 }
 
-export function signInSuccess(student, registration, token, vimeoAuth) {
+export function signInSuccess(
+  student,
+  registration,
+  monthly,
+  token,
+  vimeoAuth,
+) {
   return {
     type: '@auth/SIGN_IN_SUCCESS',
-    payload: { student, registration, token, vimeoAuth },
+    payload: { student, registration, monthly, token, vimeoAuth },
   };
 }
 

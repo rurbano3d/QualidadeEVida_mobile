@@ -1,12 +1,12 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
+  align-items: center;
   padding: 0 15px;
-  height: 45px;
-  width: 100%;
+  height: 60px;
   border-radius: 4px;
   border: 1px solid #dddddd;
-  align-items: center;
+  background-color: #fff;
 `;
 
 export const TInput = styled.TextInput`
@@ -14,4 +14,6 @@ export const TInput = styled.TextInput`
   padding: 10px;
   font-size: 20px;
   color: #999999;
+
+  width: 100%;
 `;

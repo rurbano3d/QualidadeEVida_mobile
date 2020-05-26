@@ -7,6 +7,7 @@ import challenges from './challenges/reducer';
 import completed from './completed/reducer';
 import series from './series/reducer';
 import runnings from './runnings/reducer';
+import signUp from './signUp/reducer';
 
 const appReducer = combineReducers({
   auth,
@@ -16,6 +17,7 @@ const appReducer = combineReducers({
   completed,
   series,
   runnings,
+  signUp,
 });
 
 const rootReducer = (state, action) => {

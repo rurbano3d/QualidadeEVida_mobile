@@ -15,4 +15,5 @@ export const TextInputCustom = styled.TextInput`
   width: 70px;
   height: 40px;
   padding: 0 15px;
+  margin-bottom: 10px;
 `;

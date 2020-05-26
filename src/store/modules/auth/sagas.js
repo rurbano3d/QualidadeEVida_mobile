@@ -7,9 +7,10 @@ import api from '~/services/api';
 
 export function* signIn({ payload }) {
   try {
-    const { email } = payload;
+    const { email, password } = payload;
     const response = yield call(api.post, 'sessionStudents', {
       email,
+      password,
     });
     const { student, token, vimeoAuth } = response.data;
 
@@ -18,15 +19,22 @@ export function* signIn({ payload }) {
     const responseRegistration = yield call(api.get, 'registrations', {
       params: { student_id: student.id },
     });
+    const monthlyResponse = yield api.get('monthlyPayments', {
+      params: { q: responseRegistration.id },
+    });
 
     const registration = responseRegistration.data;
+    const monthly = monthlyResponse.data;
 
-    yield put(signInSuccess(student, registration, token, vimeoAuth));
+    yield put(signInSuccess(student, registration, monthly, token, vimeoAuth));
   } catch (err) {
     let error = '';
     switch (err.response.data.error) {
-      case 'Student no found':
-        error = 'Seu e-mail não foi encontrado!';
+      case 'Student not found':
+        error = 'Seu e-mail ou senha não confere!';
+        break;
+      case 'Password does not match':
+        error = 'Seu e-mail ou senha não confere!';
         break;
       case 'Student has no Registration':
         error = 'Sua matrícula ainda não foi cadastrada!';

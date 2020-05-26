@@ -7,6 +7,7 @@ import challenges from './challenges/sagas';
 import completed from './completed/sagas';
 import series from './series/sagas';
 import runnings from './runnings/sagas';
+import signUp from './signUp/sagas';
 
 export default function* rootSaga() {
   return yield all([
@@ -17,5 +18,6 @@ export default function* rootSaga() {
     completed,
     series,
     runnings,
+    signUp,
   ]);
 }

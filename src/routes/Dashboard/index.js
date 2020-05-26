@@ -1,4 +1,6 @@
 import React from 'react';
+import { Platform } from 'react-native';
+import { useSelector } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -10,6 +12,7 @@ import Ranking from '~/pages/Ranking';
 const Tab = createBottomTabNavigator();
 
 export default function DashboarRouter() {
+  const { registration, monthly } = useSelector(state => state.auth);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -41,16 +44,18 @@ export default function DashboarRouter() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#53B1DA',
-        inactiveTintColor: '#AFAFAF',
+        activeTintColor: '#fff',
+        inactiveTintColor: '#ddd',
+
         style: {
-          height: 95,
-          paddingBottom: 20,
-          paddingTop: 20,
+          height: Platform.OS === 'ios' ? 95 : 75,
+          paddingBottom: Platform.OS === 'ios' ? 25 : 10,
+          paddingTop: 15,
+          backgroundColor: '#53B1DA',
         },
         labelStyle: {
-          fontSize: 14,
-          paddingTop: 5,
+          fontSize: 15,
+          fontWeight: 'bold',
         },
       }}
     >
@@ -59,16 +64,22 @@ export default function DashboarRouter() {
         component={Dashboard}
         options={{ title: 'Início' }}
       />
-      <Tab.Screen
-        name="Challenges"
-        component={ChallengesRoutes}
-        options={{ title: 'Desafios' }}
-      />
-      <Tab.Screen
-        name="Points"
-        component={Points}
-        options={{ title: 'Pontuação' }}
-      />
+      {registration != '' && (
+        <>
+          <Tab.Screen
+            name="Challenges"
+            component={ChallengesRoutes}
+            options={{ title: 'Desafios' }}
+          />
+
+          <Tab.Screen
+            name="Points"
+            component={Points}
+            options={{ title: 'Pontuação' }}
+          />
+        </>
+      )}
+
       {/* <Tab.Screen name="Ranking" component={Ranking} /> */}
     </Tab.Navigator>
   );

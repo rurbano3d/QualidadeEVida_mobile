@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { parseISO, differenceInDays } from 'date-fns';
+import { parseISO, differenceInDays, isToday, parseJSON } from 'date-fns';
 
 import api from '~/services/api';
 
@@ -11,7 +12,10 @@ import {
   runningRemove,
 } from '~/store/modules/runnings/actions';
 
-import { completedRequest } from '~/store/modules/completed/actions';
+import {
+  completedRequest,
+  completedRemove,
+} from '~/store/modules/completed/actions';
 
 import Calc from '~/components/Running/Calc';
 import CheckFields from '~/components/Running/CheckFields';
@@ -29,16 +33,17 @@ export default function ButtonSeries({ item: data, category, onCompleted }) {
   const [textValue, setTextValue] = useState('');
 
   let repetitions = [];
-
   useEffect(() => {
     if (runningsCache) {
       const runningsCacheFilter = runningsCache.filter(
         running => running.running === data.id && running.category === category,
       );
+
       if (runningsCacheFilter) {
         setFillDays(runningsCacheFilter);
       }
     }
+
     async function getChallegesCompleted() {
       const response = await api.get(`completed/${student.id}`, {
         params: {
@@ -46,8 +51,14 @@ export default function ButtonSeries({ item: data, category, onCompleted }) {
           running_id: data.id,
         },
       });
+
       if (response.data != '') {
-        onCompleted(true);
+        const today = isToday(parseISO(response.data[0].createdAt));
+        if (data.runnings[0].end_date || today) {
+          onCompleted(true);
+        } else {
+          onCompleted(false);
+        }
       } else {
         onCompleted(false);
       }
@@ -60,12 +71,12 @@ export default function ButtonSeries({ item: data, category, onCompleted }) {
       parseISO(data.runnings[0].end_date),
       parseISO(data.runnings[0].start_date),
     );
-    for (let i = 0; i < differenceInDaysCount; i += 1) {
+
+    for (let i = 0; i < differenceInDaysCount + 1; i += 1) {
       repetitions.push(i);
     }
     return repetitions;
   }
-
   function handleFillDay(position) {
     if (textValue) {
       const positionExists = fillDays.find(day => day.position === position);
@@ -92,9 +103,21 @@ export default function ButtonSeries({ item: data, category, onCompleted }) {
       dispatch(runningRemove(category, data.id));
     }
   }
+
+  function handleCheckIn() {
+    dispatch(
+      completedRequest(student.id, registration.id, category, null, data.id),
+    );
+    onCompleted(true);
+  }
   return (
     <>
       <Sequency>
+        {createRepetitions().length <= 0 && (
+          <TouchableOpacity onPress={() => handleCheckIn()}>
+            <AntDesign name="checkcircleo" size={25} color="#afafaf" />
+          </TouchableOpacity>
+        )}
         <FlatListCustom
           data={createRepetitions()}
           keyExtractor={item => String(item)}

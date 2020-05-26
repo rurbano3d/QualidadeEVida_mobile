@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,16 +9,19 @@ import Button from '~/components/Button';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
-import { Container, Logo, Form } from './styles';
+import { Container, Logo, Form, SignLink, SignLinkText } from './styles';
 
-export default function SignIn() {
+export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
+  const passwordRef = useRef();
+
   const loading = useSelector(state => state.auth.loading);
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   function handleSubmit() {
-    if (email) {
-      dispatch(signInRequest(email));
+    if ((email, password)) {
+      dispatch(signInRequest(email, password));
     }
   }
   return (
@@ -31,17 +34,30 @@ export default function SignIn() {
         <Input
           autoCapitalize="none"
           placeholder="Informe seu e-mail"
-          keyboatdType="email-address"
-          returnKeyType="send"
-          onSubmitEditing={handleSubmit}
+          keyboardType="email-address"
+          returnKeyType="next"
+          onSubmitEditing={() => passwordRef.current.focus()}
           value={email}
           onChangeText={setEmail}
+        />
+        <Input
+          style={{ marginTop: 10 }}
+          secureTextEntry
+          placeholder="Senha"
+          ref={passwordRef}
+          returnKeyType="send"
+          onSubmitEditing={handleSubmit}
+          value={password}
+          onChangeText={setPassword}
         />
 
         <Button loading={loading} onPress={handleSubmit}>
           Acessar
         </Button>
       </Form>
+      <SignLink onPress={() => navigation.navigate('SignUp')}>
+        <SignLinkText>Criar conta</SignLinkText>
+      </SignLink>
     </Container>
   );
 }

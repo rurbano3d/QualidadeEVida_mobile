@@ -1,23 +1,26 @@
 import React from 'react';
 
-import { Video } from 'expo-av';
+import ListSequence from '~/Animation/ListSequence';
 
-// import { Container } from './styles';
+import { Container, VideoCustom } from './styles';
 
-const VideoPlayer = ({ uri }) => {
+const VideoPlayer = ({ uri, width, height }) => {
   return (
-    <Video
-      source={{
-        uri,
-      }}
-      rate={1.0}
-      volume={1.0}
-      isMuted={false}
-      resizeMode="cover"
-      isLooping
-      useNativeControls
-      style={{ width: 300, height: 300 }}
-    />
+    <>
+      <Container>
+        {uri.length > 0 && (
+          <ListSequence>
+            <VideoCustom
+              source={{
+                uri,
+              }}
+              resizeMode="stretch"
+              useNativeControls
+            />
+          </ListSequence>
+        )}
+      </Container>
+    </>
   );
 };
 

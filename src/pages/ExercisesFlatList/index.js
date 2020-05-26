@@ -10,6 +10,7 @@ export default function ExercisesFlatList({
   data,
   category,
   renderButtonSeries,
+  hasVideo,
 }) {
   return (
     <Container>
@@ -23,12 +24,14 @@ export default function ExercisesFlatList({
             {item.exercises ? (
               <ExercisesRender
                 item={item}
+                hasVideo={hasVideo}
                 category={category}
                 renderButtonSeries={renderButtonSeries}
               />
             ) : (
               <RunningsRender
                 item={item}
+                hasVideo={hasVideo}
                 category={category}
                 renderButtonSeries={renderButtonSeries}
               />

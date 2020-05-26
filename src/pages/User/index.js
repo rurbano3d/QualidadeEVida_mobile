@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { parseISO } from 'date-fns';
@@ -11,10 +11,14 @@ import ExitButton from '~/components/Exit';
 import SlideRight from '~/Animation/SlideRight';
 import GrowUp from '~/Animation/GrowUp';
 
-import { Container, List, Item } from './styles';
+import { Container, List, Item, CustomText, ItemExit } from './styles';
 
 export default function User() {
-  const student = useSelector((state) => state.auth.student);
+  const student = useSelector(state => state.auth.student);
+  const studentFormatted = {
+    ...student,
+    formattedBirth: student.birth && formatDatePure(parseISO(student.birth)),
+  };
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   return (
@@ -23,26 +27,28 @@ export default function User() {
         <SlideRight>
           <List>
             <Item>
-              <Text>{student.name}</Text>
+              <CustomText>{studentFormatted.name}</CustomText>
             </Item>
             <Item>
-              <Text>{student.email}</Text>
+              <CustomText>{studentFormatted.email}</CustomText>
             </Item>
             <Item>
-              <Text>{student.age} anos</Text>
+              <CustomText>{studentFormatted.age} anos</CustomText>
             </Item>
             <Item>
-              <Text>{formatDatePure(parseISO(student.birth))}</Text>
+              <CustomText>
+                {studentFormatted.birth && studentFormatted.formattedBirth}
+              </CustomText>
             </Item>
             <Item>
-              <Text>{student.weight} Kg</Text>
+              <CustomText>{studentFormatted.weight} Kg</CustomText>
             </Item>
             <Item>
-              <Text>{student.height} de altura</Text>
+              <CustomText>{studentFormatted.height} de altura</CustomText>
             </Item>
-            <Item>
+            <ItemExit>
               <ExitButton />
-            </Item>
+            </ItemExit>
           </List>
         </SlideRight>
         <Separator />

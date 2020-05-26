@@ -6,6 +6,7 @@ export const ExitButton = styled(TouchableOpacity)`
 `;
 
 export const ExitText = styled.Text`
-  color: #cc3026;
+  color: #f8333c;
+  font-size: 18px;
   font-weight: bold;
 `;

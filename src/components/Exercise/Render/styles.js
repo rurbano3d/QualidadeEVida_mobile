@@ -1,6 +1,10 @@
 import styled from 'styled-components/native';
 
 export const Item = styled.View`
+  border: 1px solid #eaeaea;
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 5px;
   padding: 0 20px;
   align-items: center;
   padding-bottom: 20px;
