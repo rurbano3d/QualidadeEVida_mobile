@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import { setDate, parseISO } from 'date-fns';
-import { formatDatePure } from '~/utils';
+import { formatDatePure, formatDate } from '~/utils';
 
 import api from '~/services/api';
 
-import { Container, Warning, WarningView, CustomText } from './styles';
+import {
+  Container,
+  Warning,
+  WarningView,
+  CustomText,
+  AlertView,
+  NormalView,
+} from './styles';
 
-const MonthlyInfo = () => {
+const MonthlyInfo = ({ register }) => {
   const [monthly, setMonthly] = useState({});
-  const registration = useSelector(state => state.auth.registration);
+  const { student } = useSelector(state => state.auth);
+
   async function getMonthlyPayments() {
     const response = await api.get('monthlyPayments', {
-      params: { q: registration.id },
+      params: { q: register?.id },
     });
 
     const filter = response.data.filter(item => item.payday === null);
@@ -25,6 +34,7 @@ const MonthlyInfo = () => {
         return {
           ...item,
           paymentDayFormatted: formatDatePure(newPaymentDay),
+          overdueFormatted: formatDatePure(newPaymentDay),
         };
       }
     });
@@ -36,24 +46,27 @@ const MonthlyInfo = () => {
 
   useEffect(() => {
     getMonthlyPayments();
-  }, []);
+  }, [register]);
 
-  return (
-    monthly && (
-      <Container>
-        {monthly.overdue ? (
-          <WarningView>
-            <Warning>Mensalidade atrasada:</Warning>
-            <Warning>{monthly.paymentDayFormatted}</Warning>
-          </WarningView>
-        ) : (
-          <>
-            <CustomText>Próxima mensalidade:</CustomText>
-            <CustomText>{monthly.paymentDayFormatted}</CustomText>
-          </>
-        )}
-      </Container>
-    )
+  return monthly ? (
+    <Container>
+      {monthly.overdue ? (
+        <WarningView>
+          <Warning>Mensalidade atrasada:</Warning>
+          <Warning>{monthly.overdueFormatted}</Warning>
+        </WarningView>
+      ) : (
+        <NormalView>
+          <CustomText>Próxima mensalidade:</CustomText>
+          <CustomText>{monthly.paymentDayFormatted}</CustomText>
+        </NormalView>
+      )}
+    </Container>
+  ) : (
+    <AlertView>
+      <Warning>Sua matrícula venceu</Warning>
+      <Warning>{formatDate(register?.end_date)}</Warning>
+    </AlertView>
   );
 };
 

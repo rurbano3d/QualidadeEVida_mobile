@@ -46,9 +46,15 @@ const FormComplements = ({ route }) => {
   const [show, setShow] = useState(false);
   const [placeholder, setPlaceholder] = useState(true);
 
+  const onChangeField = (field, value) => {
+    if (field === 'weight') setWeight(value);
+    if (field === 'height') setHeight(value);
+  };
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || birth;
     setShow(Platform.OS === 'ios');
+
     setBirth(currentDate);
     setPlaceholder(false);
   };
@@ -112,7 +118,7 @@ const FormComplements = ({ route }) => {
                       heightRef.current.getElement().focus()
                     }
                     value={props.values.weight}
-                    onChangeText={props.handleChange('weight')}
+                    onChangeText={e => onChangeField('weight', e)}
                   />
                 </InputMaskContainer>
                 {props.errors.weight && <Error>{props.errors.weight}</Error>}
@@ -130,16 +136,16 @@ const FormComplements = ({ route }) => {
                     returnKeyType="send"
                     onSubmitEditing={props.handleSubmit}
                     value={props.values.height}
-                    onChangeText={props.handleChange('height')}
+                    onChangeText={e => onChangeField('height', e)}
                   />
                 </InputMaskContainer>
                 {props.errors.height && <Error>{props.errors.height}</Error>}
               </InputField>
+              <ButtonView>
+                <Button onPress={props.handleSubmit}>Finalizar</Button>
+              </ButtonView>
             </Content>
           </FormCustom>
-          <ButtonView>
-            <Button onPress={props.handleSubmit}>Finalizar</Button>
-          </ButtonView>
         </Container>
       )}
     </Formik>

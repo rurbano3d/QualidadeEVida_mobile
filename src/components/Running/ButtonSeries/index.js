@@ -26,7 +26,7 @@ export default function ButtonSeries({ item: data, category, onCompleted }) {
   const dispatch = useDispatch();
 
   const student = useSelector(state => state.auth.student);
-  const registration = useSelector(state => state.auth.registration);
+  const [registration, setRegistration] = useState([]);
   const runningsCache = useSelector(state => state.runnings);
 
   const [fillDays, setFillDays] = useState([]);
@@ -45,6 +45,10 @@ export default function ButtonSeries({ item: data, category, onCompleted }) {
     }
 
     async function getChallegesCompleted() {
+      const register = await api.get('registrations', {
+        params: { student_id: student.id },
+      });
+      setRegistration(register.data[0]);
       const response = await api.get(`completed/${student.id}`, {
         params: {
           category,

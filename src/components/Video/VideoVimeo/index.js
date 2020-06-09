@@ -5,7 +5,7 @@ import vimeoApi from '~/services/vimeoApi';
 import VideoPlayer from '~/components/Video/VideoPlayer';
 import Loading from '~/components/Loading';
 
-const VideoVimeo = ({ url }) => {
+const VideoVimeo = ({ url, width, height }) => {
   const { vimeoAuth } = useSelector(state => state.auth);
   const [uri, setUri] = useState('');
   const [loading, setLoading] = useState(true);
@@ -24,7 +24,11 @@ const VideoVimeo = ({ url }) => {
     }
     getVideoVimeo();
   }, []);
-  return loading ? <Loading /> : <VideoPlayer uri={uri} />;
+  return loading ? (
+    <Loading />
+  ) : (
+    <VideoPlayer uri={uri} width={width} height={height} />
+  );
 };
 
 export default VideoVimeo;

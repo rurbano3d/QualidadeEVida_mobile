@@ -9,7 +9,6 @@ import api from '~/services/api';
 export function* addStudent({ payload }) {
   try {
     const { gym, name, phone, email, password } = payload;
-
     const response = yield call(api.post, '/students', {
       name,
       phone,

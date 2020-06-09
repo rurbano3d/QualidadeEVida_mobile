@@ -1,18 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import api from '~/services/api';
 
 import Dashboard from '~/pages/Dashboard';
 import ChallengesRoutes from '~/routes/Challenges';
 import Points from '~/pages/Points';
+import TrainingsRoutes from '~/routes/Trainings';
 import Ranking from '~/pages/Ranking';
 
 const Tab = createBottomTabNavigator();
 
 export default function DashboarRouter() {
-  const { registration, monthly } = useSelector(state => state.auth);
+  const isFocused = useIsFocused();
+  const { student } = useSelector(state => state.auth);
+  const [blocked, setBlocked] = useState('');
+  const [hasRegister, setHasRegister] = useState('');
+
+  useEffect(() => {
+    async function getBlocked() {
+      const registration = await api.get('registrations', {
+        params: { student_id: student.id },
+      });
+      if (registration.data) {
+        const response = await api.get('monthlyOverdue', {
+          params: { q: registration.data[0]?.id },
+        });
+        setBlocked(response.data.blockedAccess);
+      }
+      setHasRegister(registration.data);
+    }
+
+    if (isFocused) {
+      getBlocked();
+    }
+  }, [isFocused]);
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -28,12 +55,17 @@ export default function DashboarRouter() {
           }
           if (route.name === 'Challenges') {
             return (
-              <MaterialCommunityIcons name="dumbbell" size={30} color={color} />
+              <MaterialCommunityIcons name="trophy" size={30} color={color} />
             );
           }
           if (route.name === 'Points') {
             return (
               <MaterialCommunityIcons name="medal" size={30} color={color} />
+            );
+          }
+          if (route.name === 'Trainings') {
+            return (
+              <MaterialCommunityIcons name="dumbbell" size={30} color={color} />
             );
           }
           // if (route.name === 'Ranking') {
@@ -48,6 +80,8 @@ export default function DashboarRouter() {
         inactiveTintColor: '#ddd',
 
         style: {
+          paddingLeft: 20,
+          paddingRight: 20,
           height: Platform.OS === 'ios' ? 95 : 75,
           paddingBottom: Platform.OS === 'ios' ? 25 : 10,
           paddingTop: 15,
@@ -64,8 +98,13 @@ export default function DashboarRouter() {
         component={Dashboard}
         options={{ title: 'Início' }}
       />
-      {registration != '' && (
+      {hasRegister[0]?.active && !blocked && (
         <>
+          <Tab.Screen
+            name="Trainings"
+            component={TrainingsRoutes}
+            options={{ title: `Treinos` }}
+          />
           <Tab.Screen
             name="Challenges"
             component={ChallengesRoutes}
@@ -75,7 +114,7 @@ export default function DashboarRouter() {
           <Tab.Screen
             name="Points"
             component={Points}
-            options={{ title: 'Pontuação' }}
+            options={{ title: 'Pontos' }}
           />
         </>
       )}

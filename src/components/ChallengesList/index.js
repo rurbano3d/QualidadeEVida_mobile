@@ -100,7 +100,7 @@ const ChallengesList = ({ type }) => {
       onEndReachedThreshold={0.01}
       onEndReached={loadMore}
       showsVerticalScrollIndicator={false}
-      ListEmptyComponent={<Warning message="Sem Desafios disponívies" />}
+      ListEmptyComponent={<Warning message="Sem Desafios disponíveis" />}
       ItemSeparatorComponent={SeparatorList}
       keyExtractor={item => String(item.id)}
       renderItem={({ item }) => (

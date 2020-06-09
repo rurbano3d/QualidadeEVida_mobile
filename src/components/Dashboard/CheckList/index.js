@@ -5,13 +5,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import Loading from '~/components/Loading';
 import Button from '~/components/Button';
 import { formatDate } from '~/utils';
-import SeparatorList from '~/components/SeparatorList';
 
 import api from '~/services/api';
 
 import { checkinRequest } from '~/store/modules/checkin/actions';
 
-import { Container, Checkin, CheckinView, DataText, CheckText } from './styles';
+import Warning from '~/components/WarningWithoutInfo';
+import {
+  Container,
+  Checkin,
+  CheckinView,
+  DataText,
+  CheckText,
+  Content,
+} from './styles';
 
 const CheckList = () => {
   const student = useSelector(state => state.auth.student);
@@ -20,62 +27,49 @@ const CheckList = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
-  const [page, setPage] = useState(null);
-
-  async function getCheckins(page = 1) {
+  async function getCheckins() {
     const response = await api.get(`students/${student.id}/checkins`, {
-      params: { page },
+      params: { mobile: true },
     });
+    if (response.data.length) {
+      const checkinsFormatted = response.data.map(checkin => ({
+        ...checkin,
+        formattedData: formatDate(checkin.createdAt),
+      }));
 
-    const checkinsFormatted = response.data.map(checkin => ({
-      ...checkin,
-      formattedData: formatDate(checkin.createdAt),
-    }));
+      setCheckins(checkinsFormatted);
+    }
     setRefresh(false);
-    setPage(page);
     setLoading(false);
-    setCheckins(
-      page >= 2 ? [...checkins, ...checkinsFormatted] : checkinsFormatted,
-    );
   }
 
   useEffect(() => {
     getCheckins();
   }, [refresh]);
 
-  function loadMore() {
-    const next = page + 1;
-    getCheckins(next);
-  }
-
   async function handleNewCheckin() {
     dispatch(checkinRequest(student.id));
     setRefresh(true);
   }
-
   return loading ? (
     <Loading />
   ) : (
     <Container>
       <Button onPress={handleNewCheckin}>Novo check-in</Button>
-
-      <Checkin
-        onRefresh={getCheckins}
-        refreshing={refresh}
-        data={checkins}
-        onEndReachedThreshold={0.01}
-        onEndReached={loadMore}
-        showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={SeparatorList}
-        keyExtractor={item => String(item.id)}
-        nestedScrollEnabled
-        renderItem={({ item }) => (
-          <CheckinView>
-            <CheckText>Check-in </CheckText>
-            <DataText>{item.formattedData}</DataText>
-          </CheckinView>
+      <Content>
+        {!checkins.length ? (
+          <Warning message="Você não fez nenhum checkin" />
+        ) : (
+          <Checkin>
+            {checkins.map(checkin => (
+              <CheckinView key={checkin.id}>
+                <CheckText>Check-in </CheckText>
+                <DataText>{checkin.formattedData}</DataText>
+              </CheckinView>
+            ))}
+          </Checkin>
         )}
-      />
+      </Content>
     </Container>
   );
 };

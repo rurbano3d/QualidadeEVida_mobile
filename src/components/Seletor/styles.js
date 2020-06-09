@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
 
 export const Seletor = styled.TouchableOpacity`
-  width: 65%;
+  flex: 1;
 `;

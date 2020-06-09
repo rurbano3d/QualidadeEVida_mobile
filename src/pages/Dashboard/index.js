@@ -1,83 +1,58 @@
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+
 import { useIsFocused } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import Separator from '~/components/Separator';
+import api from '~/services/api';
 
 import Loading from '~/components/Loading';
 
-import MonthlyInfo from '~/components/Dashboard/MonthlyInfo';
-import Pontuation from '~/components/Dashboard/Pontuation';
-import CheckList from '~/components/Dashboard/CheckList';
-import Welcome from '~/components/Dashboard/Welcome';
+import Main from '~/components/Dashboard/Main';
 
-import Slideleft from '~/Animation/SlideLeft';
-import SlideTop from '~/Animation/SlideTop';
-import SlideBottom from '~/Animation/SlideBottom';
-
-import {
-  Container,
-  Header,
-  Info,
-  Content,
-  Information,
-  PointText,
-  DescView,
-} from './styles';
+import { Container } from './styles';
 
 export default function Dashboard() {
   const isFocused = useIsFocused();
-  const registration = useSelector(state => state.auth.registration);
+  const { student } = useSelector(state => state.auth);
+  const [loading, setLoading] = useState(true);
+  const [register, setRegister] = useState({});
+  useEffect(() => {
+    async function getBlocked() {
+      try {
+        const response = await api.get('registrations', {
+          params: { student_id: student.id },
+        });
+        const registration = response.data[0];
+        if (registration) {
+          const overdue = await api.get('monthlyOverdue', {
+            params: { q: registration?.id },
+          });
+          const { blockedAccess } = overdue.data;
 
-  return (
-    isFocused && (
-      <Container>
-        <Header>
-          <SlideTop>
-            <MonthlyInfo />
-          </SlideTop>
-        </Header>
-        <Info>
-          <Slideleft>
-            <Information>
-              <DescView>
-                <MaterialCommunityIcons
-                  name="dumbbell"
-                  size={20}
-                  color="#444444"
-                />
-                <Text>Pontuação</Text>
-                <Pontuation />
-              </DescView>
-              <DescView>
-                <MaterialCommunityIcons
-                  name="folder-open"
-                  size={20}
-                  color="#444444"
-                />
-                <Text>Plano</Text>
-                <PointText>
-                  {registration ? registration.plan.title : 'Sem plano'}
-                </PointText>
-              </DescView>
-            </Information>
-          </Slideleft>
-        </Info>
-        <Separator />
-        <Content>
-          <SlideBottom>
-            {registration != '' ? (
-              <View>
-                <CheckList />
-              </View>
-            ) : (
-              <Welcome />
-            )}
-          </SlideBottom>
-        </Content>
-      </Container>
-    )
+          const registrationFormatted = {
+            ...registration,
+            blockedAccess,
+          };
+
+          setRegister(registrationFormatted);
+        } else {
+          setRegister(null);
+        }
+        setLoading(false);
+      } catch (err) {}
+    }
+
+    if (isFocused) {
+      setLoading(true);
+      getBlocked();
+    }
+  }, [isFocused]);
+
+  return isFocused && loading ? (
+    <Loading />
+  ) : (
+    <Container>
+      <Main register={register} />
+    </Container>
   );
 }

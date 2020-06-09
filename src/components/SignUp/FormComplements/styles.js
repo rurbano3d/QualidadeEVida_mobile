@@ -9,6 +9,7 @@ import { Platform } from 'react-native';
 export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',
   behavior: 'padding',
+  keyboardVerticalOffset: 120,
 })`
   justify-content: center;
   height: 100%;

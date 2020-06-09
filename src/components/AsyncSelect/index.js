@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Select from 'react-native-picker-select';
 
@@ -23,7 +23,7 @@ const AsyncSelect = ({ gym, handleChange }) => {
     underline: { borderTopWidth: 0 },
   };
 
-  useMemo(() => {
+  useEffect(() => {
     async function getGyms() {
       const response = await api.get('gyms');
 
@@ -42,8 +42,9 @@ const AsyncSelect = ({ gym, handleChange }) => {
         onValueChange={handleChange}
         placeholder={{
           label: 'Escolha sua academia',
+          value: '',
         }}
-        items={gyms && gyms}
+        items={gyms}
         useNativeAndroidPickerStyle={false}
         style={pickerStyle}
       />

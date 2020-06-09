@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from '~/services/NavigationService';
 import ErrorBoundary from '~/ErrorBoundary';
+import { ClientProvider } from '~/contexts/client';
 
 // import { Container } from './styles';
 import Routes from '~/routes';
@@ -14,7 +15,9 @@ export default function App() {
   return (
     <ErrorBoundary>
       <NavigationContainer ref={navigationRef}>
-        <Routes signed={signed} />
+        <ClientProvider>
+          <Routes signed={signed} />
+        </ClientProvider>
       </NavigationContainer>
     </ErrorBoundary>
   );

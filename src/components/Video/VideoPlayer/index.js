@@ -1,27 +1,34 @@
 import React from 'react';
-
-import ListSequence from '~/Animation/ListSequence';
+import PropTypes from 'prop-types';
 
 import { Container, VideoCustom } from './styles';
 
-const VideoPlayer = ({ uri, width, height }) => {
+export default function VideoPlayer({ uri, width, height }) {
   return (
     <>
       <Container>
         {uri.length > 0 && (
-          <ListSequence>
-            <VideoCustom
-              source={{
-                uri,
-              }}
-              resizeMode="stretch"
-              useNativeControls
-            />
-          </ListSequence>
+          <VideoCustom
+            source={{
+              uri,
+            }}
+            width={width}
+            height={height}
+            resizeMode="stretch"
+            useNativeControls
+          />
         )}
       </Container>
     </>
   );
-};
+}
 
-export default VideoPlayer;
+VideoPlayer.propTypes = {
+  uri: PropTypes.string.isRequired,
+  width: PropTypes.string,
+  height: PropTypes.string,
+};
+VideoPlayer.defaultProps = {
+  width: '350px',
+  height: '200px',
+};

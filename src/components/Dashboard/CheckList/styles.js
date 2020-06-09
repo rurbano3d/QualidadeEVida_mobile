@@ -1,9 +1,13 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  max-height: 98%;
+  flex: 1;
 `;
-export const Checkin = styled.FlatList`
+
+export const Content = styled.View`
+  max-height: 100%;
+`;
+export const Checkin = styled.View`
   background-color: #fff;
   border: 1px solid #dddddd;
   border-radius: 4px;

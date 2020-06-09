@@ -1,15 +1,13 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
   flex-direction: column;
   padding: 20px 20px 0 20px;
 `;
-export const Header = styled.View`
-  height: 10%;
-`;
+export const Header = styled.View``;
 export const Info = styled.View`
-  height: 15%;
+  height: 80px;
 `;
 export const Information = styled.View`
   flex-direction: row;
@@ -20,10 +18,11 @@ export const Information = styled.View`
   background-color: #fff;
   border: 1px solid #dddddd;
   border-radius: 4px;
+  margin: 10px 0;
 `;
 export const Content = styled.View`
-  margin-top: 2%;
-  height: 73%;
+  flex: 1;
+  margin-bottom: 20px;
 `;
 
 export const DescView = styled.View`

@@ -1,5 +1,6 @@
 import { Alert } from 'react-native';
 import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { differenceInDays, setDate, parseISO } from 'date-fns';
 
 import { signInSuccess, signFailure } from './actions';
 
@@ -16,17 +17,7 @@ export function* signIn({ payload }) {
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    const responseRegistration = yield call(api.get, 'registrations', {
-      params: { student_id: student.id },
-    });
-    const monthlyResponse = yield api.get('monthlyPayments', {
-      params: { q: responseRegistration.id },
-    });
-
-    const registration = responseRegistration.data;
-    const monthly = monthlyResponse.data;
-
-    yield put(signInSuccess(student, registration, monthly, token, vimeoAuth));
+    yield put(signInSuccess(student, token, vimeoAuth));
   } catch (err) {
     let error = '';
     switch (err.response.data.error) {

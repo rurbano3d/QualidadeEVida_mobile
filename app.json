@@ -40,13 +40,14 @@
     ],
     "ios": {
       "bundleIdentifier": "com.alatar.qualidadeVidaApp",
-      "buildNumber": "1.0.0",
+      "buildNumber": "2.0.0",
       "supportsTablet": true
     },
     "android": {
       "package": "com.alatar.qualidadeVidaApp",
-      "versionCode": 1
-    },
+      "versionCode": 3,
+      "permissions": []
+    }
 
   }
 }

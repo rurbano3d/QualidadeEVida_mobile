@@ -17,7 +17,8 @@ export const Item = styled.View`
 `;
 
 export const ItemButton = styled(TouchableOpacity)`
-  background-color: ${props => (props.type === 'add' ? '#9FD356' : '#F8333C')};
+  /* #9FD356 */
+  background-color: ${props => (props.type === 'add' ? '#53B1DA' : '#F8333C')};
   border-radius: 4px;
   padding: 10px 15px;
 `;

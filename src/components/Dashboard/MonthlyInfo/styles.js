@@ -5,8 +5,13 @@ export const Container = styled.View`
 `;
 export const Warning = styled.Text`
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
+`;
+
+export const NormalView = styled.View`
+  align-items: center;
+  height: 40px;
 `;
 
 export const WarningView = styled.View`
@@ -19,4 +24,12 @@ export const WarningView = styled.View`
 
 export const CustomText = styled.Text`
   font-weight: bold;
+`;
+
+export const AlertView = styled.View`
+  background-color: #f8333c;
+  width: 100%;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
 `;

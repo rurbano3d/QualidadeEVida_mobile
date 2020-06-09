@@ -20,7 +20,13 @@ import Evaluation from '~/pages/Evaluation';
 import Category from '~/pages/Category';
 import MyCategory from '~/pages/MyCategory';
 import PointDetail from '~/pages/PointDetail';
+import MyTrainingDetail from '~/pages/MyTrainingDetail';
+import Order from '~/pages/Order';
+import OrderDetail from '~/pages/OrderDetail';
 import RankingDetail from '~/pages/RankingDetail';
+
+import Refresh from '~/pages/Refresh';
+import SignOutScreen from '~/pages/SignOutScreen';
 
 const Stack = createStackNavigator();
 
@@ -100,7 +106,13 @@ export default function Routes({ signed }) {
           <Stack.Screen name="Category" component={Category} />
           <Stack.Screen name="MyCategory" component={MyCategory} />
           <Stack.Screen name="PointDetail" component={PointDetail} />
+          <Stack.Screen name="TrainingDetail" component={MyTrainingDetail} />
+          <Stack.Screen name="Order" component={Order} />
+          <Stack.Screen name="OrderDetail" component={OrderDetail} />
           {/* <Stack.Screen name="RankingDetail" component={RankingDetail} /> */}
+
+          <Stack.Screen name="Refresh" component={Refresh} />
+          <Stack.Screen name="SignOutScreen" component={SignOutScreen} />
         </>
       )}
     </Stack.Navigator>

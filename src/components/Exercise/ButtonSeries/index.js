@@ -19,9 +19,9 @@ export default function ButtonSeries({ item, category, onCompleted }) {
   const [exerciseCompleted, setExerciseCompleted] = useState(false);
   const [checkButtons, setCheckButtons] = useState([]);
   const [completedId, setCompletedId] = useState('');
+  const [registration, setRegistration] = useState([]);
   const dispatch = useDispatch();
   const student = useSelector(state => state.auth.student);
-  const registration = useSelector(state => state.auth.registration);
 
   const seriesCache = useSelector(state => state.series);
 
@@ -45,6 +45,10 @@ export default function ButtonSeries({ item, category, onCompleted }) {
       }
     }
     async function getChallegesCompleted() {
+      const register = await api.get('registrations', {
+        params: { student_id: student.id },
+      });
+      setRegistration(register.data[0]);
       const response = await api.get(`completed/${student.id}`, {
         params: {
           category,

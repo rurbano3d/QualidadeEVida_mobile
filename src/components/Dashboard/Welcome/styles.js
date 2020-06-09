@@ -6,10 +6,9 @@ export const Container = styled.View`
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 20px;
-  margin-bottom: 20px;
 `;
 export const Content = styled.ScrollView`
-  height: 100%;
+  max-height: 100%;
 `;
 
 export const Title = styled.Text`
@@ -25,5 +24,12 @@ export const Subtitle = styled.Text`
 `;
 export const Message = styled.Text`
   font-size: 15px;
-  text-align: center;
+  text-align: left;
+  margin-bottom: 10px;
+`;
+
+export const Info = styled.Text`
+  text-align: left;
+  font-size: 14px;
+  margin: 10px 0 0 0;
 `;

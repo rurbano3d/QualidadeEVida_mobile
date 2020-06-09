@@ -1,9 +1,9 @@
-import React, { useState, useRef, createRef } from 'react';
+import React, { useState, useRef } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Feather } from '@expo/vector-icons';
-
 import { useDispatch } from 'react-redux';
+import { useClient } from '~/contexts/client';
 
 import { signUpRequest } from '~/store/modules/signUp/actions';
 
@@ -38,10 +38,22 @@ const schema = Yup.object({
     .min(6, 'A senha deve possuir no mínimo 6 caracteres')
     .required('Este campo é obrigatório'),
 });
+const schemaQualidadeVida = Yup.object({
+  name: Yup.string().required('Este campo é obrigatório'),
+  email: Yup.string()
+    .email('Este email não é válido')
+    .required('Este campo é obrigatório'),
+  phone: Yup.string()
+    .min(15, 'Numero inválido')
+    .required('Este campo é obrigatório'),
+  password: Yup.string()
+    .min(6, 'A senha deve possuir no mínimo 6 caracteres')
+    .required('Este campo é obrigatório'),
+});
 
 const Form = () => {
   const dispatch = useDispatch();
-
+  const { client } = useClient();
   const [gym, setGym] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -67,11 +79,15 @@ const Form = () => {
         phone,
         password,
       }}
-      validationSchema={schema}
+      validationSchema={
+        client === 'qualidadeVida' ? schemaQualidadeVida : schema
+      }
       onSubmit={values => {
         dispatch(
           signUpRequest(
-            values.gym,
+            client === 'qualidadeVida'
+              ? 'acec07cb-418d-480a-8cce-b64a92b82274'
+              : values.gym,
             values.name,
             values.phone,
             values.email,
@@ -85,13 +101,16 @@ const Form = () => {
           <FormCustom>
             <Label>Preciso de algumas informações, é rapidinho!</Label>
             <Content>
-              <InputField>
-                <Select
-                  handleChange={props.handleChange('gym')}
-                  onSubmitEditing={() => nameRef.current.focus()}
-                />
-                {props.errors.gym && <Error>{props.errors.gym}</Error>}
-              </InputField>
+              {client !== 'qualidadeVida' && (
+                <InputField>
+                  <Select
+                    handleChange={props.handleChange('gym')}
+                    onSubmitEditing={() => nameRef.current.focus()}
+                  />
+                  {props.errors.gym && <Error>{props.errors.gym}</Error>}
+                </InputField>
+              )}
+
               <InputField>
                 <Input
                   name="name"
@@ -157,11 +176,11 @@ const Form = () => {
                   <Error>{props.errors.password}</Error>
                 )}
               </InputField>
+              <ButtonView>
+                <Button onPress={props.handleSubmit}>Continuar</Button>
+              </ButtonView>
             </Content>
           </FormCustom>
-          <ButtonView>
-            <Button onPress={props.handleSubmit}>Continuar</Button>
-          </ButtonView>
         </Container>
       )}
     </Formik>
