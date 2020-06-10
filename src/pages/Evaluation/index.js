@@ -8,12 +8,14 @@ import api from '~/services/api';
 import { formatDateParse } from '~/utils';
 import Warning from '~/components/WarningWithoutInfo';
 import ListSequence from '~/Animation/ListSequence';
+import Loading from '~/components/Loading';
 
 import { Container, List, Row, Column, Title, Item } from './styles';
 
 export default function Evaluation() {
   const student = useSelector(state => state.auth.student);
   const [evaluations, setEvaluations] = useState([]);
+  const [loading, setLoading] = useState(true);
   const isFocused = useIsFocused();
 
   async function getEvaluations() {
@@ -26,6 +28,7 @@ export default function Evaluation() {
       formattedDate: formatDateParse(evaluation.createdAt),
     }));
     setEvaluations(evaluationsFormatted);
+    setLoading(false);
   }
   useEffect(() => {
     if (isFocused) {
@@ -33,7 +36,10 @@ export default function Evaluation() {
     }
   }, [isFocused]);
   return (
-    isFocused && (
+    isFocused &&
+    (loading ? (
+      <Loading />
+    ) : (
       <Container>
         <List
           data={evaluations}
@@ -67,6 +73,6 @@ export default function Evaluation() {
           )}
         />
       </Container>
-    )
+    ))
   );
 }

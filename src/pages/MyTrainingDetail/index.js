@@ -85,7 +85,7 @@ export default function TrainingDetails() {
 
             <Modal visible={modalVisible} onVisible={onVisible} id={id} />
           </Content>
-          {!finishedValue && (
+          {!finishedValue && dateFormattedComplete && (
             <Button
               onPress={() => {
                 handleFinished();
@@ -95,7 +95,7 @@ export default function TrainingDetails() {
               Finalizado
             </Button>
           )}
-          {finishedValue && (
+          {(finishedValue || !dateFormattedComplete) && (
             <Order>
               <Header>
                 <Top>

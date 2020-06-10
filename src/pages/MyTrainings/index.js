@@ -23,7 +23,6 @@ export default function Trainings() {
   useEffect(() => {
     async function getTrainings() {
       const response = await api.get(`trainingsbetweenDates/${id}`);
-      console.tron.log(response.data);
 
       const trainingsFormatted = response.data.map(training => {
         if (training.date) {

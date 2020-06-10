@@ -17,7 +17,6 @@ import {
 
 const MonthlyInfo = ({ register }) => {
   const [monthly, setMonthly] = useState({});
-  const { student } = useSelector(state => state.auth);
 
   async function getMonthlyPayments() {
     const response = await api.get('monthlyPayments', {
@@ -62,11 +61,16 @@ const MonthlyInfo = ({ register }) => {
         </NormalView>
       )}
     </Container>
-  ) : (
+  ) : !register?.active ? (
     <AlertView>
       <Warning>Sua matrícula venceu</Warning>
       <Warning>{formatDate(register?.end_date)}</Warning>
     </AlertView>
+  ) : (
+    <NormalView>
+      <CustomText>Sua matrícula vence</CustomText>
+      <CustomText>{formatDate(register?.end_date)}</CustomText>
+    </NormalView>
   );
 };
 
