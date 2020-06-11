@@ -26,6 +26,12 @@ export const DescView = styled.View`
   margin: 0 auto;
 `;
 
+export const PointView = styled.View`
+  align-items: center;
+  margin: 0 auto;
+  width: 150px;
+`;
+
 export const PointText = styled.Text`
   color: #53b1da;
   font-size: 14px;

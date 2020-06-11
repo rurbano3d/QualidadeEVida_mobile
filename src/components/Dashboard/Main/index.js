@@ -23,6 +23,7 @@ import {
   Information,
   PointText,
   DescView,
+  PointView,
 } from './styles';
 
 const Main = ({ register }) => {
@@ -57,9 +58,11 @@ const Main = ({ register }) => {
                     color="#444444"
                   />
                   <Text>Plano</Text>
-                  <PointText>
-                    {register.plan ? register.plan.title : 'Sem plano'}
-                  </PointText>
+                  <PointView>
+                    <PointText>
+                      {register.plan ? register.plan.title : 'Sem plano'}
+                    </PointText>
+                  </PointView>
                 </DescView>
               </Information>
             </Slideleft>

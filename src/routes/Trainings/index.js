@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
@@ -20,7 +21,7 @@ export default function DashboarRouter() {
         },
         indicatorStyle: {
           borderColor: '#53B1DA',
-          borderBottomWidth: 53,
+          borderBottomWidth: Platform.OS === 'ios' ? 49 : 53,
         },
         style: {
           marginTop: 20,

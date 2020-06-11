@@ -32,6 +32,7 @@ export const DateView = styled.View`
   align-items: center;
   justify-content: center;
   padding: 15px;
+  width: 60px;
 `;
 export const DateText = styled.Text`
   width: 30px;
