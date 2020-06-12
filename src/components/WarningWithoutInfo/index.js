@@ -9,7 +9,7 @@ export default function WarningWithoutInfo({ message }) {
       <MaterialCommunityIcons
         name="alert-circle-outline"
         size={70}
-        color="#53b1da"
+        color="#009fe3"
       />
       <Text style={{ fontSize: 15, width: 270, textAlign: 'center' }}>
         {message}

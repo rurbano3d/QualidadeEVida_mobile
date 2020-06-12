@@ -2,14 +2,20 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
 `;
 
 export const Content = styled.View`
+  align-items: center;
+  justify-content: center;
+
   width: 49%;
-  background-color: #fff;
+  height: 280px;
   padding: 10px;
+
+  background-color: #fff;
   border: 1px solid #dddddd;
 `;
 export const Title = styled.Text`

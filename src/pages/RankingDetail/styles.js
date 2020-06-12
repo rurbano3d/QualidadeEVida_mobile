@@ -31,5 +31,5 @@ export const TitleText = styled.Text`
 `;
 
 export const ValueText = styled.Text`
-  color: #53b1da;
+  color: #009fe3;
 `;

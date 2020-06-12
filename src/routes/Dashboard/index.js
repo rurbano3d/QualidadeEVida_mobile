@@ -85,7 +85,7 @@ export default function DashboarRouter() {
           height: Platform.OS === 'ios' ? 95 : 75,
           paddingBottom: Platform.OS === 'ios' ? 25 : 10,
           paddingTop: 15,
-          backgroundColor: '#53B1DA',
+          backgroundColor: '#009fe3',
         },
         labelStyle: {
           fontSize: 15,

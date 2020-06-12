@@ -7,7 +7,7 @@ export const List = styled.FlatList`
   padding: 10px;
 `;
 export const PointText = styled.Text`
-  color: #53b1da;
+  color: #009fe3;
   font-size: 15px;
 `;
 export const Item = styled.View`

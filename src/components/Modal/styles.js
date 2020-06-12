@@ -35,7 +35,7 @@ export const ButtonText = styled.Text`
   font-size: 18px;
 `;
 export const YesButton = styled.TouchableHighlight`
-  background-color: #53b1da;
+  background-color: #009fe3;
   padding: 15px 30px;
   border-radius: 4px;
 `;

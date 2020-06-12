@@ -4,7 +4,7 @@ import * as Linking from 'expo-linking';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import logoFoods from '~/assets/logoFoods.png';
-import logo from '~/assets/logoHorizontal.png';
+import logoAssessoria from '~/assets/logoAssessoria.png';
 
 import { Container, Content, Info, Icon, Title } from './styles';
 
@@ -26,8 +26,9 @@ const Adds = () => {
             source={logoFoods}
             style={{
               width: 150,
-              height: 50,
-              resizeMode: 'contain',
+              height: 153,
+              resizeMode: 'cover',
+              marginLeft: 5,
             }}
           />
           <Title>Alimentação saudável</Title>
@@ -41,10 +42,10 @@ const Adds = () => {
       <Content>
         <TouchableOpacity onPress={handleWhatsapp}>
           <Image
-            source={logo}
+            source={logoAssessoria}
             style={{
               width: 150,
-              height: 50,
+              height: 145,
               resizeMode: 'cover',
             }}
           />

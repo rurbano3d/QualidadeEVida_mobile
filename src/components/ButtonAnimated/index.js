@@ -57,5 +57,5 @@ ButtonAnimated.propTypes = {
 
 ButtonAnimated.defaultProps = {
   loading: false,
-  color: '#53b1da',
+  color: '#009fe3',
 };

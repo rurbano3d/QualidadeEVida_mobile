@@ -20,7 +20,7 @@ export default function DashboarRouter() {
           textTransform: 'capitalize',
         },
         indicatorStyle: {
-          borderColor: '#53B1DA',
+          borderColor: '#009fe3',
           borderBottomWidth: Platform.OS === 'ios' ? 49 : 53,
         },
         style: {

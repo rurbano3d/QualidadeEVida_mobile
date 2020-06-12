@@ -35,7 +35,7 @@ export default function Routes({ signed }) {
     return (
       <Image
         source={logo}
-        style={{ width: 140, resizeMode: 'cover', marginBottom: 10 }}
+        style={{ width: 150, resizeMode: 'contain', marginBottom: 5 }}
       />
     );
   }
@@ -58,7 +58,7 @@ export default function Routes({ signed }) {
           borderBottomColor: '#dadada',
         },
         headerBackTitleVisible: false,
-        headerTintColor: '#53b1da',
+        headerTintColor: '#009fe3',
       }}
       headerMode="float"
 

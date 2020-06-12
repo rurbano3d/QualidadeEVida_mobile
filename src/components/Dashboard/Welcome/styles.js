@@ -13,7 +13,7 @@ export const Content = styled.ScrollView`
 
 export const Title = styled.Text`
   text-align: center;
-  color: #53b1da;
+  color: #009fe3;
   padding: 20px 0;
   font-size: 25px;
 `;

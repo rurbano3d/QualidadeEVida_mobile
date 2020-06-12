@@ -31,6 +31,6 @@ export const DescView = styled.View`
 `;
 
 export const PointText = styled.Text`
-  color: #53b1da;
+  color: #009fe3;
   font-size: 14px;
 `;

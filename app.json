@@ -24,7 +24,7 @@
         "svg"
       ]
     },
-    "version": "2.0.0",
+    "version": "2.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -40,12 +40,12 @@
     ],
     "ios": {
       "bundleIdentifier": "com.alatar.qualidadeVidaApp",
-      "buildNumber": "2.0.0",
+      "buildNumber": "2.0.1",
       "supportsTablet": true
     },
     "android": {
       "package": "com.alatar.qualidadeVidaApp",
-      "versionCode": 3,
+      "versionCode": 4,
       "permissions": []
     }
 

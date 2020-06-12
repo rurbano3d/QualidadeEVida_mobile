@@ -9,7 +9,7 @@ export default function User() {
 
   return (
     <UserButton onPress={() => navigation.navigate('User', null)}>
-      <AntDesign name="user" size={25} color="#53B1DA" />
+      <AntDesign name="user" size={25} color="#009fe3" />
     </UserButton>
   );
 }

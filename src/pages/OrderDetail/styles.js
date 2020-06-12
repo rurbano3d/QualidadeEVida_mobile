@@ -42,7 +42,7 @@ export const Name = styled.Text`
 
 export const AnswerDate = styled.Text`
   text-align: right;
-  color: #53b1da;
+  color: #009fe3;
   font-size: 12px;
   padding-top: 10px;
 `;

@@ -34,7 +34,7 @@ export function* signIn({ payload }) {
         error = 'Sua matrícula não esta ativa!';
         break;
       default:
-        error = 'Contate o suporte!';
+        error = err.response.data.error;
     }
     Alert.alert('Ops!', `${error}`);
     yield put(signFailure());

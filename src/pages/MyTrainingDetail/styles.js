@@ -36,14 +36,14 @@ export const Description = styled.View`
   width: 100%;
 `;
 export const DateText = styled.Text`
-  color: #53b1da;
+  color: #009fe3;
   font-size: 18px;
   font-weight: bold;
   text-transform: capitalize;
   margin-top: 3px;
 `;
 export const Order = styled.View`
-  background-color: #53b1da;
+  background-color: #009fe3;
   border-radius: 4px;
   height: 150px;
   padding: 20px;

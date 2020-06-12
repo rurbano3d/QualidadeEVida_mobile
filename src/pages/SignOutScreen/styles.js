@@ -20,7 +20,7 @@ export const Status = styled.Text`
 export const Confirmed = styled.Text`
   font-size: 18px;
   text-align: center;
-  color: #53b1da;
+  color: #009fe3;
 `;
 
 export const Denied = styled.Text`
