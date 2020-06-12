@@ -6,7 +6,7 @@ import { Container } from './styles';
 export default function Loading() {
   return (
     <Container>
-      <MaterialIndicator color="#01d5f3" />
+      <MaterialIndicator color="#009fe3" />
     </Container>
   );
 }

@@ -6,7 +6,7 @@ import { Container } from './styles';
 export default function WaveLoading() {
   return (
     <Container>
-      <BarIndicator color="#01d5f3" />
+      <BarIndicator color="#009fe3" />
     </Container>
   );
 }
