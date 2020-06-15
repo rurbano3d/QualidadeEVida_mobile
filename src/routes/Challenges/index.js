@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
-
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useClient } from '~/contexts/client';
 
 import Challenges from '~/pages/Challenges';
 import MyChallenges from '~/pages/MyChallenges';
@@ -9,6 +9,7 @@ import MyChallenges from '~/pages/MyChallenges';
 const Stack = createMaterialTopTabNavigator();
 
 export default function DashboarRouter() {
+  const { client } = useClient();
   return (
     <Stack.Navigator
       tabBarOptions={{
@@ -20,7 +21,7 @@ export default function DashboarRouter() {
           textTransform: 'capitalize',
         },
         indicatorStyle: {
-          borderColor: '#009fe3',
+          borderColor: client === 'qualidadeVida' ? '#009fe3' : '#fb6c02',
           borderBottomWidth: Platform.OS === 'ios' ? 49 : 53,
         },
         style: {

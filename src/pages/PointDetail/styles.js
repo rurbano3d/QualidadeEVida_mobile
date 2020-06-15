@@ -31,5 +31,5 @@ export const TitleText = styled.Text`
 `;
 
 export const ValueText = styled.Text`
-  color: #009fe3;
+  color: ${props => props.theme.colors.primary};
 `;

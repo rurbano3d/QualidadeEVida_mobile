@@ -19,10 +19,8 @@ export default function Button({ children, loading, color, ...rest }) {
 Button.propTypes = {
   children: PropTypes.string.isRequired,
   loading: PropTypes.bool,
-  color: PropTypes.string,
 };
 
 Button.defaultProps = {
   loading: false,
-  color: '#009fe3',
 };

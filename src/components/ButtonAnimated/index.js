@@ -52,10 +52,8 @@ export default function ButtonAnimated({
 ButtonAnimated.propTypes = {
   children: PropTypes.string.isRequired,
   loading: PropTypes.bool,
-  color: PropTypes.string,
 };
 
 ButtonAnimated.defaultProps = {
   loading: false,
-  color: '#009fe3',
 };

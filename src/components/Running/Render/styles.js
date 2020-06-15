@@ -30,7 +30,7 @@ export const ExerciseView = styled.View`
   margin-bottom: 10px;
   border-radius: 4px;
   border-bottom-width: 2px;
-  border-bottom-color: #009fe3;
+  border-bottom-color: ${props => props.theme.colors.primary};
 `;
 
 export const ExerciseText = styled.Text`

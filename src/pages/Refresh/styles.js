@@ -20,7 +20,7 @@ export const Status = styled.Text`
 export const Confirmed = styled.Text`
   font-size: 18px;
   text-align: center;
-  color: #009fe3;
+  color: ${props => props.theme.colors.primary};
 `;
 
 export const Denied = styled.Text`

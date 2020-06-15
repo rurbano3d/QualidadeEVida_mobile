@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
 export const PointText = styled.Text`
-  color: #009fe3;
+  color: ${props => props.theme.colors.primary};
   font-size: 14px;
 `;

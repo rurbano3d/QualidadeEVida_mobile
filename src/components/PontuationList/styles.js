@@ -7,7 +7,7 @@ export const List = styled.FlatList`
   padding: 10px;
 `;
 export const PointText = styled.Text`
-  color: #009fe3;
+  color: ${props => props.theme.colors.primary};
   font-size: 15px;
 `;
 export const Item = styled.View`

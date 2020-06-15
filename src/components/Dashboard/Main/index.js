@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useClient } from '~/contexts/client';
 
 import Separator from '~/components/Separator';
 import MonthlyInfo from '~/components/Dashboard/MonthlyInfo';
@@ -27,11 +28,14 @@ import {
 } from './styles';
 
 const Main = ({ register }) => {
+  const { client } = useClient();
   return (
     <Container>
-      <SlideTop>
-        <Adds />
-      </SlideTop>
+      {client === 'qualidadeVida' && (
+        <SlideTop>
+          <Adds />
+        </SlideTop>
+      )}
       {register && (
         <>
           <Header>

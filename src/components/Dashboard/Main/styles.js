@@ -24,15 +24,15 @@ export const Content = styled.View`
 export const DescView = styled.View`
   align-items: center;
   margin: 0 auto;
+  width: 150px;
 `;
 
 export const PointView = styled.View`
   align-items: center;
   margin: 0 auto;
-  width: 150px;
 `;
 
 export const PointText = styled.Text`
-  color: #009fe3;
+  color: ${props => props.theme.colors.primary};
   font-size: 14px;
 `;

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useClient } from '~/contexts/client';
 
 import api from '~/services/api';
 
@@ -20,6 +21,7 @@ export default function DashboarRouter() {
   const { student } = useSelector(state => state.auth);
   const [blocked, setBlocked] = useState('');
   const [hasRegister, setHasRegister] = useState('');
+  const { client } = useClient();
 
   useEffect(() => {
     async function getBlocked() {
@@ -85,7 +87,7 @@ export default function DashboarRouter() {
           height: Platform.OS === 'ios' ? 95 : 75,
           paddingBottom: Platform.OS === 'ios' ? 25 : 10,
           paddingTop: 15,
-          backgroundColor: '#009fe3',
+          backgroundColor: client === 'qualidadeVida' ? '#009fe3' : '#fb6c02',
         },
         labelStyle: {
           fontSize: 15,

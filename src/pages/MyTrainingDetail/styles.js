@@ -36,14 +36,14 @@ export const Description = styled.View`
   width: 100%;
 `;
 export const DateText = styled.Text`
-  color: #009fe3;
+  color: ${props => props.theme.colors.primary};
   font-size: 18px;
   font-weight: bold;
   text-transform: capitalize;
   margin-top: 3px;
 `;
 export const Order = styled.View`
-  background-color: #009fe3;
+  background-color: ${props => props.theme.colors.primary};
   border-radius: 4px;
   height: 150px;
   padding: 20px;

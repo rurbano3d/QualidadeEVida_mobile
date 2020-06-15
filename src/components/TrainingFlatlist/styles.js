@@ -12,7 +12,7 @@ export const Item = styled.View`
   flex-direction: row;
   justify-content: space-between;
 
-  background-color: #009fe3;
+  background-color: ${props => props.theme.colors.primary};
   border: 1px solid #ddd;
 
   border-bottom-color: #eaeaea;

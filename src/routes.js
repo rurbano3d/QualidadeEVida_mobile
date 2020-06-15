@@ -5,6 +5,11 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from '@react-navigation/stack';
+import { ThemeProvider } from 'styled-components';
+import { useClient } from '~/contexts/client';
+
+import euTreino from '~/styles/themes/euTreino';
+import qualidadeVida from '~/styles/themes/qualidadeVida';
 
 import logo from '~/assets/logoHorizontal.png';
 import ExitButton from '~/components/Exit';
@@ -31,6 +36,7 @@ import SignOutScreen from '~/pages/SignOutScreen';
 const Stack = createStackNavigator();
 
 export default function Routes({ signed }) {
+  const { client } = useClient();
   function Logo() {
     return (
       <Image
@@ -41,81 +47,85 @@ export default function Routes({ signed }) {
   }
 
   return (
-    <Stack.Navigator
-      screenOptions={{
-        cardShadowEnabled: false,
-        cardOverlayEnabled: false,
-        gestureEnabled: true,
-        gestureDirection: 'horizontal',
-        ...TransitionPresets.SlideFromRightIOS,
-        headerTitleAlign: 'center',
-        headerTitle: () => <Logo />,
-        headerRight: () => <UserButton />,
-        headerStyle: {
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 1,
-          borderBottomColor: '#dadada',
-        },
-        headerBackTitleVisible: false,
-        headerTintColor: '#009fe3',
-      }}
-      headerMode="float"
-
-      // animation="fade"
+    <ThemeProvider
+      theme={client === 'qualidadeVida' ? qualidadeVida : euTreino}
     >
-      {signed === false ? (
-        <>
-          <Stack.Screen
-            name="SignIn"
-            component={SignIn}
-            options={{
-              headerShown: false,
-              title: 'Sign in',
-              // When logging out, a pop animation feels intuitive
-              // You can remove this if you want the default 'push' animation
-              animationTypeForReplace: signed ? 'pop' : 'push',
-            }}
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{
-              headerShown: false,
-              title: 'Sign up',
-              // When logging out, a pop animation feels intuitive
-              // You can remove this if you want the default 'push' animation
-              // animationTypeForReplace: signed ? 'pop' : 'push',
-            }}
-          />
-          <Stack.Screen
-            name="SignUpComplements"
-            component={SignUpComplements}
-            options={{
-              headerShown: false,
-              title: 'Sign up Complements',
-              gestureEnabled: false,
-            }}
-          />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name="Dashboard" component={DashboardRouter} />
-          <Stack.Screen name="User" component={User} />
-          <Stack.Screen name="Evaluation" component={Evaluation} />
-          <Stack.Screen name="Category" component={Category} />
-          <Stack.Screen name="MyCategory" component={MyCategory} />
-          <Stack.Screen name="PointDetail" component={PointDetail} />
-          <Stack.Screen name="TrainingDetail" component={MyTrainingDetail} />
-          <Stack.Screen name="Order" component={Order} />
-          <Stack.Screen name="OrderDetail" component={OrderDetail} />
-          {/* <Stack.Screen name="RankingDetail" component={RankingDetail} /> */}
+      <Stack.Navigator
+        screenOptions={{
+          cardShadowEnabled: false,
+          cardOverlayEnabled: false,
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          ...TransitionPresets.SlideFromRightIOS,
+          headerTitleAlign: 'center',
+          headerTitle: () => <Logo />,
+          headerRight: () => <UserButton />,
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: '#dadada',
+          },
+          headerBackTitleVisible: false,
+          headerTintColor: client === 'qualidadeVida' ? '#009fe3' : '#fb6c02',
+        }}
+        headerMode="float"
 
-          <Stack.Screen name="Refresh" component={Refresh} />
-          <Stack.Screen name="SignOutScreen" component={SignOutScreen} />
-        </>
-      )}
-    </Stack.Navigator>
+        // animation="fade"
+      >
+        {signed === false ? (
+          <>
+            <Stack.Screen
+              name="SignIn"
+              component={SignIn}
+              options={{
+                headerShown: false,
+                title: 'Sign in',
+                // When logging out, a pop animation feels intuitive
+                // You can remove this if you want the default 'push' animation
+                animationTypeForReplace: signed ? 'pop' : 'push',
+              }}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={SignUp}
+              options={{
+                headerShown: false,
+                title: 'Sign up',
+                // When logging out, a pop animation feels intuitive
+                // You can remove this if you want the default 'push' animation
+                // animationTypeForReplace: signed ? 'pop' : 'push',
+              }}
+            />
+            <Stack.Screen
+              name="SignUpComplements"
+              component={SignUpComplements}
+              options={{
+                headerShown: false,
+                title: 'Sign up Complements',
+                gestureEnabled: false,
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Dashboard" component={DashboardRouter} />
+            <Stack.Screen name="User" component={User} />
+            <Stack.Screen name="Evaluation" component={Evaluation} />
+            <Stack.Screen name="Category" component={Category} />
+            <Stack.Screen name="MyCategory" component={MyCategory} />
+            <Stack.Screen name="PointDetail" component={PointDetail} />
+            <Stack.Screen name="TrainingDetail" component={MyTrainingDetail} />
+            <Stack.Screen name="Order" component={Order} />
+            <Stack.Screen name="OrderDetail" component={OrderDetail} />
+            {/* <Stack.Screen name="RankingDetail" component={RankingDetail} /> */}
+
+            <Stack.Screen name="Refresh" component={Refresh} />
+            <Stack.Screen name="SignOutScreen" component={SignOutScreen} />
+          </>
+        )}
+      </Stack.Navigator>
+    </ThemeProvider>
   );
 }
 Routes.propTypes = {
