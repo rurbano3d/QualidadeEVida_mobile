@@ -4,7 +4,16 @@ import VideoBasic from '~/components/Video/VideoBasic';
 import VideoVimeo from '~/components/Video/VideoVimeo';
 import Warning from '~/components/WarningWithoutInfo';
 
-import { List, Item, DateView, InfoView, Title, DateText } from './styles';
+import {
+  List,
+  Item,
+  DateView,
+  InfoView,
+  Title,
+  DateText,
+  Top,
+  Bottom,
+} from './styles';
 
 const VideoFlatlist = ({ videos, type }) => {
   return (
@@ -14,22 +23,22 @@ const VideoFlatlist = ({ videos, type }) => {
       keyExtractor={item => String(item.id)}
       renderItem={({ item }) => (
         <>
-          <Title>{item.name}</Title>
           <Item finished={item.finished}>
-            <DateView>
-              <DateText>{item.startDateFormatted}</DateText>
-              <DateText>
-                {item.endDateFormatted && `     ${item.endDateFormatted}`}
-              </DateText>
-            </DateView>
-            <InfoView>
-              {type === 'videoBasic' && (
-                <VideoBasic url={item.url} width="240px" height="180px" />
-              )}
-              {type === 'videoVimeo' && (
-                <VideoVimeo url={item.url} width="240px" height="180px" />
-              )}
-            </InfoView>
+            <Top>
+              <Title>{item.name}</Title>
+            </Top>
+            <Bottom>
+              <DateView>
+                <DateText>{item.startDateFormatted}</DateText>
+                <DateText>
+                  {item.endDateFormatted && item.endDateFormatted}
+                </DateText>
+              </DateView>
+              <InfoView>
+                {type === 'videoBasic' && <VideoBasic url={item.url} />}
+                {type === 'videoVimeo' && <VideoVimeo url={item.url} />}
+              </InfoView>
+            </Bottom>
           </Item>
         </>
       )}

@@ -8,7 +8,6 @@ import { ptBR } from 'date-fns/locale';
 
 import api from '~/services/api';
 
-import TrainingFlatlist from '~/components/TrainingFlatlist';
 import VideoFlatlist from '~/components/VideoFlatlist';
 import ListSequence from '~/Animation/ListSequence';
 import Loading from '~/components/Loading';

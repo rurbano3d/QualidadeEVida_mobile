@@ -21,6 +21,7 @@
     "expo": "^37.0.0",
     "expo-av": "~8.1.0",
     "expo-linking": "^1.0.1",
+    "expo-screen-orientation": "^1.0.0",
     "formik": "^2.1.4",
     "immer": "^6.0.3",
     "metro-config": "^0.59.0",

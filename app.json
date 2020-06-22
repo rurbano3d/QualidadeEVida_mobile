@@ -4,10 +4,7 @@
     "slug": "qualidade-vida-mobile",
     "privacy": "public",
     "sdkVersion": "37.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "packagerOpts": {
       "config": "metro.config.js",
       "sourceExts": [
@@ -24,7 +21,7 @@
         "svg"
       ]
     },
-    "version": "2.0.1",
+    "version": "2.1.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -35,19 +32,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.alatar.qualidadeVidaApp",
-      "buildNumber": "2.0.1",
+      "buildNumber": "2.1.2",
       "supportsTablet": true
     },
     "android": {
       "package": "com.alatar.qualidadeVidaApp",
-      "versionCode": 4,
+      "versionCode": 6,
       "permissions": []
     }
-
   }
 }

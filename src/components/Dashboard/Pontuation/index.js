@@ -14,7 +14,7 @@ const Pontuation = () => {
 
   useEffect(() => {
     getPoints();
-  }, []);
+  }, [student.id]);
   return <PointText>{points[0] ? points[0].totalScore : '0'} pontos</PointText>;
 };
 

@@ -56,10 +56,9 @@ export default function Exercises({ renderButtonSeries, ButtonRender }) {
           params: { category_id: id, basic: true },
         }),
       ]);
-
       setItems([...exercises.data, ...runnings.data]);
       if (videos.data.length) setVideo(videos.data[0].url);
-      if (videosBasic.length) setVideoBasic(videosBasic.data[0].url);
+      if (videosBasic.data.length) setVideoBasic(videosBasic.data[0].url);
     }
     setLoading(false);
     getData();

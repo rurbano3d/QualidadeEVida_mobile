@@ -7,7 +7,7 @@ export const Container = styled.View`
 `;
 
 export const VideoCustom = styled(Video)`
-  width: ${props => props.width};
-  height: ${props => props.height};
+  width: 240px;
+  height: 180px;
   background-color: #000;
 `;
