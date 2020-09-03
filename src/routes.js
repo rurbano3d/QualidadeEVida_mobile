@@ -32,6 +32,7 @@ import RankingDetail from '~/pages/RankingDetail';
 
 import Refresh from '~/pages/Refresh';
 import SignOutScreen from '~/pages/SignOutScreen';
+import SignOutToken from '~/pages/SignOutToken';
 
 const Stack = createStackNavigator();
 
@@ -122,6 +123,7 @@ export default function Routes({ signed }) {
 
             <Stack.Screen name="Refresh" component={Refresh} />
             <Stack.Screen name="SignOutScreen" component={SignOutScreen} />
+            <Stack.Screen name="SignOutToken" component={SignOutToken} />
           </>
         )}
       </Stack.Navigator>

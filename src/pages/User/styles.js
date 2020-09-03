@@ -1,12 +1,12 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-  margin: 20px;
+export const Container = styled.ScrollView`
+  margin: 20px 0;
 `;
 
 export const List = styled.View`
   background-color: #fff;
-  border: 1px solid #ddd;
+
   margin-bottom: 10px;
   padding: 10px;
 `;
@@ -30,4 +30,16 @@ export const ItemExit = styled.View`
 
   padding: 15px;
   align-items: center;
+`;
+
+export const Title = styled.Text`
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px 0 0 20px;
+  color: ${props => props.theme.colors.primary};
+  background-color: #fff;
+`;
+
+export const ButtonView = styled.View`
+  margin: 0 20px;
 `;

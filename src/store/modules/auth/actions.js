@@ -5,10 +5,10 @@ export function signInRequest(email, password) {
   };
 }
 
-export function signInSuccess(student, token, vimeoAuth) {
+export function signInSuccess(student, token, refreshToken, vimeoAuth) {
   return {
     type: '@auth/SIGN_IN_SUCCESS',
-    payload: { student, token, vimeoAuth },
+    payload: { student, token, refreshToken, vimeoAuth },
   };
 }
 

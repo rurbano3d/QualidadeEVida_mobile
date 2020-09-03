@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
-import { setDate, parseISO } from 'date-fns';
-import { formatDatePure, formatDate } from '~/utils';
+import { setDate, parseISO, differenceInDays } from 'date-fns';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { formatDatePure, formatDate, formatDateRegressivePure } from '~/utils';
 
 import api from '~/services/api';
 
@@ -17,6 +18,14 @@ import {
 const MonthlyInfo = ({ register }) => {
   const [monthly, setMonthly] = useState({});
 
+  const displayWarningOverdue = useCallback(() => {
+    const day = differenceInDays(new Date(), monthly.paymentDay);
+    if (day - 1 >= -5) {
+      return true;
+    }
+    return false;
+  }, [monthly]);
+
   async function getMonthlyPayments() {
     const response = await api.get('monthlyPayments', {
       params: { q: register?.id },
@@ -31,6 +40,7 @@ const MonthlyInfo = ({ register }) => {
         );
         return {
           ...item,
+          paymentDay: newPaymentDay,
           paymentDayFormatted: formatDatePure(newPaymentDay),
           overdueFormatted: formatDatePure(newPaymentDay),
         };
@@ -50,26 +60,47 @@ const MonthlyInfo = ({ register }) => {
     <Container>
       {monthly.overdue ? (
         <WarningView>
-          <Warning>Mensalidade atrasada:</Warning>
-          <Warning>{monthly.overdueFormatted}</Warning>
+          <MaterialCommunityIcons name="alert-circle" size={25} color="#fff" />
+          <Warning>Mensalidade atrasada: {monthly.overdueFormatted}</Warning>
+        </WarningView>
+      ) : displayWarningOverdue() ? (
+        <WarningView>
+          <MaterialCommunityIcons name="alert-circle" size={25} color="#fff" />
+          <Warning>
+            Mensalidade vence {formatDateRegressivePure(monthly.paymentDay)}
+          </Warning>
         </WarningView>
       ) : (
         <NormalView>
-          <CustomText>Próxima mensalidade:</CustomText>
-          <CustomText>{monthly.paymentDayFormatted}</CustomText>
+          <MaterialCommunityIcons name="alert-circle" size={25} color="#fff" />
+          <CustomText>
+            Próxima mensalidade: {monthly.paymentDayFormatted}
+          </CustomText>
         </NormalView>
       )}
     </Container>
   ) : !register?.active ? (
     <AlertView>
-      <Warning>Sua matrícula venceu</Warning>
-      <Warning>{formatDate(register?.end_date)}</Warning>
+      <MaterialCommunityIcons
+        name="alert-circle-outline"
+        size={25}
+        color="#f47b75"
+      />
+      <CustomText>
+        Sua matrícula venceu {formatDate(register?.end_date)}
+      </CustomText>
     </AlertView>
   ) : (
-    <NormalView>
-      <CustomText>Sua matrícula vence</CustomText>
-      <CustomText>{formatDate(register?.end_date)}</CustomText>
-    </NormalView>
+    <AlertView>
+      <MaterialCommunityIcons
+        name="alert-circle-outline"
+        size={25}
+        color="#f47b75"
+      />
+      <CustomText>
+        Sua matrícula vence {formatDate(register?.end_date)}
+      </CustomText>
+    </AlertView>
   );
 };
 

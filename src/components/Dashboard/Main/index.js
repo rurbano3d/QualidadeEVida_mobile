@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useClient } from '~/contexts/client';
 
@@ -19,62 +19,49 @@ import SlideBottom from '~/Animation/SlideBottom';
 import {
   Container,
   Header,
-  Info,
   Content,
   Information,
   PointText,
   DescView,
   PointView,
+  UserText,
+  UserView,
 } from './styles';
 
 const Main = ({ register }) => {
   const { client } = useClient();
   return (
     <Container>
+      <SlideTop>
+        <Information>
+          <UserView>
+            <UserText>
+              Olá,{'\n'}
+              {register.student?.name}
+            </UserText>
+          </UserView>
+          <DescView>
+            {/* <MaterialCommunityIcons name="dumbbell" size={20} color="#444444" /> */}
+            <UserText>Pontuação</UserText>
+            <Pontuation />
+          </DescView>
+        </Information>
+      </SlideTop>
+      {register && (
+        <>
+          <Header>
+            <Slideleft>
+              <MonthlyInfo register={register} />
+            </Slideleft>
+          </Header>
+        </>
+      )}
+
       {client === 'qualidadeVida' && (
         <SlideTop>
           <Adds />
         </SlideTop>
       )}
-      {register && (
-        <>
-          <Header>
-            <SlideTop>
-              <MonthlyInfo register={register} />
-            </SlideTop>
-          </Header>
-          <Info>
-            <Slideleft>
-              <Information>
-                <DescView>
-                  <MaterialCommunityIcons
-                    name="dumbbell"
-                    size={20}
-                    color="#444444"
-                  />
-                  <Text>Pontuação</Text>
-                  <Pontuation />
-                </DescView>
-                <DescView>
-                  <MaterialCommunityIcons
-                    name="folder-open"
-                    size={20}
-                    color="#444444"
-                  />
-                  <Text>Plano</Text>
-                  <PointView>
-                    <PointText>
-                      {register.plan ? register.plan.title : 'Sem plano'}
-                    </PointText>
-                  </PointView>
-                </DescView>
-              </Information>
-            </Slideleft>
-          </Info>
-        </>
-      )}
-
-      <Separator />
       <Content>
         <SlideBottom>
           {!register ? (

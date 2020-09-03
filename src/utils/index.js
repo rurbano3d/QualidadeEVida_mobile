@@ -34,3 +34,12 @@ export const formatDateRegressive = value => {
 
   return dateFormatted;
 };
+export const formatDateRegressivePure = value => {
+  if (!value) return null;
+  const dateFormatted = formatDistance(value, new Date(), {
+    addSuffix: true,
+    locale: pt,
+  });
+
+  return dateFormatted;
+};

@@ -1,15 +1,15 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
+  background-color: #fff;
   flex: 1;
+  padding: 20px;
 `;
 
 export const Content = styled.View`
   max-height: 100%;
 `;
 export const Checkin = styled.View`
-  background-color: #fff;
-  border: 1px solid #dddddd;
   border-radius: 4px;
   margin-top: 20px;
   padding: 0 10px;

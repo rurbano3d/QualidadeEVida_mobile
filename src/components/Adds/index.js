@@ -1,12 +1,23 @@
 import React from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image } from 'react-native';
 import * as Linking from 'expo-linking';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import logoFoods from '~/assets/logoFoods.png';
-import logoAssessoria from '~/assets/logoAssessoria.png';
+import logoAssessoria from '~/assets/logoAssessoriaHorizontal.png';
 
-import { Container, Content, Info, Icon, Title } from './styles';
+import {
+  Container,
+  Content,
+  Info,
+  TouchableOpacityCustom,
+  Icon,
+  Title,
+  Social,
+  Buttons,
+  Question,
+  Line,
+} from './styles';
 
 const Adds = () => {
   const text =
@@ -21,40 +32,29 @@ const Adds = () => {
   return (
     <Container>
       <Content>
-        <TouchableOpacity onPress={handleInstagram}>
-          <Image
-            source={logoFoods}
-            style={{
-              width: 150,
-              height: 153,
-              resizeMode: 'cover',
-              marginLeft: 5,
-            }}
-          />
-          <Title>Alimentação saudável</Title>
-          <Info>Clique e siga a gente no Instagram.</Info>
-          <Icon>
-            <MaterialCommunityIcons name="instagram" size={25} color="#666" />
-          </Icon>
-        </TouchableOpacity>
-      </Content>
-
-      <Content>
-        <TouchableOpacity onPress={handleWhatsapp}>
-          <Image
-            source={logoAssessoria}
-            style={{
-              width: 150,
-              height: 145,
-              resizeMode: 'cover',
-            }}
-          />
-          <Title>{`Assessoria e Personal \rtraining`}</Title>
-          <Info>Clique e tire suas dúvidas pelo whatsapp.</Info>
-          <Icon>
-            <MaterialCommunityIcons name="whatsapp" size={25} color="#666" />
-          </Icon>
-        </TouchableOpacity>
+        <Title>Precisa de uma assessoria?</Title>
+        <Line />
+        <Image
+          source={logoAssessoria}
+          style={{
+            width: '60%',
+            height: 75,
+            resizeMode: 'contain',
+            marginTop: 10,
+          }}
+        />
+        <Info>
+          Entre em contato pelo Whatsapp {'\n'}e siga o nosso Instagram.
+        </Info>
+        <Line />
+        <Buttons>
+          <TouchableOpacityCustom onPress={handleWhatsapp}>
+            <MaterialCommunityIcons name="whatsapp" size={38} color="#666" />
+          </TouchableOpacityCustom>
+          <TouchableOpacityCustom onPress={handleInstagram}>
+            <MaterialCommunityIcons name="instagram" size={38} color="#666" />
+          </TouchableOpacityCustom>
+        </Buttons>
       </Content>
     </Container>
   );

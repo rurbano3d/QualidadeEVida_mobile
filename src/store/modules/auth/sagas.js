@@ -1,7 +1,6 @@
 import { Alert } from 'react-native';
 import { takeLatest, call, put, all } from 'redux-saga/effects';
-import { differenceInDays, setDate, parseISO } from 'date-fns';
-
+import { setToken } from '~/services/RefreshToken';
 import { signInSuccess, signFailure } from './actions';
 
 import api from '~/services/api';
@@ -13,11 +12,11 @@ export function* signIn({ payload }) {
       email,
       password,
     });
-    const { student, token, vimeoAuth } = response.data;
+    const { student, token, refreshToken, vimeoAuth } = response.data;
 
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-
-    yield put(signInSuccess(student, token, vimeoAuth));
+    // api.defaults.headers.Authorization = `Bearer ${token}`;
+    setToken(token, refreshToken);
+    yield put(signInSuccess(student, token, refreshToken, vimeoAuth));
   } catch (err) {
     let error = '';
     switch (err.response.data.error) {
@@ -41,22 +40,22 @@ export function* signIn({ payload }) {
   }
 }
 
-export function setToken({ payload }) {
-  if (!payload) return;
+// export function setToken({ payload }) {
+//   if (!payload) return;
 
-  const { token } = payload.auth;
+//   const { token } = payload.auth;
 
-  if (token) {
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-  }
-}
+//   if (token) {
+//     api.defaults.headers.Authorization = `Bearer ${token}`;
+//   }
+// }
 
 export function signOut() {
   // history.push('/');
 }
 
 export default all([
-  takeLatest('persist/REHYDRATE', setToken),
+  // takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_OUT', signOut),
 ]);

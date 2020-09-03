@@ -1,34 +1,38 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  margin: 10px 0;
+  padding: 20px 0;
+  background-color: #fff;
 `;
 
 export const Content = styled.View`
   align-items: center;
   justify-content: center;
+`;
+export const Buttons = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
-  width: 49%;
-  height: 280px;
-  padding: 10px;
-
-  background-color: #fff;
-  border: 1px solid #dddddd;
+  width: 40%;
 `;
 export const Title = styled.Text`
-  margin-top: 10px;
-  height: 35px;
-  font-size: 13px;
+  margin: 10px 0;
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
+  color: ${props => props.theme.colors.primary};
 `;
 export const Info = styled.Text`
-  height: 55px;
+  text-align: center;
+  padding: 10px 20px;
 `;
-export const Icon = styled.View`
-  margin-top: -15px;
-  align-self: flex-end;
+export const TouchableOpacityCustom = styled.TouchableOpacity``;
+
+export const Line = styled.View`
+  border-bottom-width: 1px;
+  border-bottom-color: #ddd;
+  width: 90%;
+  margin: 10px 0;
 `;

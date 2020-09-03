@@ -12,8 +12,8 @@ const VideoVimeo = ({ url, width, height }) => {
   useEffect(() => {
     async function getVideoVimeo() {
       const response = await vimeoBasic.get(`/${url}/config`);
-      setUri(response.data.request.files.hls.cdns.akfire_interconnect_quic.url);
-
+      const server = response.data.request.files.hls.default_cdn;
+      setUri(response.data.request.files.hls.cdns[server].url);
       // setUri(
       //   response.request.files.hls.cdns[response.request.files.hls.default_cnd]
       //     .url,
