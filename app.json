@@ -3,7 +3,7 @@
     "name": "Qualidade e Vida App",
     "slug": "qualidade-vida-mobile",
     "privacy": "public",
-    "sdkVersion": "37.0.0",
+    "sdkVersion": "39.0.0",
     "platforms": ["ios", "android"],
     "packagerOpts": {
       "config": "metro.config.js",
@@ -40,7 +40,7 @@
     },
     "android": {
       "package": "com.alatar.qualidadeVidaApp",
-      "versionCode": 8,
+      "versionCode": 12,
       "permissions": []
     }
   }
