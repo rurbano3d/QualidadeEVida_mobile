@@ -3,11 +3,11 @@ import { Platform } from 'react-native';
 import { refreshToken } from '~/services/RefreshToken';
 
 const api = axios.create({
-  baseURL:
-    Platform.OS === 'ios'
-      ? 'http://localhost:3333'
-      : 'http://192.168.0.103:3333',
-  // baseURL: 'https://apiqualidadevida.ddns.net',
+  // baseURL:
+  //   Platform.OS === 'ios'
+  //     ? 'http://localhost:3333'
+  //     : 'http://192.168.0.103:3333',
+  baseURL: 'https://apiqualidadevida.ddns.net',
 });
 api.interceptors.request.use(
   async config => {
