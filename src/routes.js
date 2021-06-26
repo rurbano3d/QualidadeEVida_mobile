@@ -29,6 +29,7 @@ import MyTrainingDetail from '~/pages/MyTrainingDetail';
 import Order from '~/pages/Order';
 import OrderDetail from '~/pages/OrderDetail';
 import RankingDetail from '~/pages/RankingDetail';
+import Calendar from '~/pages/Calendar';
 
 import Refresh from '~/pages/Refresh';
 import SignOutScreen from '~/pages/SignOutScreen';
@@ -119,6 +120,7 @@ export default function Routes({ signed }) {
             <Stack.Screen name="TrainingDetail" component={MyTrainingDetail} />
             <Stack.Screen name="Order" component={Order} />
             <Stack.Screen name="OrderDetail" component={OrderDetail} />
+            <Stack.Screen name="Calendar" component={Calendar} />
             {/* <Stack.Screen name="RankingDetail" component={RankingDetail} /> */}
 
             <Stack.Screen name="Refresh" component={Refresh} />

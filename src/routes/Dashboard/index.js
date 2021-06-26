@@ -12,6 +12,7 @@ import Dashboard from '~/pages/Dashboard';
 import ChallengesRoutes from '~/routes/Challenges';
 import Points from '~/pages/Points';
 import TrainingsRoutes from '~/routes/Trainings';
+import Calendar from '~/pages/Calendar';
 import Ranking from '~/pages/Ranking';
 
 const Tab = createBottomTabNavigator();
@@ -70,6 +71,11 @@ export default function DashboarRouter() {
               <MaterialCommunityIcons name="dumbbell" size={30} color={color} />
             );
           }
+          if (route.name === 'Calendar') {
+            return (
+              <MaterialCommunityIcons name="calendar" size={30} color={color} />
+            );
+          }
           // if (route.name === 'Ranking') {
           //   return (
           //     <MaterialCommunityIcons name="trophy" size={30} color={color} />
@@ -102,6 +108,11 @@ export default function DashboarRouter() {
       />
       {hasRegister[0]?.active && !blocked && (
         <>
+          <Tab.Screen
+            name="Calendar"
+            component={Calendar}
+            options={{ title: 'Agenda' }}
+          />
           <Tab.Screen
             name="Trainings"
             component={TrainingsRoutes}

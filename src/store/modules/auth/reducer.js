@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   student: null,
+  registration: null,
   signed: false,
   loading: false,
   token: null,
@@ -25,6 +26,10 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.signed = true;
         draft.loading = false;
 
+        break;
+      }
+      case '@auth/SET_REGISTRATION': {
+        draft.registration = action.payload.registration;
         break;
       }
 

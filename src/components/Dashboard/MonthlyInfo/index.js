@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { setDate, parseISO, differenceInDays } from 'date-fns';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { formatDatePure, formatDate, formatDateRegressivePure } from '~/utils';
 
 import api from '~/services/api';
@@ -72,7 +72,7 @@ const MonthlyInfo = ({ register }) => {
         </WarningView>
       ) : (
         <NormalView>
-          <MaterialCommunityIcons name="alert-circle" size={25} color="#fff" />
+          <Feather name="alert-circle" size={25} />
           <CustomText>
             Próxima mensalidade: {monthly.paymentDayFormatted}
           </CustomText>

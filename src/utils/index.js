@@ -43,3 +43,9 @@ export const formatDateRegressivePure = value => {
 
   return dateFormatted;
 };
+export const formatTime = value => {
+  if (!value) return null;
+  const dateFormatted = format(parseISO(value), 'HH:mm');
+
+  return dateFormatted;
+};

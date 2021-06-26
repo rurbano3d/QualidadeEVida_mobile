@@ -10,7 +10,8 @@ export const Warning = styled.Text`
 export const NormalView = styled.View`
   flex-direction: row;
   align-items: center;
-  height: 40px;
+  padding: 10px;
+  margin: 0 10px;
 `;
 
 export const WarningView = styled.View`

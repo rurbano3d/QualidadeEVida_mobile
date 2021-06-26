@@ -11,6 +11,12 @@ export function signInSuccess(student, token, refreshToken, vimeoAuth) {
     payload: { student, token, refreshToken, vimeoAuth },
   };
 }
+export function setRegistration(registration) {
+  return {
+    type: '@auth/SET_REGISTRATION',
+    payload: { registration },
+  };
+}
 
 export function signUpRequest(name, email, password, confirmPassword) {
   return {
