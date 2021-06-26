@@ -34,3 +34,9 @@ export const Highlight = styled.Text`
 export const Detail = styled.Text`
   font-size: 12px;
 `;
+export const Message = styled.Text`
+  padding: 40px;
+  color: #555;
+  font-weight: bold;
+  font-size: 18px;
+`;

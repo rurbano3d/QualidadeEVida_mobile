@@ -5,6 +5,7 @@ import { FlatList, Text } from 'react-native';
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import { formatTime } from '~/utils';
 import api from '~/services/api';
+import Loading from '~/components/Loading';
 
 import {
   Container,
@@ -14,11 +15,13 @@ import {
   OneLine,
   Highlight,
   Detail,
+  Message,
 } from './styles';
 
 const Calendar = () => {
-  const [agenda, setAgenda] = useState();
+  const [agenda, setAgenda] = useState([]);
   const [reload, setReload] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { registration } = useSelector(state => state.auth);
   async function getAgenda() {
     if (registration) {
@@ -26,6 +29,7 @@ const Calendar = () => {
         params: { registration: registration?.id },
       });
       setAgenda(agendaInfo.data.vacancies);
+      setLoading(false);
     }
   }
   useEffect(() => {
@@ -37,15 +41,20 @@ const Calendar = () => {
       setReload(false);
     }
   }, [reload]);
+
   return (
     <Container>
-      {agenda && (
+      {loading ? (
+        <Loading />
+      ) : (
         <FlatList
           data={agenda}
           refreshing={reload}
           onRefresh={() => setReload(true)}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent="Suas aulas não foram cadastradas!"
+          ListEmptyComponent={
+            <Message>Suas aulas não foram cadastradas ainda!</Message>
+          }
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <Class>
