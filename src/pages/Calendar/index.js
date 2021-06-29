@@ -26,7 +26,7 @@ const Calendar = () => {
   async function getAgenda() {
     if (registration) {
       const agendaInfo = await api.get('vacancies', {
-        params: { registration: registration?.id },
+        params: { registration_id: registration },
       });
       setAgenda(agendaInfo.data.vacancies);
       setLoading(false);
