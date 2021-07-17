@@ -1,7 +1,9 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.ScrollView``;
-export const Header = styled.View``;
+export const Header = styled.View`
+  margin-top: 10px;
+`;
 
 export const Information = styled.View`
   flex-direction: row;
@@ -35,4 +37,8 @@ export const PointView = styled.View`
 export const PointText = styled.Text`
   color: ${props => props.theme.colors.primary};
   font-size: 14px;
+`;
+
+export const Top = styled.View`
+  background: #fff;
 `;

@@ -11,7 +11,8 @@ export const NormalView = styled.View`
   flex-direction: row;
   align-items: center;
   padding: 10px;
-  margin: 0 10px;
+
+  background-color: #fff;
 `;
 
 export const WarningView = styled.View`
@@ -21,7 +22,6 @@ export const WarningView = styled.View`
 
   align-items: center;
   padding: 10px;
-  margin: 0 10px;
   /* border-radius: 4px; */
 `;
 
