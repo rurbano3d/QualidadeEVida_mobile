@@ -4,7 +4,7 @@ import SeparatorList from '~/components/SeparatorList';
 import ExercisesRender from '~/components/Exercise/Render';
 import RunningsRender from '~/components/Running/Render';
 
-import { Container, List } from './styles';
+import { List } from './styles';
 
 export default function ExercisesFlatList({
   data,
@@ -13,32 +13,30 @@ export default function ExercisesFlatList({
   hasVideo,
 }) {
   return (
-    <Container>
-      <List
-        data={data}
-        ItemSeparatorComponent={SeparatorList}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={item => String(item.id + item.title)}
-        renderItem={({ item }) => (
-          <>
-            {item.exercises ? (
-              <ExercisesRender
-                item={item}
-                hasVideo={hasVideo}
-                category={category}
-                renderButtonSeries={renderButtonSeries}
-              />
-            ) : (
-              <RunningsRender
-                item={item}
-                hasVideo={hasVideo}
-                category={category}
-                renderButtonSeries={renderButtonSeries}
-              />
-            )}
-          </>
-        )}
-      />
-    </Container>
+    <List
+      data={data}
+      ItemSeparatorComponent={SeparatorList}
+      showsVerticalScrollIndicator={false}
+      keyExtractor={item => String(item.id + item.title)}
+      renderItem={({ item }) => (
+        <>
+          {item.exercises ? (
+            <ExercisesRender
+              item={item}
+              hasVideo={hasVideo}
+              category={category}
+              renderButtonSeries={renderButtonSeries}
+            />
+          ) : (
+            <RunningsRender
+              item={item}
+              hasVideo={hasVideo}
+              category={category}
+              renderButtonSeries={renderButtonSeries}
+            />
+          )}
+        </>
+      )}
+    />
   );
 }

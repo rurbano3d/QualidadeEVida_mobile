@@ -4,9 +4,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export const List = styled.FlatList`
   background-color: #fff;
   border: 1px solid #ddd;
-  margin: 20px;
-  padding: 10px;
-  max-height: 98%;
+  margin: 5px 20px;
+  padding: 0 10px;
 `;
 
 export const Item = styled.View`

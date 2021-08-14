@@ -2,12 +2,12 @@ import styled from 'styled-components/native';
 import Button from '~/components/Button';
 
 export const Container = styled.View`
-  flex: ${props => (props.hasVideo ? 0.6 : 0.9)};
+  flex: ${props => (props.hasVideo ? 1 : 1)};
 `;
 
 export const Item = styled.View``;
 export const Info = styled.View`
-  max-height: 80%;
+  max-height: 100%;
 `;
 export const Title = styled.View`
   align-items: flex-start;
