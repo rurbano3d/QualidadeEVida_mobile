@@ -9,6 +9,7 @@ import series from './series/reducer';
 import runnings from './runnings/reducer';
 import signUp from './signUp/reducer';
 import order from './order/reducer';
+import schedule from './schedule/reducer';
 
 const appReducer = combineReducers({
   auth,
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
   runnings,
   signUp,
   order,
+  schedule,
 });
 
 const rootReducer = (state, action) => {

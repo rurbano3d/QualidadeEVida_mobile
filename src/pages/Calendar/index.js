@@ -14,35 +14,35 @@ const Calendar = () => {
   const { registration, student } = useSelector(state => state.auth);
   async function getAgenda() {
     if (registration) {
-      const seg = await api.get('schedule', {
+      const seg = await api.get('scheduleV2', {
         params: {
           order: 1,
           gym_id: student.gym_id,
           registration_id: registration,
         },
       });
-      const ter = await api.get('schedule', {
+      const ter = await api.get('scheduleV2', {
         params: {
           order: 2,
           gym_id: student.gym_id,
           registration_id: registration,
         },
       });
-      const qua = await api.get('schedule', {
+      const qua = await api.get('scheduleV2', {
         params: {
           order: 3,
           gym_id: student.gym_id,
           registration_id: registration,
         },
       });
-      const qui = await api.get('schedule', {
+      const qui = await api.get('scheduleV2', {
         params: {
           order: 4,
           gym_id: student.gym_id,
           registration_id: registration,
         },
       });
-      const sex = await api.get('schedule', {
+      const sex = await api.get('scheduleV2', {
         params: {
           order: 5,
           gym_id: student.gym_id,

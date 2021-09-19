@@ -49,3 +49,10 @@ export const formatTime = value => {
 
   return dateFormatted;
 };
+
+export const formatDayMonth = value => {
+  if (!value) return null;
+  const dateFormatted = format(parseISO(value), "dd'/'MM");
+
+  return dateFormatted;
+};
