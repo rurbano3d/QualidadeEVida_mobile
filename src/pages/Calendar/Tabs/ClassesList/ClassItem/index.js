@@ -1,6 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { scheduleAddClass } from '~/store/modules/schedule/actions';
 import { formatTime } from '~/utils';
 
 import {
@@ -11,25 +12,37 @@ import {
   Highlight,
   Detail,
   DefaultText,
+  ItemButton,
+  TextButton,
+  Right,
 } from './styles';
 
-const ClassItem = ({ item }) => {
+const ClassItem = ({ item, canceled, active }) => {
+  const dispatch = useDispatch();
+  const { registration } = useSelector(state => state.auth);
+
+  const handleAddClass = () => {
+    dispatch(scheduleAddClass(registration, item.classes.id, item.id));
+  };
+
   return (
-    <Class highlight={item.vagas.length}>
+    <Class highlight={item.vagas.length} canceled={canceled}>
       <Hour>
-        <Highlight highlight={item.vagas.length}>
+        <Highlight highlight={item.vagas.length} canceled={canceled}>
           {formatTime(item.classes.start_time)}
         </Highlight>
-        <Detail highlight={item.vagas.length}>40 min </Detail>
+        <Detail highlight={item.vagas.length} canceled={canceled}>
+          40 min
+        </Detail>
       </Hour>
       <Info>
         <OneLine>
           <Entypo
             name="location-pin"
             size={17}
-            color={item.vagas.length ? '#fff' : '#444444'}
+            color={item.vagas.length || canceled ? '#fff' : '#444444'}
           />
-          <DefaultText highlight={item.vagas.length}>
+          <DefaultText highlight={item.vagas.length} canceled={canceled}>
             {item.classes.place === '' ? 'Academia' : item.classes.place}
           </DefaultText>
         </OneLine>
@@ -37,18 +50,28 @@ const ClassItem = ({ item }) => {
           <MaterialIcons
             name="directions-run"
             size={17}
-            color={item.vagas.length ? '#fff' : '#444444'}
+            color={item.vagas.length || canceled ? '#fff' : '#444444'}
           />
-          <DefaultText highlight={item.vagas.length}>
+          <DefaultText highlight={item.vagas.length} canceled={canceled}>
             {item.classes.teacher}
           </DefaultText>
         </OneLine>
       </Info>
-      <View>
-        <DefaultText highlight={item.vagas.length}>
-          {item.vacanciesFilled}/{item.classes.vacancies} vagas
-        </DefaultText>
-      </View>
+      {!canceled && (
+        <Right>
+          <DefaultText highlight={item.vagas.length}>
+            {item.vacanciesFilled}/{item.classes.vacancies} vagas
+          </DefaultText>
+          {!item.haveClassToday &&
+            !item.vagas.length &&
+            active &&
+            item.isAddOnClass && (
+              <ItemButton type="add" onPress={() => handleAddClass()}>
+                <TextButton>+</TextButton>
+              </ItemButton>
+            )}
+        </Right>
+      )}
     </Class>
   );
 };

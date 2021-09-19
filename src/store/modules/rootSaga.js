@@ -9,6 +9,7 @@ import series from './series/sagas';
 import runnings from './runnings/sagas';
 import signUp from './signUp/sagas';
 import order from './order/sagas';
+import schedule from './schedule/sagas';
 
 export default function* rootSaga() {
   return yield all([
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     runnings,
     signUp,
     order,
+    schedule,
   ]);
 }
