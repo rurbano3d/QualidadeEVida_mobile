@@ -57,7 +57,7 @@ export default function User() {
         <List>
           <Item>
             <CustomText>
-              {register.plan ? register.plan.title : 'Sem plano'}
+              {register ? register.plan.title : 'Sem plano'}
             </CustomText>
           </Item>
         </List>
@@ -69,6 +69,9 @@ export default function User() {
           </Item>
           <Item>
             <CustomText>{studentFormatted.email}</CustomText>
+          </Item>
+          <Item>
+            <CustomText>{studentFormatted.city}</CustomText>
           </Item>
           <Item>
             <CustomText>{studentFormatted.age} anos</CustomText>

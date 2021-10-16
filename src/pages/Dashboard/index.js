@@ -56,7 +56,7 @@ export default function Dashboard() {
     <Loading />
   ) : (
     <Container>
-      <Main register={register} />
+      <Main register={register} student={student} />
     </Container>
   );
 }

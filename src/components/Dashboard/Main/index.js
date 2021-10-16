@@ -21,7 +21,7 @@ import {
   Top,
 } from './styles';
 
-const Main = ({ register }) => {
+const Main = ({ register, student }) => {
   const { client } = useClient();
   return (
     <Container>
@@ -31,7 +31,7 @@ const Main = ({ register }) => {
             <UserView>
               <UserText>
                 Olá,{'\n'}
-                {register.student?.name}
+                {student?.name}
               </UserText>
             </UserView>
             <DescView>

@@ -1,7 +1,7 @@
-export function signUpRequest(gym, name, phone, email, password) {
+export function signUpRequest(gym, name, phone, email, password, city) {
   return {
     type: '@signUp/SIGN_UP_REQUEST',
-    payload: { gym, name, phone, email, password },
+    payload: { gym, name, phone, email, password, city },
   };
 }
 
@@ -12,10 +12,10 @@ export function signUpUpdate(id, birth, weight, height) {
   };
 }
 
-export function signUpRemove(name, phone, email, password) {
+export function signUpRemove(name, phone, email, password, city) {
   return {
     type: '@signUp/SIGN_UP_REMOVE',
-    payload: { name, phone, email, password },
+    payload: { name, phone, email, password, city },
   };
 }
 

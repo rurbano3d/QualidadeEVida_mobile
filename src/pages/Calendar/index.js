@@ -19,6 +19,7 @@ const Calendar = () => {
           order: 1,
           gym_id: student.gym_id,
           registration_id: registration,
+          city: student.city,
         },
       });
       const ter = await api.get('scheduleV2', {
@@ -26,6 +27,7 @@ const Calendar = () => {
           order: 2,
           gym_id: student.gym_id,
           registration_id: registration,
+          city: student.city,
         },
       });
       const qua = await api.get('scheduleV2', {
@@ -33,6 +35,7 @@ const Calendar = () => {
           order: 3,
           gym_id: student.gym_id,
           registration_id: registration,
+          city: student.city,
         },
       });
       const qui = await api.get('scheduleV2', {
@@ -40,6 +43,7 @@ const Calendar = () => {
           order: 4,
           gym_id: student.gym_id,
           registration_id: registration,
+          city: student.city,
         },
       });
       const sex = await api.get('scheduleV2', {
@@ -47,6 +51,7 @@ const Calendar = () => {
           order: 5,
           gym_id: student.gym_id,
           registration_id: registration,
+          city: student.city,
         },
       });
       setClasses({

@@ -10,6 +10,7 @@ import { signUpRequest } from '~/store/modules/signUp/actions';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import Select from '~/components/AsyncSelect';
+import SelectSimple from '~/components/Select';
 
 import {
   Container,
@@ -28,6 +29,7 @@ import {
 const schema = Yup.object({
   gym: Yup.string().required('Este campo é obrigatório'),
   name: Yup.string().required('Este campo é obrigatório'),
+  city: Yup.string().required('Este campo é obrigatório'),
   email: Yup.string()
     .email('Este email não é válido')
     .required('Este campo é obrigatório'),
@@ -40,6 +42,7 @@ const schema = Yup.object({
 });
 const schemaQualidadeVida = Yup.object({
   name: Yup.string().required('Este campo é obrigatório'),
+  city: Yup.string().required('Este campo é obrigatório'),
   email: Yup.string()
     .email('Este email não é válido')
     .required('Este campo é obrigatório'),
@@ -55,6 +58,7 @@ const Form = () => {
   const dispatch = useDispatch();
   const { client } = useClient();
   const [gym, setGym] = useState('');
+  const [city, setCity] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -64,8 +68,13 @@ const Form = () => {
   const phoneRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const cityRef = useRef();
 
   const [show, setShow] = useState(true);
+
+  const gymId = __DEV__
+    ? '3a3bd24e-4cfa-44f4-9c2b-538bdd5feff3'
+    : 'acec07cb-418d-480a-8cce-b64a92b82274';
 
   return (
     <Formik
@@ -78,6 +87,7 @@ const Form = () => {
         email,
         phone,
         password,
+        city,
       }}
       validationSchema={
         client === 'qualidadeVida' ? schemaQualidadeVida : schema
@@ -85,13 +95,12 @@ const Form = () => {
       onSubmit={values => {
         dispatch(
           signUpRequest(
-            client === 'qualidadeVida'
-              ? 'acec07cb-418d-480a-8cce-b64a92b82274'
-              : values.gym,
+            client === 'qualidadeVida' ? gymId : values.gym,
             values.name,
             values.phone,
             values.email,
             values.password,
+            values.city,
           ),
         );
       }}
@@ -158,7 +167,7 @@ const Form = () => {
                     placeholder="Senha"
                     secureTextEntry={show}
                     returnKeyType="send"
-                    onSubmitEditing={props.handleSubmit}
+                    onSubmitEditing={() => cityRef.current.focus()}
                     ref={passwordRef}
                     // onSubmitEditing={() => passwordAgainRef.current.focus()}
                     value={props.values.password}
@@ -175,6 +184,19 @@ const Form = () => {
                 {props.errors.password && (
                   <Error>{props.errors.password}</Error>
                 )}
+              </InputField>
+              <InputField>
+                <SelectSimple
+                  label="Cidade"
+                  items={[
+                    { label: 'Brotas', value: 'Brotas' },
+                    { label: 'Torrinha', value: 'Torrinha' },
+                  ]}
+                  ref={cityRef}
+                  handleChange={props.handleChange('city')}
+                  onSubmitEditing={props.handleSubmit}
+                />
+                {props.errors.city && <Error>{props.errors.city}</Error>}
               </InputField>
               <ButtonView>
                 <Button onPress={props.handleSubmit}>Continuar</Button>
