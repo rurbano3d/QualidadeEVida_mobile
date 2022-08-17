@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { isAfter } from 'date-fns';
 import { scheduleCancelClass } from '~/store/modules/schedule/actions';
@@ -131,12 +131,17 @@ const ClassesList = ({ selectedTab, classes, onRefresh }) => {
         }
         keyExtractor={item => String(item.classes.id)}
         renderItem={({ item }) =>
-          item.remainingVacancies !== 0 &&
+          item.remainingVacancies > 0 &&
           item.vagas.length <= 0 && (
-            <ClassItem
-              item={item}
-              active={today.classCanceledThisWeek && !today.classAddedThisWeek}
-            />
+            <>
+              <ClassItem
+                item={item}
+                active={
+                  today.classCanceledThisWeek && !today.classAddedThisWeek
+                }
+              />
+              <Text>Aqui</Text>
+            </>
           )
         }
       />
