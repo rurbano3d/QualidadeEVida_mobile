@@ -9,7 +9,7 @@ import { TabCustom, TextCustom } from './styles';
 
 const Tabs = ({ classes, onRefresh }) => {
   let todayIs = getDay(new Date());
-  if (todayIs > 5) todayIs = 0;
+  if (todayIs > 5 || todayIs === 0) todayIs = 1;
   const [selectedTab, setSelectedTab] = useState(todayIs);
   useEffect(() => {
     setSelectedTab(todayIs);
@@ -17,7 +17,7 @@ const Tabs = ({ classes, onRefresh }) => {
 
   const label = (day, index) => {
     const date = formatDayMonth(classes?.[day].result[0].date);
-    const active = selectedTab === index;
+    const active = selectedTab === index - 1;
     return (
       <TabCustom active={active}>
         <TextCustom active={active}>{day}</TextCustom>
@@ -30,11 +30,11 @@ const Tabs = ({ classes, onRefresh }) => {
     <>
       <MaterialTabs
         items={[
-          label('seg', 0),
-          label('ter', 1),
-          label('qua', 2),
-          label('qui', 3),
-          label('sex', 4),
+          label('seg', 1),
+          label('ter', 2),
+          label('qua', 3),
+          label('qui', 4),
+          label('sex', 5),
         ]}
         selectedIndex={selectedTab}
         onChange={setSelectedTab}

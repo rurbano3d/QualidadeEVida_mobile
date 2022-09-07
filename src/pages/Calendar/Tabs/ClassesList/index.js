@@ -140,7 +140,6 @@ const ClassesList = ({ selectedTab, classes, onRefresh }) => {
                   today.classCanceledThisWeek && !today.classAddedThisWeek
                 }
               />
-              <Text>Aqui</Text>
             </>
           )
         }

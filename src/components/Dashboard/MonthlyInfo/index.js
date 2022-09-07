@@ -67,7 +67,8 @@ const MonthlyInfo = ({ register }) => {
         <WarningView>
           <MaterialCommunityIcons name="alert-circle" size={25} color="#fff" />
           <Warning>
-            Mensalidade vence {formatDateRegressivePure(monthly.paymentDay)}
+            {/* Mensalidade vence {formatDateRegressivePure(monthly.paymentDay)} */}
+            Mensalidade vence {String(monthly.paymentDay)}
           </Warning>
         </WarningView>
       ) : (

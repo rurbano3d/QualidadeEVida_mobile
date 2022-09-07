@@ -12,11 +12,18 @@ export function* signIn({ payload }) {
       email,
       password,
     });
-    const { student, token, refreshToken, vimeoAuth } = response.data;
-
+    const {
+      student,
+      token,
+      refreshToken,
+      vimeoAuth,
+      isAgreement,
+    } = response.data;
     // api.defaults.headers.Authorization = `Bearer ${token}`;
     setToken(token, refreshToken);
-    yield put(signInSuccess(student, token, refreshToken, vimeoAuth));
+    yield put(
+      signInSuccess(student, token, refreshToken, vimeoAuth, isAgreement),
+    );
   } catch (err) {
     let error = '';
     switch (err.response.data.error) {
@@ -54,8 +61,21 @@ export function signOut() {
   // history.push('/');
 }
 
+export function* agreementRequest({ payload }) {
+  const { student, isAgreement } = payload;
+  try {
+    yield call(api.post, 'contractChecks', {
+      student_id: student,
+      checked: isAgreement,
+    });
+  } catch (err) {
+    Alert.alert('Ops!', `${err}`);
+  }
+}
+
 export default all([
   // takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_OUT', signOut),
+  takeLatest('@auth/AGREEMENT_REQUEST', agreementRequest),
 ]);

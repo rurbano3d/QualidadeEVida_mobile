@@ -58,3 +58,8 @@ export const Remove = styled.TouchableOpacity`
   align-items: flex-end;
   width: 50px;
 `;
+
+export const TipView = styled.View`
+  background-color: #fff;
+  padding: 10px;
+`;

@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   token: null,
   refreshToken: null,
   vimeoAuth: null,
+  isAgreement: false,
 };
 
 export default function auth(state = INITIAL_STATE, action) {
@@ -25,7 +26,7 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.vimeoAuth = action.payload.vimeoAuth;
         draft.signed = true;
         draft.loading = false;
-
+        draft.isAgreement = action.payload.isAgreement;
         break;
       }
       case '@auth/SET_REGISTRATION': {
@@ -43,6 +44,11 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.refreshToken = null;
         draft.vimeoAuth = null;
         draft.signed = false;
+        break;
+      }
+
+      case '@auth/AGREEMENT_REQUEST': {
+        draft.isAgreement = action.payload.isAgreement;
         break;
       }
 

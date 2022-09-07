@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -25,6 +25,7 @@ import {
   Message,
   Top,
   Remove,
+  TipView,
 } from './styles';
 
 const OrderDetailPage = () => {
@@ -85,6 +86,15 @@ const OrderDetailPage = () => {
     <Loading />
   ) : (
     <Container>
+      <TipView>
+        <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
+          Nos ajude respondendo estas 4 perguntas na mesma mensagem:
+        </Text>
+        <Text>1- Qual o grau da intensidade (de 0 a 5)</Text>
+        <Text>2- Qual o grau de satisfação(de 0 a 5) </Text>
+        <Text>3- Sentiu alguma dor em pontos específicos?</Text>
+        <Text>4- Qual a maior dificuldade nesse treino?</Text>
+      </TipView>
       <Content>
         <FlatList
           data={orders}

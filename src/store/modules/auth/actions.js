@@ -5,10 +5,16 @@ export function signInRequest(email, password) {
   };
 }
 
-export function signInSuccess(student, token, refreshToken, vimeoAuth) {
+export function signInSuccess(
+  student,
+  token,
+  refreshToken,
+  vimeoAuth,
+  isAgreement,
+) {
   return {
     type: '@auth/SIGN_IN_SUCCESS',
-    payload: { student, token, refreshToken, vimeoAuth },
+    payload: { student, token, refreshToken, vimeoAuth, isAgreement },
   };
 }
 export function setRegistration(registration) {
@@ -34,5 +40,12 @@ export function signFailure() {
 export function signOut() {
   return {
     type: '@auth/SIGN_OUT',
+  };
+}
+
+export function agreementRequest(student, isAgreement) {
+  return {
+    type: '@auth/AGREEMENT_REQUEST',
+    payload: { student, isAgreement },
   };
 }

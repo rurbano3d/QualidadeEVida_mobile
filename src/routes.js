@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image } from 'react-native';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   createStackNavigator,
@@ -30,6 +31,7 @@ import Order from '~/pages/Order';
 import OrderDetail from '~/pages/OrderDetail';
 import RankingDetail from '~/pages/RankingDetail';
 import Calendar from '~/pages/Calendar';
+import Agreement from './pages/Agreement';
 
 import Refresh from '~/pages/Refresh';
 import SignOutScreen from '~/pages/SignOutScreen';
@@ -39,6 +41,8 @@ const Stack = createStackNavigator();
 
 export default function Routes({ signed }) {
   const { client } = useClient();
+  // const isAgreement = useSelector(state => state.auth.isAgreement);
+  const isAgreement = useSelector(state => state.auth.isAgreement);
   function Logo() {
     return (
       <Image
@@ -108,6 +112,12 @@ export default function Routes({ signed }) {
                 gestureEnabled: false,
               }}
             />
+          </>
+        ) : !isAgreement ? (
+          <>
+            <Stack.Screen name="Agreement" component={Agreement} />
+            <Stack.Screen name="User" component={User} />
+            <Stack.Screen name="Evaluation" component={Evaluation} />
           </>
         ) : (
           <>
