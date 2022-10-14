@@ -89,7 +89,6 @@ const Agreement = () => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Terms and conditions</Text>
       <ScrollView
         style={styles.tcContainer}
         onScroll={({ nativeEvent }) => {
@@ -106,7 +105,7 @@ const Agreement = () => {
         onPress={handleAccepted}
         style={enabled ? styles.button : styles.buttonDisabled}
       >
-        <Text style={styles.buttonLabel}>Accept</Text>
+        <Text style={styles.buttonLabel}>Aceito</Text>
       </TouchableOpacity>
     </View>
   );
